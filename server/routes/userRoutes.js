@@ -1,7 +1,10 @@
 "use strict";
 
 const express = require("express");
+const persist = require("../persist");
 let router = express.Router();
+// import { User } from '../User';
+const User = require('../User');
 
 router 
     .route("/")
@@ -15,7 +18,19 @@ router
 router 
     .route("/:username")
     .get((req, res) => {
-        res.send(`This is user ${req.params.username}`);
+        persist.loadUsersData()
+        .then(dataArray => {
+            let userName = req.params.username;
+            
+            for (let i = 0; i < dataArray.length; i++) {
+                if (dataArray[i].username === userName) {
+                    res.send(`This is user ${userName}`);
+                    return;
+                } 
+            } 
+
+            res.send('User does not exist.')
+        })
     })
     .post((req, res) => {
         

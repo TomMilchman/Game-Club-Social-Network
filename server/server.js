@@ -2,6 +2,7 @@
 
 const express = require("express"); 
 const bodyParser = require('body-parser'); 
+const persist = require("./persist");
 const app = express();
 const port = 3000; 
 const userRoutes = require('./routes/userRoutes'); // Import userRoutes module
@@ -10,7 +11,10 @@ const userRoutes = require('./routes/userRoutes'); // Import userRoutes module
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 app.get('/', (req, res) => {
-    res.send("This is the main page");
+    persist.loadUsersData()
+    .then(dataArray => {
+        res.send(dataArray[0].username);
+    })
 })
 
 app.use('/users', userRoutes); // Use userRoutes for routes starting with /users

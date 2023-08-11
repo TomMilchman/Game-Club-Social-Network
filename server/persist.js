@@ -6,10 +6,10 @@ async function loadData(filePath) {
       const jsonData = await fs.readFile(filePath, 'utf-8');
       return JSON.parse(jsonData);
     } catch (error) {
-      console.error('Error reading data:', error);
-      return [];
+      console.error('Error loading data:', error);
+      throw error; 
     }
-  }
+}
   
 async function saveData(filePath, data) {
     try {
@@ -21,6 +21,6 @@ async function saveData(filePath, data) {
 }
 
 module.exports = {
-    loadUserData: () => loadData('users.json'),
-    saveUserData: data => saveData('users.json', data),
+    loadUsersData: () => loadData('./users.json'),
+    saveUsersData: data => saveData('./users.json', data),
 };

@@ -10,6 +10,14 @@ class User {
         this.followers = [];
         this.posts = [];
     }
+
+    addPost(post) {
+        this.posts.push(post);
+    }
+
+    deletePost(postId) {
+        this.posts.splice(postId, 1);
+    }
 }
 
 module.exports = User;
