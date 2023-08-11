@@ -1,0 +1,11 @@
+[
+  {
+    "username": "Hypno",
+    "password": "genericpass123",
+    "isAdmin": false,
+    "email": "hypno@fakemail.com",
+    "following": [],
+    "followers": [],
+    "posts": []
+  }
+]
