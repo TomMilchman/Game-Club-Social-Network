@@ -5,35 +5,36 @@ const persist = require("../persist");
 let router = express.Router();
 // import { User } from '../User';
 const User = require('../User');
+const usersData = require("../server");
 
-router 
-    .route("/")
-    .get((req, res) => {
-        res.send("This is the users screen");
-    })
-    .post((req, res) => {
+router.route("/")
+.get((req, res) => {
+    res.send("This is the users screen");
+})
+.post((req, res) => {
 
-    })
+})
 
-router 
-    .route("/:username")
-    .get((req, res) => {
-        persist.loadUsersData()
-        .then(dataArray => {
-            let userName = req.params.username;
-            
-            for (let i = 0; i < dataArray.length; i++) {
-                if (dataArray[i].username === userName) {
-                    res.send(`This is user ${userName}`);
-                    return;
-                } 
-            } 
-
-            res.send('User does not exist.')
-        })
-    })
-    .post((req, res) => {
+router.route("/:username")
+.get((req, res) => {
+    try {
+        const userName = req.params.username;
         
-    })
+        for (let i = 0; i < persist.usersData.length; i++) {
+                if (persist.usersData[i].username === userName) {
+                res.send(`This is user ${userName}`);
+                return; 
+            } 
+        } 
+
+        res.status(404).send('User does not exist.'); // Set status code for user not found
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error'); // Handle loading error with status code
+    }
+})
+.post((req, res) => {
+    // Handle POST request
+});
 
 module.exports = router;
