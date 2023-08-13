@@ -1,7 +1,7 @@
 "use strict";
 
 class User {
-    constructor(username, password, email) {
+    constructor(username, password, email, lastLogin) {
         this.username = username;
         this.password = password;
         this.isAdmin = false;
@@ -9,6 +9,7 @@ class User {
         this.following = [];
         this.followers = [];
         this.posts = [];
+        this.lastLogin = lastLogin;
     }
 
     addPost(post) {

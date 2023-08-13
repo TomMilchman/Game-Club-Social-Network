@@ -3,11 +3,36 @@
 const express = require("express"); 
 const bodyParser = require('body-parser'); 
 const persist = require("./persist");
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3000; 
-const userRoutes = require('./routes/userRoutes'); // Import userRoutes module
+const userRoutes = require('./routes/userRoutes'); 
+const loginRoute = require('./routes/loginRoute');
+
+let loggedInUsers = {}
 
 app.use(bodyParser.json()); // Parse JSON request bodies
+app.use(cookieParser());
+
+//Check if user session is active and refresh cookies
+app.use((req, res, next) => {
+    const tempPass = req.cookies.tempPass;
+
+    //If cookies are not expired, refresh cookies and proceed with the request. 
+    //If expired, redirect to login and don't refresh.
+    if (tempPass) {
+        if (loggedInUsers[tempPass] !== undefined) {
+            const timeToLive = req.cookies.timeToLive;
+
+            res.cookie('tempPass', tempPass, {maxAge: timeToLive, httpOnly: true, secure: true});
+            res.cookie('timeToLive', timeToLive, {maxAge: timeToLive, httpOnly: true, secure: true});
+            
+            next();
+        }
+    }
+
+    res.redirect('/login');
+});
 
 app.route("/")
 .get(async (req, res) => {
@@ -20,6 +45,7 @@ app.route("/")
 }); 
 
 app.use('/users', userRoutes); // Use userRoutes for routes starting with /users
+app.use('/login', loginRoute); // Login page
 
 //Error 404 for non-existing pages
 app.get('*', function(req, res){
@@ -40,3 +66,5 @@ app.listen(port, async(err) => {
         console.error("Error loading user data:", error);
     }
 });
+
+module.exports = loggedInUsers;
