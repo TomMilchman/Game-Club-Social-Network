@@ -13,9 +13,10 @@ async function loadData(filePath) {
     }
 }
   
-async function saveData(filePath, data) {
+async function saveData(filePath, jsonData) {
     try {
-      await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
+      await fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf-8');
+      usersData = jsonData;
       console.log('Data saved successfully');
     } catch (error) {
       console.error('Error saving data:', error);

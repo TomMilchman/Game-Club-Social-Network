@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require('body-parser'); 
 const persist = require("./persist");
 const cookieParser = require('cookie-parser');
+const security = require("./security");
 const app = express();
 const port = 3000; 
 const userRoutes = require('./routes/userRoutes'); 
@@ -19,18 +20,15 @@ app.use((req, res, next) => {
     const tempPass = req.cookies.tempPass;
 
     //If cookies are not expired, refresh cookies and proceed with the request. 
-    //If expired, redirect to login and don't refresh.
+    //If expired, delete user from logged in users, redirect to login and don't refresh cookies.
     if (tempPass) {
         if (loggedInUsers[tempPass] !== undefined) {
-            const timeToLive = req.cookies.timeToLive;
-
-            res.cookie('tempPass', tempPass, {maxAge: timeToLive, httpOnly: true, secure: true});
-            res.cookie('timeToLive', timeToLive, {maxAge: timeToLive, httpOnly: true, secure: true});
-            
+            const maxAge = req.cookies.timeToLive;
+            security.refreshCookie(req, res, maxAge)
             next();
         }
-    }
-
+    } 
+    
     res.redirect('/login');
 });
 
