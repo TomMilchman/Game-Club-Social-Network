@@ -15,7 +15,7 @@ router.route("/login")
         security.createNewCookie(res, maxAge, username);
         console.log(`User ${username}: login successful.`);
     } else {
-        console.log(`User ${username}: login failure.`)
+        console.log(`User ${username}: login failure, ${loginSuccess.issue}.`)
     }
 
     res.json(loginSuccess);

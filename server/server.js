@@ -29,6 +29,8 @@ app.use((req, res, next) => {
         }
     } 
     
+    //Might have to change
+    //Possibly: return res.status(401).json({ message: 'Unauthorized' });
     res.redirect('/login');
 });
 

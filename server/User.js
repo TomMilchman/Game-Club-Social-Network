@@ -4,8 +4,8 @@ class User {
     constructor(username, password, email, lastLogin) {
         this.username = username;
         this.password = password;
-        this.isAdmin = false;
         this.email = email;
+        this.isAdmin = false;
         this.following = [];
         this.followers = [];
         this.posts = [];

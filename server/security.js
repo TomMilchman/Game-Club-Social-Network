@@ -25,8 +25,8 @@ function createNewCookie(res, maxAge, username) {
 }
 
 function attachCookiesToRes(res, tempPass, maxAge) {
-    res.cookie('tempPass', tempPass, {maxAge: maxAge, httpOnly: true, secure: true});
-    res.cookie('timeToLive', maxAge, {maxAge: maxAge, httpOnly: true, secure: true});    
+    res.cookie('tempPass', tempPass, {maxAge: maxAge, httpOnly: true, secure: true, overwrite: true});
+    res.cookie('timeToLive', maxAge, {maxAge: maxAge, httpOnly: true, secure: true, overwrite: true});    
 }
 
 // Register user and hash password
