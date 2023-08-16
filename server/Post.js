@@ -1,20 +1,20 @@
 "use strict";
 
 class Post {
-    constructor(postId, content, timestamp) {
-        this.postId = postId;
-        this.content = content;
-        this.timestamp = timestamp;
-        this.likes = [];
-    }
+  constructor(postId, content, timestamp) {
+    this.postId = postId;
+    this.content = content;
+    this.timestamp = timestamp;
+    this.likes = [];
+  }
 
-    likePost(user) {
-        this.likes.push(user);
-    }
+  likePost(user) {
+    this.likes.push(user);
+  }
 
-    numOfLikes() {
-        return this.likes.length;
-    }
+  numOfLikes() {
+    return this.likes.length;
+  }
 }
 
 export default Post;

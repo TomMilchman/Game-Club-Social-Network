@@ -1,9 +1,9 @@
 [
   {
     "username": "Hypno",
-    "password": "genericpass123",
-    "isAdmin": false,
+    "password": "$2b$10$TskAflKx1dXjdpg2Or4ehOzZyX6MAinNRdWzVHKsPwI3WrVlJso/u",
     "email": "hypno@fakemail.com",
+    "isAdmin": true,
     "following": [],
     "followers": [],
     "posts": []
