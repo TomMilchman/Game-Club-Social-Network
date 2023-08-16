@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GameClubLogo from "../images/GameClubLogo.png";
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -31,7 +32,8 @@ export default function SignUpPage() {
       if (response.ok) {
         // Successfully logged in
         localStorage.setItem("active-user", username);
-        console.log("Registered:", responseData);
+        console.log("Registered:", responseData.message);
+        navigate("../feed");
       } else {
         // Error handling if login failed
         console.error("Login failed:", responseData);

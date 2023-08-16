@@ -2,13 +2,15 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const persist = require("./persist");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const app = express();
 const port = 3000;
+
+const persist = require("./persist");
 const userRoutes = require("./routes/userRoutes");
 const loginRoute = require("./routes/loginRoute");
+const logoutRoute = require("./routes/logoutRoute");
 const signupRoute = require("./routes/signupRoute");
 
 let loggedInUsers = {};
@@ -53,6 +55,7 @@ app.route("/").get((req, res) => {
 app.use("/users", userRoutes); // Use userRoutes for routes starting with /users
 app.use("/login", loginRoute); // Login page
 app.use("/signup", signupRoute);
+app.use("/logout", logoutRoute);
 
 //Error 404 for non-existing pages
 app.get("*", function (req, res) {

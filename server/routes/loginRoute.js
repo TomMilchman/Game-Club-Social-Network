@@ -2,10 +2,11 @@
 
 const express = require("express");
 let router = express.Router();
+const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
+
 const persist = require("../persist");
 const cookieManager = require("../cookieManager");
-const bodyParser = require("body-parser");
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 
