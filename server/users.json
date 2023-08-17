@@ -1,11 +1,20 @@
 [
   {
-    "username": "Hypno",
-    "password": "$2b$10$TskAflKx1dXjdpg2Or4ehOzZyX6MAinNRdWzVHKsPwI3WrVlJso/u",
-    "email": "hypno@fakemail.com",
-    "isAdmin": true,
-    "following": [],
-    "followers": [],
-    "posts": []
+    "_username": "Hypno",
+    "_password": "$2b$10$VCJIER2wyJ64YmDWTiWjRem5idwPvHt/yhD1mwxh4rRuzrWruEOX2",
+    "_email": "hypno@fakemail.com",
+    "_isAdmin": false,
+    "_following": [],
+    "_followers": [],
+    "_posts": []
+  },
+  {
+    "_username": "Hypno2",
+    "_password": "$2b$10$L2O53D27CVAdYkxzOutn9.ZgB9z3lxyQmwRlqO1R1R9JXofxclsGa",
+    "_email": "dushabell@gmail.com",
+    "_isAdmin": false,
+    "_following": [],
+    "_followers": [],
+    "_posts": []
   }
 ]

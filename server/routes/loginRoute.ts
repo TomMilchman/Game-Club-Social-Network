@@ -12,11 +12,14 @@ router.use(bodyParser.json()); // Parse JSON request bodies
 // Authenticate user
 async function authenticateUser(username: string, password: string) {
   const users: User[] = persist.usersData;
-  const user = users.find((u: User) => u.username === username);
+  const user = users.find((u) => u.username === username);
 
   if (user) {
     if (await bcrypt.compare(password, user.password)) {
-      return { ok: true, message: "authentication successful" };
+      return {
+        ok: true,
+        message: `User ${username} authentication successful`,
+      };
     }
     return { ok: false, message: "wrong password" };
   }
@@ -33,7 +36,7 @@ router.post("/", async (req, res) => {
 
     if (loginSuccess.ok === true) {
       const maxAge = rememberMeChecked ? 864000000 : 1800000;
-      cookieManager.createNewCookie(res, maxAge, username);
+      cookieManager.createNewCookies(res, maxAge, username);
       res.status(200).json(message);
     } else {
       res.status(401).json(message);

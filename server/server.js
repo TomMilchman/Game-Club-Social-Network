@@ -47,7 +47,8 @@ var userRoutes_1 = require("./routes/userRoutes");
 var loginRoute_1 = require("./routes/loginRoute");
 var logoutRoute_1 = require("./routes/logoutRoute");
 var signupRoute_1 = require("./routes/signupRoute");
-var loggedInUsers = {};
+var searchRoute_1 = require("./routes/searchRoute");
+var loggedInUsers = new Map();
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(cookieParser());
 app.use(cors({
@@ -83,6 +84,7 @@ app.use("/users", userRoutes_1.default); // Use userRoutes for routes starting w
 app.use("/login", loginRoute_1.default); // Login page
 app.use("/signup", signupRoute_1.default);
 app.use("/logout", logoutRoute_1.default);
+app.use("/search", searchRoute_1.default);
 //Error 404 for non-existing pages
 app.get("*", function (req, res) {
     res.status(404).send("Error 404: Page not found.");

@@ -1,25 +1,41 @@
-const { v4: uuidv4 } = require("uuid");
-const loggedInUsers = require("./server");
+import { v4 as uuidv4 } from "uuid";
+import loggedInUsers from "./server";
 
 //Refresh cookies and update object of logged in users
-function refreshCookie(req, res) {
+function refreshCookies(req, res) {
   const newTempPass = uuidv4();
   const oldTempPass = req.cookie.tempPass;
   const maxAge = req.cookie.timeToLive;
 
   attachCookiesToRes(res, newTempPass, maxAge);
 
-  loggedInUsers[newTempPass] = loggedInUsers[oldTempPass];
-  delete loggedInUsers[oldTempPass];
+  loggedInUsers.set(newTempPass, loggedInUsers.get(oldTempPass));
+  loggedInUsers.delete(oldTempPass);
 }
 
-function createNewCookie(res, maxAge: number, username: string) {
+function createNewCookies(res, maxAge: number, username: string) {
   const tempPass = uuidv4();
   attachCookiesToRes(res, tempPass, maxAge);
-  loggedInUsers[tempPass] = username;
+  loggedInUsers.set(tempPass, username);
   console.log(
-    `Created cookies for user ${loggedInUsers[tempPass]}, temp pass: ${tempPass}`
+    `Created cookies for user ${loggedInUsers.get(
+      tempPass
+    )}, temp pass: ${tempPass}`
   );
+}
+
+function deleteCookies(res, tempPass: string, timeToLive: number) {
+  loggedInUsers.delete(tempPass);
+  res.cookie("tempPass", tempPass, {
+    maxAge: -1,
+    httpOnly: true,
+    secure: true,
+  });
+  res.cookie("timeToLive", timeToLive, {
+    maxAge: -1,
+    httpOnly: true,
+    secure: true,
+  });
 }
 
 function attachCookiesToRes(res, tempPass: string, maxAge: number) {
@@ -37,4 +53,4 @@ function attachCookiesToRes(res, tempPass: string, maxAge: number) {
   });
 }
 
-export default { refreshCookie, createNewCookie };
+export default { refreshCookies, createNewCookies, deleteCookies };

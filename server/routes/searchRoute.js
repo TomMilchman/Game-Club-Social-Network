@@ -39,64 +39,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
 var bodyParser = require("body-parser");
-var bcrypt = require("bcrypt");
+var trie_search_1 = require("trie-search");
 var persist_1 = require("../persist");
-var cookieManager_1 = require("../cookieManager");
 router.use(bodyParser.json()); // Parse JSON request bodies
-// Authenticate user
-function authenticateUser(username, password) {
-    return __awaiter(this, void 0, void 0, function () {
-        var users, user;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    users = persist_1.default.usersData;
-                    user = users.find(function (u) { return u.username === username; });
-                    if (!user) return [3 /*break*/, 2];
-                    return [4 /*yield*/, bcrypt.compare(password, user.password)];
-                case 1:
-                    if (_a.sent()) {
-                        return [2 /*return*/, {
-                                ok: true,
-                                message: "User ".concat(username, " authentication successful"),
-                            }];
-                    }
-                    return [2 /*return*/, { ok: false, message: "wrong password" }];
-                case 2: return [2 /*return*/, { ok: false, message: "wrong username" }];
-            }
-        });
-    });
-}
-router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, rememberMeChecked, loginSuccess, message, maxAge, error_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, username = _a.username, password = _a.password, rememberMeChecked = _a.rememberMeChecked;
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, authenticateUser(username, password)];
-            case 2:
-                loginSuccess = _b.sent();
-                message = { message: loginSuccess.message };
-                if (loginSuccess.ok === true) {
-                    maxAge = rememberMeChecked ? 864000000 : 1800000;
-                    cookieManager_1.default.createNewCookies(res, maxAge, username);
-                    res.status(200).json(message);
-                }
-                else {
-                    res.status(401).json(message);
-                }
-                return [3 /*break*/, 4];
-            case 3:
-                error_1 = _b.sent();
-                console.error("Error during login:", error_1);
-                res.status(500).json({ message: error_1 });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+router.post("/:username", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var inputUsername, usersData, trie, resultUsernames;
+    return __generator(this, function (_a) {
+        try {
+            inputUsername = req.params.username;
+            usersData = persist_1.default.usersData;
+            trie = new trie_search_1.default("username");
+            trie.addAll(usersData);
+            resultUsernames = trie.search(inputUsername);
+            console.log("User search: found ".concat(resultUsernames.length, " results"));
+            res.status(200).json(resultUsernames);
         }
+        catch (error) {
+            res.status(500).json("An error occured: " + error);
+        }
+        return [2 /*return*/];
     });
 }); });
 exports.default = router;
-//# sourceMappingURL=loginRoute.js.map
+//# sourceMappingURL=searchRoute.js.map

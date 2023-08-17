@@ -4,6 +4,7 @@ import cookieParser = require("cookie-parser");
 import bodyParser = require("body-parser");
 
 import loggedInUsers from "../server";
+import cookieManager from "../cookieManager";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
@@ -12,18 +13,8 @@ router.post("/", (req, res) => {
   try {
     const tempPass: string = req.cookies.tempPass;
     const timeToLive: number = req.cookies.timeToLive;
-    const username = loggedInUsers[tempPass];
-    delete loggedInUsers[tempPass];
-    res.cookie("tempPass", tempPass, {
-      maxAge: -1,
-      httpOnly: true,
-      secure: true,
-    });
-    res.cookie("timeToLive", timeToLive, {
-      maxAge: -1,
-      httpOnly: true,
-      secure: true,
-    });
+    const username = loggedInUsers.get(tempPass);
+    cookieManager.deleteCookies(res, tempPass, timeToLive);
     res
       .status(200)
       .json({ message: `User ${username} successfully logged out` });

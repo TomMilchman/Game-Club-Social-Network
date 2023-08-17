@@ -9,7 +9,7 @@ class User {
   private _followers: User[];
   private _posts: Post[];
 
-  constructor(username, password, email) {
+  constructor(username: string, password: string, email: string) {
     this._username = username;
     this._password = password;
     this._email = email;
@@ -21,15 +21,19 @@ class User {
   }
 
   get username(): string {
-    return this.username;
+    return this._username;
   }
 
   get password(): string {
-    return this.password;
+    return this._password;
   }
 
   set password(newPassword: string) {
-    this.password = newPassword;
+    this._password = newPassword;
+  }
+
+  get email(): string {
+    return this._email;
   }
 
   addPost(post: Post) {

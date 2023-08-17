@@ -5,24 +5,15 @@ var router = express.Router();
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var server_1 = require("../server");
+var cookieManager_1 = require("../cookieManager");
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
 router.post("/", function (req, res) {
     try {
         var tempPass = req.cookies.tempPass;
         var timeToLive = req.cookies.timeToLive;
-        var username = server_1.default[tempPass];
-        delete server_1.default[tempPass];
-        res.cookie("tempPass", tempPass, {
-            maxAge: -1,
-            httpOnly: true,
-            secure: true,
-        });
-        res.cookie("timeToLive", timeToLive, {
-            maxAge: -1,
-            httpOnly: true,
-            secure: true,
-        });
+        var username = server_1.default.get(tempPass);
+        cookieManager_1.default.deleteCookies(res, tempPass, timeToLive);
         res
             .status(200)
             .json({ message: "User ".concat(username, " successfully logged out") });

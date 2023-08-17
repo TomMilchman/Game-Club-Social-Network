@@ -37,10 +37,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = require("fs");
+var User_1 = require("./User");
 var usersData = []; //holds up to date users' data
 function loadData(filePath) {
     return __awaiter(this, void 0, void 0, function () {
-        var jsonData, error_1;
+        var jsonData, userObjects, users, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -48,7 +49,11 @@ function loadData(filePath) {
                     return [4 /*yield*/, fs_1.promises.readFile(filePath, "utf-8")];
                 case 1:
                     jsonData = _a.sent();
-                    return [2 /*return*/, JSON.parse(jsonData)];
+                    userObjects = JSON.parse(jsonData);
+                    users = userObjects.map(function (u) {
+                        return new User_1.default(u._username, u._password, u._email);
+                    });
+                    return [2 /*return*/, users];
                 case 2:
                     error_1 = _a.sent();
                     console.error("Error loading data:", error_1);
@@ -58,17 +63,17 @@ function loadData(filePath) {
         });
     });
 }
-function saveData(filePath, jsonData) {
+function saveData(filePath, data) {
     return __awaiter(this, void 0, void 0, function () {
         var error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fs_1.promises.writeFile(filePath, JSON.stringify(jsonData, null, 2), "utf-8")];
+                    return [4 /*yield*/, fs_1.promises.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8")];
                 case 1:
                     _a.sent();
-                    usersData = jsonData;
+                    usersData = data;
                     console.log("Data saved successfully");
                     return [3 /*break*/, 3];
                 case 2:

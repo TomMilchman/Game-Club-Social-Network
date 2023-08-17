@@ -61,7 +61,7 @@ function registerUser(user) {
                     return [4 /*yield*/, persist_1.default.saveUsersData(users)];
                 case 2:
                     _a.sent();
-                    return [2 /*return*/, { message: "registration successful" }];
+                    return [2 /*return*/, { message: "User ".concat(user.username, " registration successful") }];
                 case 3:
                     error_1 = _a.sent();
                     return [2 /*return*/, { message: error_1 }];
@@ -92,7 +92,7 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, registerUser(user)];
             case 2:
                 signupSuccess = _b.sent();
-                cookieManager_1.default.createNewCookie(res, maxAge, user.username);
+                cookieManager_1.default.createNewCookies(res, maxAge, user.username);
                 message = { message: signupSuccess.message };
                 res.status(200).json(message);
                 return [3 /*break*/, 4];

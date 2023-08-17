@@ -10,8 +10,9 @@ import userRoutes from "./routes/userRoutes";
 import loginRoute from "./routes/loginRoute";
 import logoutRoute from "./routes/logoutRoute";
 import signupRoute from "./routes/signupRoute";
+import searchRoute from "./routes/searchRoute";
 
-let loggedInUsers = {};
+let loggedInUsers = new Map<string, string>();
 
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(cookieParser());
@@ -54,6 +55,7 @@ app.use("/users", userRoutes); // Use userRoutes for routes starting with /users
 app.use("/login", loginRoute); // Login page
 app.use("/signup", signupRoute);
 app.use("/logout", logoutRoute);
+app.use("/search", searchRoute);
 
 //Error 404 for non-existing pages
 app.get("*", function (req, res) {

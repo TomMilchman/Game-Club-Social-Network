@@ -13,17 +13,24 @@ var User = /** @class */ (function () {
     }
     Object.defineProperty(User.prototype, "username", {
         get: function () {
-            return this.username;
+            return this._username;
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(User.prototype, "password", {
         get: function () {
-            return this.password;
+            return this._password;
         },
         set: function (newPassword) {
-            this.password = newPassword;
+            this._password = newPassword;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(User.prototype, "email", {
+        get: function () {
+            return this._email;
         },
         enumerable: false,
         configurable: true

@@ -17,7 +17,7 @@ async function registerUser(user: User) {
     user.password = hashedPassword;
     users.push(user);
     await persist.saveUsersData(users);
-    return { message: "registration successful" };
+    return { message: `User ${user.username} registration successful` };
   } catch (error) {
     return { message: error };
   }
@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
     const users = persist.usersData;
 
     //Check if a user of the same name exists, if it does, reject request.
-    if (users.find((u: User) => u.username === username)) {
+    if (users.find((u) => u.username === username)) {
       res
         .status(400)
         .json({ message: "user with this username already exists" });
@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
     }
 
     const signupSuccess = await registerUser(user);
-    cookieManager.createNewCookie(res, maxAge, user.username);
+    cookieManager.createNewCookies(res, maxAge, user.username);
     const message = { message: signupSuccess.message };
     res.status(200).json(message);
   } catch (error) {
