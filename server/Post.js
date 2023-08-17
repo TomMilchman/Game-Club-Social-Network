@@ -1,20 +1,19 @@
 "use strict";
-
-class Post {
-  constructor(postId, content, timestamp) {
-    this.postId = postId;
-    this.content = content;
-    this.timestamp = timestamp;
-    this.likes = [];
-  }
-
-  likePost(user) {
-    this.likes.push(user);
-  }
-
-  numOfLikes() {
-    return this.likes.length;
-  }
-}
-
-export default Post;
+Object.defineProperty(exports, "__esModule", { value: true });
+var Post = /** @class */ (function () {
+    function Post(postId, content, timestamp) {
+        this._postId = postId;
+        this._content = content;
+        this._timestamp = timestamp;
+        this._likes = [];
+    }
+    Post.prototype.likePost = function (user) {
+        this._likes.push(user);
+    };
+    Post.prototype.numOfLikes = function () {
+        return this._likes.length;
+    };
+    return Post;
+}());
+exports.default = Post;
+//# sourceMappingURL=Post.js.map

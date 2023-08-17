@@ -1,24 +1,40 @@
 "use strict";
-
-class User {
-  constructor(username, password, email) {
-    this.username = username;
-    this.password = password;
-    this.email = email;
-    this.isAdmin = false;
-    this.following = [];
-    this.followers = [];
-    this.posts = [];
-    //this.lastLogin = lastLogin;
-  }
-
-  addPost(post) {
-    this.posts.push(post);
-  }
-
-  deletePost(postId) {
-    this.posts.splice(postId, 1);
-  }
-}
-
-module.exports = User;
+Object.defineProperty(exports, "__esModule", { value: true });
+var User = /** @class */ (function () {
+    function User(username, password, email) {
+        this._username = username;
+        this._password = password;
+        this._email = email;
+        this._isAdmin = false;
+        this._following = [];
+        this._followers = [];
+        this._posts = [];
+        //this.lastLogin = lastLogin;
+    }
+    Object.defineProperty(User.prototype, "username", {
+        get: function () {
+            return this.username;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(User.prototype, "password", {
+        get: function () {
+            return this.password;
+        },
+        set: function (newPassword) {
+            this.password = newPassword;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    User.prototype.addPost = function (post) {
+        this._posts.push(post);
+    };
+    User.prototype.deletePost = function (postId) {
+        this._posts.splice(postId, 1);
+    };
+    return User;
+}());
+exports.default = User;
+//# sourceMappingURL=User.js.map
