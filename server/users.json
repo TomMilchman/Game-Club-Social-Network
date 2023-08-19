@@ -1,20 +1,38 @@
 [
   {
-    "_username": "Hypno",
-    "_password": "$2b$10$VCJIER2wyJ64YmDWTiWjRem5idwPvHt/yhD1mwxh4rRuzrWruEOX2",
-    "_email": "hypno@fakemail.com",
-    "_isAdmin": false,
-    "_following": [],
-    "_followers": [],
-    "_posts": []
+    "username": "hypno",
+    "password": "$2b$10$VCJIER2wyJ64YmDWTiWjRem5idwPvHt/yhD1mwxh4rRuzrWruEOX2",
+    "email": "hypno@fakemail.com",
+    "isAdmin": false,
+    "following": [],
+    "followers": [],
+    "posts": []
   },
   {
-    "_username": "Hypno2",
-    "_password": "$2b$10$L2O53D27CVAdYkxzOutn9.ZgB9z3lxyQmwRlqO1R1R9JXofxclsGa",
-    "_email": "dushabell@gmail.com",
-    "_isAdmin": false,
-    "_following": [],
-    "_followers": [],
-    "_posts": []
+    "username": "hypno2",
+    "password": "$2b$10$WUUvoqMEl.oJ4k0L5DZF/uzXWuF/yMyyHate.rM42CcCdkyHDVMs6",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "following": [],
+    "followers": [],
+    "posts": []
+  },
+  {
+    "username": "hypno3",
+    "password": "$2b$10$yeu..5yQ0l0pB15QmuCHo.inNpcdhOhYCkCKGhxI22c/dz01zJiKe",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "following": [],
+    "followers": [],
+    "posts": []
+  },
+  {
+    "username": "hypno4",
+    "password": "$2b$10$AqK23jNVFaXIJVlKDlPAvOfzq0UtFefIpKX2nt.YtqgG/A2XQ3lQi",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "following": [],
+    "followers": [],
+    "posts": []
   }
 ]

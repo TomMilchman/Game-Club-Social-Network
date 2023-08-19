@@ -1,24 +1,24 @@
 import User from "./Post";
 
 class Post {
-  private _postId: number;
-  private _content: string;
-  private _timestamp: Date;
-  private _likes: User[];
+  public postId: number;
+  public content: string;
+  public timestamp: Date;
+  public likes: User[];
 
   constructor(postId: number, content: string, timestamp: Date) {
-    this._postId = postId;
-    this._content = content;
-    this._timestamp = timestamp;
-    this._likes = [];
+    this.postId = postId;
+    this.content = content;
+    this.timestamp = timestamp;
+    this.likes = [];
   }
 
   likePost(user: User) {
-    this._likes.push(user);
+    this.likes.push(user);
   }
 
   numOfLikes() {
-    return this._likes.length;
+    return this.likes.length;
   }
 }
 

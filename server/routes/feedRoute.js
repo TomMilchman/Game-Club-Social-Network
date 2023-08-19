@@ -39,8 +39,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
 var bodyParser = require("body-parser");
+var server_1 = require("../server");
 router.use(bodyParser.json()); // Parse JSON request bodies
-router.get("/:username", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/];
-}); }); });
+router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var tempPass, username;
+    return __generator(this, function (_a) {
+        try {
+            tempPass = req.cookies.tempPass;
+            username = server_1.default.get(tempPass);
+            res.status(200).json({ username: username });
+        }
+        catch (error) {
+            res.status(500).json({ message: error });
+        }
+        return [2 /*return*/];
+    });
+}); });
+exports.default = router;
 //# sourceMappingURL=feedRoute.js.map

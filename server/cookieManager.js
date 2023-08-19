@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var uuid_1 = require("uuid");
 var server_1 = require("./server");
 //Refresh cookies and update object of logged in users
-function refreshCookies(req, res) {
+function refreshCookies(res, tempPass, maxAge) {
     var newTempPass = (0, uuid_1.v4)();
-    var oldTempPass = req.cookie.tempPass;
-    var maxAge = req.cookie.timeToLive;
     attachCookiesToRes(res, newTempPass, maxAge);
-    server_1.default.set(newTempPass, server_1.default.get(oldTempPass));
-    server_1.default.delete(oldTempPass);
+    var username = server_1.default.get(tempPass);
+    server_1.default.set(newTempPass, username);
+    server_1.default.delete(tempPass);
+    console.log("Refreshed cookies for user ".concat(server_1.default.get(newTempPass), ": ").concat(newTempPass));
 }
 function createNewCookies(res, maxAge, username) {
     var tempPass = (0, uuid_1.v4)();
@@ -17,31 +17,27 @@ function createNewCookies(res, maxAge, username) {
     server_1.default.set(tempPass, username);
     console.log("Created cookies for user ".concat(server_1.default.get(tempPass), ", temp pass: ").concat(tempPass));
 }
-function deleteCookies(res, tempPass, timeToLive) {
+function deleteCookies(res, tempPass, maxAge) {
+    var username = server_1.default.get(tempPass);
     server_1.default.delete(tempPass);
     res.cookie("tempPass", tempPass, {
         maxAge: -1,
         httpOnly: true,
-        secure: true,
     });
-    res.cookie("timeToLive", timeToLive, {
+    res.cookie("timeToLive", maxAge, {
         maxAge: -1,
         httpOnly: true,
-        secure: true,
     });
+    console.log("Deleted cookies for user ".concat(username));
 }
 function attachCookiesToRes(res, tempPass, maxAge) {
     res.cookie("tempPass", tempPass, {
         maxAge: maxAge,
         httpOnly: true,
-        secure: true,
-        overwrite: true,
     });
     res.cookie("timeToLive", maxAge, {
         maxAge: maxAge,
         httpOnly: true,
-        secure: true,
-        overwrite: true,
     });
 }
 exports.default = { refreshCookies: refreshCookies, createNewCookies: createNewCookies, deleteCookies: deleteCookies };

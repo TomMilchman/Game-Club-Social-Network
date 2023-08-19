@@ -39,25 +39,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
 var bodyParser = require("body-parser");
-var trie_search_1 = require("trie-search");
-var persist_1 = require("../persist");
+var server_1 = require("../server");
+var cookieManager_1 = require("../cookieManager");
 router.use(bodyParser.json()); // Parse JSON request bodies
-router.get("/:username", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var inputUsername, usersData, trie, resultUsernames;
+router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var tempPass, maxAge;
     return __generator(this, function (_a) {
+        tempPass = req.cookies.tempPass;
+        maxAge = req.cookies.timeToLive;
         try {
-            inputUsername = req.params.username;
-            usersData = persist_1.default.usersData;
-            trie = new trie_search_1.default("username");
-            trie.addAll(usersData);
-            resultUsernames = trie.search(inputUsername);
-            res.status(200).json(resultUsernames);
+            if (tempPass !== undefined) {
+                if (server_1.default.get(tempPass) !== undefined) {
+                    cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
+                    res.status(200);
+                    return [2 /*return*/];
+                }
+                else {
+                    cookieManager_1.default.deleteCookies(res, tempPass, maxAge);
+                }
+            }
+            res.status(401);
         }
         catch (error) {
-            res.status(500).json("An error occured: " + error);
+            res.status(500).json({ message: "Error authenticating user: ".concat(error) });
         }
         return [2 /*return*/];
     });
 }); });
 exports.default = router;
-//# sourceMappingURL=searchRoute.js.map
+//# sourceMappingURL=authenticationRoute.js.map

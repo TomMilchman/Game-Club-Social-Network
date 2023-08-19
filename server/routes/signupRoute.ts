@@ -6,14 +6,14 @@ import bcrypt = require("bcrypt");
 import cookieManager from "../cookieManager";
 import persist from "../persist";
 import User from "../User";
+import loggedInUsers from "../server";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 
-// Register user and hash password
 async function registerUser(user: User) {
   try {
     const users: User[] = persist.usersData;
-    const hashedPassword = await bcrypt.hash(user.password, 10); // Hash with bcrypt
+    const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
     users.push(user);
     await persist.saveUsersData(users);
@@ -27,22 +27,22 @@ router.post("/", async (req, res) => {
   const { username, password, email, rememberMeChecked } = req.body;
 
   try {
-    const user = new User(username, password, email);
+    const lowerCaseUsername = username.toLowerCase();
+    const user = new User(lowerCaseUsername, password, email);
     const maxAge = rememberMeChecked ? 864000000 : 1800000; // 10 days : 10 minutes
     const users = persist.usersData;
 
     //Check if a user of the same name exists, if it does, reject request.
-    if (users.find((u) => u.username === username)) {
+    if (users.find((u) => u.username === lowerCaseUsername)) {
       res
         .status(400)
         .json({ message: "user with this username already exists" });
-      return;
+    } else {
+      const signupSuccess = await registerUser(user);
+      cookieManager.createNewCookies(res, maxAge, user.username);
+      const message = { message: signupSuccess.message };
+      res.status(200).json(message);
     }
-
-    const signupSuccess = await registerUser(user);
-    cookieManager.createNewCookies(res, maxAge, user.username);
-    const message = { message: signupSuccess.message };
-    res.status(200).json(message);
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({ message: error });

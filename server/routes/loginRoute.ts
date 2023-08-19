@@ -10,12 +10,13 @@ import User from "../User";
 router.use(bodyParser.json()); // Parse JSON request bodies
 
 // Authenticate user
-async function authenticateUser(username: string, password: string) {
+async function checkPasswordHash(username: string, password: string) {
   const users: User[] = persist.usersData;
   const user = users.find((u) => u.username === username);
 
   if (user) {
     if (await bcrypt.compare(password, user.password)) {
+      console.log(`User ${username} authentication successful`);
       return {
         ok: true,
         message: `User ${username} authentication successful`,
@@ -31,7 +32,8 @@ router.post("/", async (req, res) => {
   const { username, password, rememberMeChecked } = req.body;
 
   try {
-    const loginSuccess = await authenticateUser(username, password);
+    const lowerCaseUsername = username.toLowerCase();
+    const loginSuccess = await checkPasswordHash(lowerCaseUsername, password);
     const message = { message: loginSuccess.message };
 
     if (loginSuccess.ok === true) {

@@ -31,9 +31,8 @@ export default function SignUpPage() {
       const responseData = await response.json();
       if (response.ok) {
         // Successfully logged in
-        localStorage.setItem("active-user", username);
         console.log("Registered:", responseData.message);
-        navigate("../feed");
+        navigate("/feed", { replace: true });
       } else {
         // Error handling if login failed
         console.error("Login failed:", responseData);

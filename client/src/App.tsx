@@ -1,16 +1,12 @@
 import "./App.css";
-import LoginPage from "./pages/loginPage";
-import RootLayout from "./layouts/rootLayout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Feed from "./pages/feed";
-import UserPage from "./pages/userPage";
-import SignUpPage from "./pages/signUpPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import RootLayout from "./layouts/RootLayout";
+import FeedPage from "./pages/FeedPage";
+import UserPage from "./pages/UserPage";
 
 function App() {
-  // const isAuthenticated = () => {
-
-  // }
-
   return (
     <BrowserRouter>
       <main>
@@ -18,7 +14,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/" element={<RootLayout />}>
-            <Route path="feed" element={<Feed />} />
+            <Route path="feed" element={<FeedPage />} />
             <Route path="users/:username" element={<UserPage />} />
           </Route>
         </Routes>

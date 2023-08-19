@@ -43,11 +43,13 @@ var cors = require("cors");
 var app = express();
 var port = 3000;
 var persist_1 = require("./persist");
+var feedRoute_1 = require("./routes/feedRoute");
 var userRoutes_1 = require("./routes/userRoutes");
 var loginRoute_1 = require("./routes/loginRoute");
 var logoutRoute_1 = require("./routes/logoutRoute");
 var signupRoute_1 = require("./routes/signupRoute");
 var searchRoute_1 = require("./routes/searchRoute");
+var authenticationRoute_1 = require("./routes/authenticationRoute");
 var loggedInUsers = new Map();
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(cookieParser());
@@ -55,39 +57,16 @@ app.use(cors({
     origin: "http://localhost:5173",
     credentials: true, // Allow cookies and other credentials to be included in requests
 }));
-//Check if user session is active and refresh cookies
-// app.use((req, res, next) => {
-//   const tempPass = req.cookies.tempPass;
-//   //If cookies are not expired, refresh cookies and proceed with the request.
-//   //If expired, delete user from logged in users, redirect to login and don't refresh cookies.
-//   if (tempPass) {
-//     if (loggedInUsers[tempPass] !== undefined) {
-//       const maxAge = req.cookies.timeToLive;
-//       security.refreshCookie(req, res, maxAge);
-//       next();
-//     }
-//   }
-//   //Might have to change
-//   //Possibly: return res.status(401).json({ message: 'Unauthorized' });
-//   //res.redirect("/login");
-// });
-app.route("/").get(function (req, res) {
-    try {
-        res.send("hello world");
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
-    }
-});
-app.use("/users", userRoutes_1.default); // Use userRoutes for routes starting with /users
-app.use("/login", loginRoute_1.default); // Login page
+app.use("/login", loginRoute_1.default);
 app.use("/signup", signupRoute_1.default);
+app.use("/authentication", authenticationRoute_1.default);
+app.use("/feed", feedRoute_1.default);
+app.use("/users", userRoutes_1.default); // Use userRoutes for routes starting with /users
 app.use("/logout", logoutRoute_1.default);
 app.use("/search", searchRoute_1.default);
 //Error 404 for non-existing pages
 app.get("*", function (req, res) {
-    res.status(404).send("Error 404: Page not found.");
+    res.status(404).send("Error 404: Not found.");
 });
 // Start the server and load data from disk
 app.listen(port, function () { return __awaiter(void 0, void 0, void 0, function () {

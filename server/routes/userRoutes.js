@@ -4,23 +4,18 @@ var express = require("express");
 var persist_1 = require("../persist");
 var router = express.Router();
 router
-    .route("/")
-    .get(function (req, res) {
-    res.send("This is the users screen");
-})
-    .post(function (req, res) { });
-router
     .route("/:username")
     .get(function (req, res) {
     try {
-        var userName = req.params.username;
+        var username = req.params.username;
         for (var i = 0; i < persist_1.default.usersData.length; i++) {
-            if (persist_1.default.usersData[i].username === userName) {
-                res.send("This is user ".concat(userName));
+            var user = persist_1.default.usersData[i];
+            if (user.username === username) {
+                res.status(200).json(user);
                 return;
             }
         }
-        res.status(404).send("User does not exist."); // Set status code for user not found
+        res.status(404); // Set status code for user not found
     }
     catch (error) {
         console.error(error);

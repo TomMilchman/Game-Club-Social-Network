@@ -4,26 +4,19 @@ let router = express.Router();
 import User from "../User";
 
 router
-  .route("/")
-  .get((req, res) => {
-    res.send("This is the users screen");
-  })
-  .post((req, res) => {});
-
-router
   .route("/:username")
   .get((req, res) => {
     try {
-      const userName = req.params.username;
+      const username = req.params.username;
 
       for (let i = 0; i < persist.usersData.length; i++) {
-        if (persist.usersData[i].username === userName) {
-          res.send(`This is user ${userName}`);
+        const user = persist.usersData[i];
+        if (user.username === username) {
+          res.status(200).json(user);
           return;
         }
       }
-
-      res.status(404).send("User does not exist."); // Set status code for user not found
+      res.status(404); // Set status code for user not found
     } catch (error) {
       console.error(error);
       res.status(500).send("Internal Server Error"); // Handle loading error with status code

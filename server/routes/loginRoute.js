@@ -44,7 +44,7 @@ var persist_1 = require("../persist");
 var cookieManager_1 = require("../cookieManager");
 router.use(bodyParser.json()); // Parse JSON request bodies
 // Authenticate user
-function authenticateUser(username, password) {
+function checkPasswordHash(username, password) {
     return __awaiter(this, void 0, void 0, function () {
         var users, user;
         return __generator(this, function (_a) {
@@ -56,6 +56,7 @@ function authenticateUser(username, password) {
                     return [4 /*yield*/, bcrypt.compare(password, user.password)];
                 case 1:
                     if (_a.sent()) {
+                        console.log("User ".concat(username, " authentication successful"));
                         return [2 /*return*/, {
                                 ok: true,
                                 message: "User ".concat(username, " authentication successful"),
@@ -68,7 +69,7 @@ function authenticateUser(username, password) {
     });
 }
 router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, rememberMeChecked, loginSuccess, message, maxAge, error_1;
+    var _a, username, password, rememberMeChecked, lowerCaseUsername, loginSuccess, message, maxAge, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -76,7 +77,8 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, authenticateUser(username, password)];
+                lowerCaseUsername = username.toLowerCase();
+                return [4 /*yield*/, checkPasswordHash(lowerCaseUsername, password)];
             case 2:
                 loginSuccess = _b.sent();
                 message = { message: loginSuccess.message };

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GameClubLogo from "../images/GameClubLogo.png"; // Import your logo image
+import GameClubLogo from "../images/GameClubLogo.png";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -29,9 +29,9 @@ export default function LoginPage() {
       const responseData = await response.json();
       if (response.ok) {
         // Successfully logged in
-        localStorage.setItem("active-user", username);
         console.log("Logged in:", responseData.message);
-        navigate("../feed");
+        navigate("/feed", { replace: true });
+        return null;
       } else {
         // Error handling if login failed
         console.error("Login failed:", responseData);
@@ -72,7 +72,7 @@ export default function LoginPage() {
       </button>
       <div id="other-option-container">
         <p>Or sign up instead:</p>
-        <Link to="../signup">
+        <Link to="/signup">
           <button className="other-option-btn" id="redirect-to-signup-btn">
             SIGN UP
           </button>

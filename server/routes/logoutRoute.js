@@ -11,9 +11,9 @@ router.use(cookieParser());
 router.post("/", function (req, res) {
     try {
         var tempPass = req.cookies.tempPass;
-        var timeToLive = req.cookies.timeToLive;
+        var maxAge = req.cookies.timeToLive;
         var username = server_1.default.get(tempPass);
-        cookieManager_1.default.deleteCookies(res, tempPass, timeToLive);
+        cookieManager_1.default.deleteCookies(res, tempPass, maxAge);
         res
             .status(200)
             .json({ message: "User ".concat(username, " successfully logged out") });
