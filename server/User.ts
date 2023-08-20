@@ -8,6 +8,7 @@ class User {
   public following: User[];
   public followers: User[];
   public posts: Post[];
+  public currentPostId: number; //When a new post is created, this will be its id
 
   constructor(username: string, password: string, email: string) {
     this.username = username;
@@ -17,6 +18,7 @@ class User {
     this.following = [];
     this.followers = [];
     this.posts = [];
+    this.currentPostId = 0;
     //this.lastLogin = lastLogin;
   }
 
@@ -25,7 +27,7 @@ class User {
   }
 
   deletePost(postId: number) {
-    this.posts.splice(postId, 1);
+    this.posts.filter((post) => post.postId != postId);
   }
 }
 

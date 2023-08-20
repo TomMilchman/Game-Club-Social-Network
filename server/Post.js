@@ -5,13 +5,16 @@ var Post = /** @class */ (function () {
         this.postId = postId;
         this.content = content;
         this.timestamp = timestamp;
-        this.likes = [];
+        this.usernamesWhoLiked = [];
     }
-    Post.prototype.likePost = function (user) {
-        this.likes.push(user);
+    Post.prototype.likePost = function (username) {
+        this.usernamesWhoLiked.push(username);
+    };
+    Post.prototype.unlikePost = function (usernameToRemove) {
+        this.usernamesWhoLiked.filter(function (username) { return username !== usernameToRemove; });
     };
     Post.prototype.numOfLikes = function () {
-        return this.likes.length;
+        return this.usernamesWhoLiked.length;
     };
     return Post;
 }());

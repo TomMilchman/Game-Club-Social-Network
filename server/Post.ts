@@ -4,21 +4,25 @@ class Post {
   public postId: number;
   public content: string;
   public timestamp: Date;
-  public likes: User[];
+  public usernamesWhoLiked: string[];
 
   constructor(postId: number, content: string, timestamp: Date) {
     this.postId = postId;
     this.content = content;
     this.timestamp = timestamp;
-    this.likes = [];
+    this.usernamesWhoLiked = [];
   }
 
-  likePost(user: User) {
-    this.likes.push(user);
+  likePost(username: string) {
+    this.usernamesWhoLiked.push(username);
+  }
+
+  unlikePost(usernameToRemove: string) {
+    this.usernamesWhoLiked.filter((username) => username !== usernameToRemove);
   }
 
   numOfLikes() {
-    return this.likes.length;
+    return this.usernamesWhoLiked.length;
   }
 }
 

@@ -6,33 +6,17 @@
     "isAdmin": false,
     "following": [],
     "followers": [],
-    "posts": []
+    "posts": [],
+    "currentPostId": 0
   },
   {
     "username": "hypno2",
-    "password": "$2b$10$WUUvoqMEl.oJ4k0L5DZF/uzXWuF/yMyyHate.rM42CcCdkyHDVMs6",
+    "password": "$2b$10$r3QMzePa5kD5GY/oT/l.QuV5SvkHy0INcXGC9KXPjqTouW2AvdHa.",
     "email": "afafa@afafa",
     "isAdmin": false,
     "following": [],
     "followers": [],
-    "posts": []
-  },
-  {
-    "username": "hypno3",
-    "password": "$2b$10$yeu..5yQ0l0pB15QmuCHo.inNpcdhOhYCkCKGhxI22c/dz01zJiKe",
-    "email": "afafa@afafa",
-    "isAdmin": false,
-    "following": [],
-    "followers": [],
-    "posts": []
-  },
-  {
-    "username": "hypno4",
-    "password": "$2b$10$AqK23jNVFaXIJVlKDlPAvOfzq0UtFefIpKX2nt.YtqgG/A2XQ3lQi",
-    "email": "afafa@afafa",
-    "isAdmin": false,
-    "following": [],
-    "followers": [],
-    "posts": []
+    "posts": [],
+    "currentPostId": 0
   }
 ]

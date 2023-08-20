@@ -39,6 +39,9 @@ router.post("/", async (req, res) => {
         .json({ message: "user with this username already exists" });
     } else {
       const signupSuccess = await registerUser(user);
+      if (req.cookies.tempPass !== undefined) {
+        loggedInUsers.delete(req.cookies.tempPass);
+      }
       cookieManager.createNewCookies(res, maxAge, user.username);
       const message = { message: signupSuccess.message };
       res.status(200).json(message);

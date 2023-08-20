@@ -31,6 +31,7 @@ export default function UserPage() {
   };
 
   useEffect(() => {
+    setUserFound(false);
     getUserInfo();
   }, [params.username]);
 

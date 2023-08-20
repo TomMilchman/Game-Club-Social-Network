@@ -8,7 +8,7 @@ import User from "../User";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 
-router.get("/:username", async (req, res) => {
+router.get("/:username", (req, res) => {
   try {
     const inputUsername = req.params.username;
     const usersData: User[] = persist.usersData;

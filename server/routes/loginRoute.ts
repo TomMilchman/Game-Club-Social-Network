@@ -6,6 +6,7 @@ import bcrypt = require("bcrypt");
 import persist from "../persist";
 import cookieManager from "../cookieManager";
 import User from "../User";
+import loggedInUsers from "../server";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 
@@ -38,6 +39,9 @@ router.post("/", async (req, res) => {
 
     if (loginSuccess.ok === true) {
       const maxAge = rememberMeChecked ? 864000000 : 1800000;
+      if (req.cookies.tempPass !== undefined) {
+        loggedInUsers.delete(req.cookies.tempPass);
+      }
       cookieManager.createNewCookies(res, maxAge, username);
       res.status(200).json(message);
     } else {

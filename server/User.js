@@ -9,13 +9,14 @@ var User = /** @class */ (function () {
         this.following = [];
         this.followers = [];
         this.posts = [];
+        this.currentPostId = 0;
         //this.lastLogin = lastLogin;
     }
     User.prototype.addPost = function (post) {
         this.posts.push(post);
     };
     User.prototype.deletePost = function (postId) {
-        this.posts.splice(postId, 1);
+        this.posts.filter(function (post) { return post.postId != postId; });
     };
     return User;
 }());

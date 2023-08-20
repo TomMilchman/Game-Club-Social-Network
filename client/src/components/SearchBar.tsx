@@ -45,15 +45,17 @@ export default function SearchBar() {
         </button>
       </div>
       <div className="dropdown">
-        <ul>
-          {searchResults
-            .map((user: any) => (
-              <li onClick={() => setQuery(user.username)} key={user.username}>
-                {user.username}
-              </li>
-            ))
-            .slice(0, 10)}
-        </ul>
+        {query && searchResults.length > 0 && (
+          <ul>
+            {searchResults
+              .map((user: any) => (
+                <li onClick={() => setQuery(user.username)} key={user.username}>
+                  {user.username}
+                </li>
+              ))
+              .slice(0, 10)}
+          </ul>
+        )}
       </div>
     </div>
   );
