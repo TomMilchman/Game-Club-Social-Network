@@ -10,11 +10,16 @@ class User {
   public posts: Post[];
   public currentPostId: number; //When a new post is created, this will be its id
 
-  constructor(username: string, password: string, email: string) {
+  constructor(
+    username: string,
+    password: string,
+    email: string,
+    isAdmin: boolean
+  ) {
     this.username = username;
     this.password = password;
     this.email = email;
-    this.isAdmin = false;
+    this.isAdmin = isAdmin;
     this.following = [];
     this.followers = [];
     this.posts = [];

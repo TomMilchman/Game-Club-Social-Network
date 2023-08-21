@@ -10,7 +10,6 @@ import loggedInUsers from "../server";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 
-// Authenticate user
 async function checkPasswordHash(username: string, password: string) {
   const users: User[] = persist.usersData;
   const user = users.find((u) => u.username === username);

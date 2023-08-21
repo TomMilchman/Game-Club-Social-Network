@@ -99,7 +99,7 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                     res.status(400).json({ message: "invalid email format" });
                     return [2 /*return*/];
                 }
-                user = new User_1.default(lowerCaseUsername_1, password, email);
+                user = new User_1.default(lowerCaseUsername_1, password, email, false);
                 maxAge = rememberMeChecked ? 864000000 : 1800000;
                 users = persist_1.default.usersData;
                 if (!users.find(function (u) { return u.username === lowerCaseUsername_1; })) return [3 /*break*/, 2];

@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 
 export default function RootLayout() {
   const navigate = useNavigate();
-  const [authenticated, setAuthenticated] = useState(true); // Initialized as null
+  const [authenticated, setAuthenticated] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -46,9 +47,32 @@ export default function RootLayout() {
     }
   };
 
+  const checkIfAdmin = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/admin", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      const responseData = await response.json();
+      if (response.ok) {
+        setIsAdmin(true);
+        console.log(responseData.message);
+      } else if (response.status === 401) {
+        setIsAdmin(false);
+        console.log(responseData.message);
+      } else {
+        console.log("An error occurred server side:", responseData.message);
+      }
+    } catch (error) {
+      setIsAdmin(false);
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
     authenticate();
-
+    checkIfAdmin();
     if (location.pathname === "/" && authenticated) {
       navigate("/feed", { replace: true });
     }
@@ -59,6 +83,7 @@ export default function RootLayout() {
       <div id="navbar">
         <img src={GameClubLogo} width={90} height={57} />
         <SearchBar />
+        {isAdmin && <button>Admin page</button>}
         <p>This is the root</p>
         <button onClick={handleLogout}>LOGOUT</button>
       </div>

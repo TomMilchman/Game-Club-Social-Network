@@ -17,6 +17,7 @@ function App() {
             <Route path="feed" element={<FeedPage />} />
             <Route path="users/:username" element={<UserPage />} />
           </Route>
+          <Route path="*" element={<p>Error 404: Page not found</p>} />
         </Routes>
       </main>
     </BrowserRouter>

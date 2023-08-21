@@ -3,7 +3,7 @@
     "username": "hypno",
     "password": "$2b$10$VCJIER2wyJ64YmDWTiWjRem5idwPvHt/yhD1mwxh4rRuzrWruEOX2",
     "email": "hypno@fakemail.com",
-    "isAdmin": false,
+    "isAdmin": true,
     "following": [],
     "followers": [],
     "posts": [],
@@ -11,38 +11,8 @@
   },
   {
     "username": "hypno2",
-    "password": "$2b$10$r3QMzePa5kD5GY/oT/l.QuV5SvkHy0INcXGC9KXPjqTouW2AvdHa.",
+    "password": "$2b$10$ILHbXtjVr7eiZhLdro86NuCXk4QZOhXaepb7N30r9N4QI.0kT72OS",
     "email": "afafa@afafa",
-    "isAdmin": false,
-    "following": [],
-    "followers": [],
-    "posts": [],
-    "currentPostId": 0
-  },
-  {
-    "username": "hypno4555",
-    "password": "$2b$10$tg6G.psd8lk8IlROmdeGbukyGklb28VhJzra9tC/3nUj8fLQ8XnEq",
-    "email": "dushabell@gmail.com",
-    "isAdmin": false,
-    "following": [],
-    "followers": [],
-    "posts": [],
-    "currentPostId": 0
-  },
-  {
-    "username": "hypno5",
-    "password": "$2b$10$FvbBjxcuZHJFq66W6/PH0.9AjyN5/8oFv4PB63cJBVAm.3b1qmaKW",
-    "email": "afafa@afafa",
-    "isAdmin": false,
-    "following": [],
-    "followers": [],
-    "posts": [],
-    "currentPostId": 0
-  },
-  {
-    "username": "hypno666",
-    "password": "$2b$10$tZBcti0ZWyA0S0Q7YobtkuCDLiNmdSTCW.tiDhGpfEo./Mu85voh2",
-    "email": "milchmantom@gmail.com",
     "isAdmin": false,
     "following": [],
     "followers": [],

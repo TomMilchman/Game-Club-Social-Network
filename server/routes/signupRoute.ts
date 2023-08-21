@@ -49,7 +49,7 @@ router.post("/", async (req, res) => {
       return;
     }
 
-    const user = new User(lowerCaseUsername, password, email);
+    const user = new User(lowerCaseUsername, password, email, false);
     const maxAge = rememberMeChecked ? 864000000 : 1800000; // 10 days : 10 minutes
     const users = persist.usersData;
 

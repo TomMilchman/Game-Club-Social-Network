@@ -50,6 +50,7 @@ var logoutRoute_1 = require("./routes/logoutRoute");
 var signupRoute_1 = require("./routes/signupRoute");
 var searchRoute_1 = require("./routes/searchRoute");
 var authenticationRoute_1 = require("./routes/authenticationRoute");
+var adminRoute_1 = require("./routes/adminRoute");
 var loggedInUsers = new Map();
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(cookieParser());
@@ -64,6 +65,7 @@ app.use("/authentication", authenticationRoute_1.default);
 app.use("/feed", feedRoute_1.default);
 app.use("/users", userRoutes_1.default);
 app.use("/search", searchRoute_1.default);
+app.use("/admin", adminRoute_1.default);
 //Error 404 for non-existing pages
 app.get("*", function (req, res) {
     res.status(404).send("Error 404: Not found.");

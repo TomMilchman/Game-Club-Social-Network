@@ -9,7 +9,7 @@ async function loadData(filePath: string) {
     const userObjects = JSON.parse(jsonData);
 
     const users = userObjects.map((u) => {
-      return new User(u.username, u.password, u.email);
+      return new User(u.username, u.password, u.email, u.isAdmin);
     });
     return users;
   } catch (error) {

@@ -14,6 +14,7 @@ import signupRoute from "./routes/signupRoute";
 import searchRoute from "./routes/searchRoute";
 import authenticationRoute from "./routes/authenticationRoute";
 import cookieManager from "./cookieManager";
+import adminRoute from "./routes/adminRoute";
 
 let loggedInUsers = new Map<string, string>();
 
@@ -33,6 +34,7 @@ app.use("/authentication", authenticationRoute);
 app.use("/feed", feedRoute);
 app.use("/users", userRoutes);
 app.use("/search", searchRoute);
+app.use("/admin", adminRoute);
 
 //Error 404 for non-existing pages
 app.get("*", function (req, res) {

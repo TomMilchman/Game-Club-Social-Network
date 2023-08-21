@@ -44,7 +44,6 @@ var persist_1 = require("../persist");
 var cookieManager_1 = require("../cookieManager");
 var server_1 = require("../server");
 router.use(bodyParser.json()); // Parse JSON request bodies
-// Authenticate user
 function checkPasswordHash(username, password) {
     return __awaiter(this, void 0, void 0, function () {
         var users, user;
