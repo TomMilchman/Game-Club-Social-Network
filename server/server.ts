@@ -12,6 +12,7 @@ import loginRoute from "./routes/loginRoute";
 import logoutRoute from "./routes/logoutRoute";
 import signupRoute from "./routes/signupRoute";
 import searchRoute from "./routes/searchRoute";
+import authenticationRoute from "./routes/authenticationRoute";
 import cookieManager from "./cookieManager";
 
 let loggedInUsers = new Map<string, string>();
@@ -28,27 +29,7 @@ app.use(
 app.use("/login", loginRoute);
 app.use("/signup", signupRoute);
 app.use("/logout", logoutRoute);
-
-//Authentication
-// app.use((req, res, next) => {
-//   const tempPass: string = req.cookies.tempPass;
-//   const maxAge: number = req.cookies.timeToLive;
-
-//   try {
-//     if (tempPass !== undefined) {
-//       const username = loggedInUsers.get(tempPass);
-//       if (username !== undefined) {
-//         //cookieManager.refreshCookies(res, tempPass, maxAge);
-//         console.log(`User ${username} authentication successful`);
-//         next();
-//       }
-//     }
-//     res.status(401).json({ message: "User is not authenticated" });
-//   } catch (error) {
-//     res.status(500).json({ message: `Error authenticating user: ${error}` });
-//   }
-// });
-
+app.use("/authentication", authenticationRoute);
 app.use("/feed", feedRoute);
 app.use("/users", userRoutes);
 app.use("/search", searchRoute);

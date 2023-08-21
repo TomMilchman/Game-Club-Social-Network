@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 
 export default function FeedPage() {
-  const [authenticated, setAuthenticated] = useState(true);
   const [username, setUsername] = useState("");
 
   const getFeed = async () => {
@@ -15,10 +13,6 @@ export default function FeedPage() {
       const responseData = await response.json();
       if (response.ok) {
         setUsername(responseData.username);
-        setAuthenticated(true);
-      } else if (response.status === 401) {
-        setAuthenticated(false);
-        console.log(responseData.message);
       } else {
         console.log("An error occurred server side:", responseData.message);
       }
@@ -31,11 +25,9 @@ export default function FeedPage() {
     getFeed();
   }, []);
 
-  return authenticated ? (
+  return (
     <div className="feed">
       <p>This is the feed for user {username}</p>
     </div>
-  ) : (
-    <Navigate to={"/login"} replace={true} />
   );
 }

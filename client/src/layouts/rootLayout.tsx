@@ -1,9 +1,11 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import GameClubLogo from "../images/GameClubLogo.png";
 import SearchBar from "../components/SearchBar";
+import { useEffect, useState } from "react";
 
 export default function RootLayout() {
   const navigate = useNavigate();
+  const [authenticated, setAuthenticated] = useState(true);
 
   const handleLogout = async () => {
     try {
@@ -23,7 +25,32 @@ export default function RootLayout() {
     }
   };
 
-  return (
+  const authenticate = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/authentication", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      const responseData = await response.json();
+      if (response.ok) {
+        setAuthenticated(true);
+      } else if (response.status === 401) {
+        setAuthenticated(false);
+        console.log(responseData.message);
+      } else {
+        console.log("An error occurred server side:", responseData.message);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    authenticate();
+  }, []);
+
+  return authenticated ? (
     <div className="root-layout">
       <div id="navbar">
         <img src={GameClubLogo} width={90} height={57} />
@@ -33,5 +60,7 @@ export default function RootLayout() {
       </div>
       <Outlet />
     </div>
+  ) : (
+    <Navigate to={"/login"} />
   );
 }
