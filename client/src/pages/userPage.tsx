@@ -10,7 +10,7 @@ export default function UserPage() {
   const getUserInfo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/users/${params.username}`,
+        `http://localhost:3000/users/${params.username}/userpage`,
         {
           method: "GET",
           credentials: "include",

@@ -26,8 +26,24 @@ class User {
     this.posts.push(post);
   }
 
-  deletePost(postId: number) {
+  deletePostById(postId: number) {
     this.posts.filter((post) => post.postId != postId);
+  }
+
+  addFollower(user: User) {
+    this.followers.push(user);
+  }
+
+  removeFollower(user: User) {
+    this.followers.filter((follower) => follower.username != user.username);
+  }
+
+  addFollowing(user: User) {
+    this.following.push(user);
+  }
+
+  removeFollowing(user: User) {
+    this.following.filter((following) => following.username != user.username);
   }
 }
 
