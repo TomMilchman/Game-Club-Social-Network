@@ -26,7 +26,7 @@ export default function SearchBar() {
   };
 
   const onSearch = () => {
-    navigate(`/users/${query}`, { replace: true });
+    navigate(`/users/${query}`);
   };
 
   return (

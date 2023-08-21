@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 
 export default function RootLayout() {
   const navigate = useNavigate();
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(true); // Initialized as null
 
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:3000/logout", {
-        method: "POST",
+        method: "PATCH",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -48,6 +48,10 @@ export default function RootLayout() {
 
   useEffect(() => {
     authenticate();
+
+    if (location.pathname === "/" && authenticated) {
+      navigate("/feed", { replace: true });
+    }
   }, []);
 
   return authenticated ? (

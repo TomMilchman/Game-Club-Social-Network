@@ -57,10 +57,10 @@ function checkPasswordHash(username, password) {
                     return [4 /*yield*/, bcrypt.compare(password, user.password)];
                 case 1:
                     if (_a.sent()) {
-                        console.log("User ".concat(username, " authentication successful"));
+                        console.log("User ".concat(username, " login successful"));
                         return [2 /*return*/, {
                                 ok: true,
-                                message: "User ".concat(username, " authentication successful"),
+                                message: "User ".concat(username, " login successful"),
                             }];
                     }
                     return [2 /*return*/, { ok: false, message: "wrong password" }];

@@ -2,14 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var uuid_1 = require("uuid");
 var server_1 = require("./server");
-//Refresh cookies and update object of logged in users
+//Extend cookie's time to live
 function refreshCookies(res, tempPass, maxAge) {
-    var newTempPass = (0, uuid_1.v4)();
-    attachCookiesToRes(res, newTempPass, maxAge);
-    var username = server_1.default.get(tempPass);
-    server_1.default.set(newTempPass, username);
-    server_1.default.delete(tempPass);
-    console.log("Refreshed cookies for user ".concat(server_1.default.get(newTempPass), ": ").concat(newTempPass));
+    attachCookiesToRes(res, tempPass, maxAge);
+    console.log("Refreshed cookies for user ".concat(server_1.default.get(tempPass)));
 }
 function createNewCookies(res, maxAge, username) {
     var tempPass = (0, uuid_1.v4)();

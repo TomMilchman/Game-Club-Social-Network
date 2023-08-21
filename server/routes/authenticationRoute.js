@@ -5,6 +5,7 @@ var router = express.Router();
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var server_1 = require("../server");
+var cookieManager_1 = require("../cookieManager");
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
 router.get("/", function (req, res) {
@@ -14,9 +15,12 @@ router.get("/", function (req, res) {
         if (tempPass !== undefined) {
             var username = server_1.default.get(tempPass);
             if (username !== undefined) {
-                //cookieManager.refreshCookies(res, tempPass, maxAge);
                 console.log("User ".concat(username, " authentication successful"));
+                cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
                 res.status(200);
+            }
+            else {
+                res.status(401).json({ message: "User is not authenticated" });
             }
         }
         else {

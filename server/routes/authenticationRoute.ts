@@ -17,9 +17,11 @@ router.get("/", (req, res) => {
     if (tempPass !== undefined) {
       const username = loggedInUsers.get(tempPass);
       if (username !== undefined) {
-        //cookieManager.refreshCookies(res, tempPass, maxAge);
         console.log(`User ${username} authentication successful`);
+        cookieManager.refreshCookies(res, tempPass, maxAge);
         res.status(200);
+      } else {
+        res.status(401).json({ message: "User is not authenticated" });
       }
     } else {
       res.status(401).json({ message: "User is not authenticated" });

@@ -34,7 +34,7 @@ export default function LoginPage() {
         return null;
       } else {
         // Error handling if login failed
-        console.error("Login failed:", responseData);
+        console.error("Login failed:", responseData.message);
         alert(`Error signing in: ${responseData.message}, please try again.`);
       }
     } catch (error) {

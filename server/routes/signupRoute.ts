@@ -24,10 +24,31 @@ async function registerUser(user: User) {
 }
 
 router.post("/", async (req, res) => {
-  const { username, password, email, rememberMeChecked } = req.body;
+  const username: string = req.body.username;
+  const password: string = req.body.password;
+  const email: string = req.body.email;
+  const rememberMeChecked: boolean = req.body.rememberMeChecked;
 
   try {
     const lowerCaseUsername = username.toLowerCase();
+
+    if (lowerCaseUsername.length < 5) {
+      res
+        .status(400)
+        .json({ message: "username must be at least 5 characters long" });
+      return;
+    }
+    if (password.length < 6) {
+      res
+        .status(400)
+        .json({ message: "password must be at least 6 characters long" });
+      return;
+    }
+    if (email.indexOf("@") === -1) {
+      res.status(400).json({ message: "invalid email format" });
+      return;
+    }
+
     const user = new User(lowerCaseUsername, password, email);
     const maxAge = rememberMeChecked ? 864000000 : 1800000; // 10 days : 10 minutes
     const users = persist.usersData;

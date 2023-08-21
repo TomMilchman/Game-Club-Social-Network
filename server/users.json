@@ -38,5 +38,15 @@
     "followers": [],
     "posts": [],
     "currentPostId": 0
+  },
+  {
+    "username": "hypno666",
+    "password": "$2b$10$tZBcti0ZWyA0S0Q7YobtkuCDLiNmdSTCW.tiDhGpfEo./Mu85voh2",
+    "email": "milchmantom@gmail.com",
+    "isAdmin": false,
+    "following": [],
+    "followers": [],
+    "posts": [],
+    "currentPostId": 0
   }
 ]

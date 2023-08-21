@@ -30,12 +30,12 @@ export default function SignUpPage() {
 
       const responseData = await response.json();
       if (response.ok) {
-        // Successfully logged in
+        // Successfully registered
         console.log("Registered:", responseData.message);
         navigate("/feed", { replace: true });
       } else {
-        // Error handling if login failed
-        console.error("Login failed:", responseData);
+        // Error handling if registration failed
+        console.error("Registration failed:", responseData.message);
         alert(`Error signing up: ${responseData.message}, please try again.`);
       }
     } catch (error) {

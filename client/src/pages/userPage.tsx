@@ -23,7 +23,7 @@ export default function UserPage() {
         setEmail(responseData.email);
         setUserFound(true);
       } else {
-        setUserFound(false); // Set error state to true
+        setUserFound(false);
       }
     } catch (error) {
       console.error("Error:", error);

@@ -17,10 +17,10 @@ async function checkPasswordHash(username: string, password: string) {
 
   if (user) {
     if (await bcrypt.compare(password, user.password)) {
-      console.log(`User ${username} authentication successful`);
+      console.log(`User ${username} login successful`);
       return {
         ok: true,
-        message: `User ${username} authentication successful`,
+        message: `User ${username} login successful`,
       };
     }
     return { ok: false, message: "wrong password" };

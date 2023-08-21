@@ -9,7 +9,7 @@ import cookieManager from "../cookieManager";
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
 
-router.post("/", (req, res) => {
+router.patch("/", (req, res) => {
   try {
     const tempPass: string = req.cookies.tempPass;
     const maxAge: number = req.cookies.timeToLive;
@@ -18,6 +18,7 @@ router.post("/", (req, res) => {
     res
       .status(200)
       .json({ message: `User ${username} successfully logged out` });
+    console.log(`User ${username} successfully logged out`);
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({ message: error });

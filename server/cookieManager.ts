@@ -1,20 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import loggedInUsers from "./server";
 
-//Refresh cookies and update object of logged in users
+//Extend cookie's time to live
 function refreshCookies(res, tempPass: string, maxAge: number) {
-  const newTempPass = uuidv4();
-
-  attachCookiesToRes(res, newTempPass, maxAge);
-
-  const username = loggedInUsers.get(tempPass);
-  loggedInUsers.set(newTempPass, username);
-  loggedInUsers.delete(tempPass);
-  console.log(
-    `Refreshed cookies for user ${loggedInUsers.get(
-      newTempPass
-    )}: ${newTempPass}`
-  );
+  attachCookiesToRes(res, tempPass, maxAge);
+  console.log(`Refreshed cookies for user ${loggedInUsers.get(tempPass)}`);
 }
 
 function createNewCookies(res, maxAge: number, username: string) {

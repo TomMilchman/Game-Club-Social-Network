@@ -8,7 +8,7 @@ var server_1 = require("../server");
 var cookieManager_1 = require("../cookieManager");
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
-router.post("/", function (req, res) {
+router.patch("/", function (req, res) {
     try {
         var tempPass = req.cookies.tempPass;
         var maxAge = req.cookies.timeToLive;
@@ -17,6 +17,7 @@ router.post("/", function (req, res) {
         res
             .status(200)
             .json({ message: "User ".concat(username, " successfully logged out") });
+        console.log("User ".concat(username, " successfully logged out"));
     }
     catch (error) {
         console.error("Error during signup:", error);

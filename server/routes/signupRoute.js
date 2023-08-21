@@ -71,15 +71,34 @@ function registerUser(user) {
     });
 }
 router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, email, rememberMeChecked, lowerCaseUsername_1, user, maxAge, users, signupSuccess, message, error_2;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var username, password, email, rememberMeChecked, lowerCaseUsername_1, user, maxAge, users, signupSuccess, message, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                _a = req.body, username = _a.username, password = _a.password, email = _a.email, rememberMeChecked = _a.rememberMeChecked;
-                _b.label = 1;
+                username = req.body.username;
+                password = req.body.password;
+                email = req.body.email;
+                rememberMeChecked = req.body.rememberMeChecked;
+                _a.label = 1;
             case 1:
-                _b.trys.push([1, 5, , 6]);
+                _a.trys.push([1, 5, , 6]);
                 lowerCaseUsername_1 = username.toLowerCase();
+                if (lowerCaseUsername_1.length < 5) {
+                    res
+                        .status(400)
+                        .json({ message: "username must be at least 5 characters long" });
+                    return [2 /*return*/];
+                }
+                if (password.length < 6) {
+                    res
+                        .status(400)
+                        .json({ message: "password must be at least 6 characters long" });
+                    return [2 /*return*/];
+                }
+                if (email.indexOf("@") === -1) {
+                    res.status(400).json({ message: "invalid email format" });
+                    return [2 /*return*/];
+                }
                 user = new User_1.default(lowerCaseUsername_1, password, email);
                 maxAge = rememberMeChecked ? 864000000 : 1800000;
                 users = persist_1.default.usersData;
@@ -90,17 +109,17 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 return [3 /*break*/, 4];
             case 2: return [4 /*yield*/, registerUser(user)];
             case 3:
-                signupSuccess = _b.sent();
+                signupSuccess = _a.sent();
                 if (req.cookies.tempPass !== undefined) {
                     server_1.default.delete(req.cookies.tempPass);
                 }
                 cookieManager_1.default.createNewCookies(res, maxAge, user.username);
                 message = { message: signupSuccess.message };
                 res.status(200).json(message);
-                _b.label = 4;
+                _a.label = 4;
             case 4: return [3 /*break*/, 6];
             case 5:
-                error_2 = _b.sent();
+                error_2 = _a.sent();
                 console.error("Error during signup:", error_2);
                 res.status(500).json({ message: error_2 });
                 return [3 /*break*/, 6];
