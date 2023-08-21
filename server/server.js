@@ -60,24 +60,23 @@ app.use("/login", loginRoute_1.default);
 app.use("/signup", signupRoute_1.default);
 app.use("/logout", logoutRoute_1.default);
 //Authentication
-app.use(function (req, res, next) {
-    var tempPass = req.cookies.tempPass;
-    var maxAge = req.cookies.timeToLive;
-    try {
-        if (tempPass !== undefined) {
-            var username = loggedInUsers.get(tempPass);
-            if (username !== undefined) {
-                //cookieManager.refreshCookies(res, tempPass, maxAge);
-                console.log("User ".concat(username, " authentication successful"));
-                next();
-            }
-        }
-        res.status(401).json({ message: "User is not authenticated" });
-    }
-    catch (error) {
-        res.status(500).json({ message: "Error authenticating user: ".concat(error) });
-    }
-});
+// app.use((req, res, next) => {
+//   const tempPass: string = req.cookies.tempPass;
+//   const maxAge: number = req.cookies.timeToLive;
+//   try {
+//     if (tempPass !== undefined) {
+//       const username = loggedInUsers.get(tempPass);
+//       if (username !== undefined) {
+//         //cookieManager.refreshCookies(res, tempPass, maxAge);
+//         console.log(`User ${username} authentication successful`);
+//         next();
+//       }
+//     }
+//     res.status(401).json({ message: "User is not authenticated" });
+//   } catch (error) {
+//     res.status(500).json({ message: `Error authenticating user: ${error}` });
+//   }
+// });
 app.use("/feed", feedRoute_1.default);
 app.use("/users", userRoutes_1.default);
 app.use("/search", searchRoute_1.default);

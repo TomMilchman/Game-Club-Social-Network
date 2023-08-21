@@ -43,6 +43,7 @@ var bcrypt = require("bcrypt");
 var cookieManager_1 = require("../cookieManager");
 var persist_1 = require("../persist");
 var User_1 = require("../User");
+var server_1 = require("../server");
 router.use(bodyParser.json()); // Parse JSON request bodies
 function registerUser(user) {
     return __awaiter(this, void 0, void 0, function () {
@@ -90,6 +91,9 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
             case 2: return [4 /*yield*/, registerUser(user)];
             case 3:
                 signupSuccess = _b.sent();
+                if (req.cookies.tempPass !== undefined) {
+                    server_1.default.delete(req.cookies.tempPass);
+                }
                 cookieManager_1.default.createNewCookies(res, maxAge, user.username);
                 message = { message: signupSuccess.message };
                 res.status(200).json(message);

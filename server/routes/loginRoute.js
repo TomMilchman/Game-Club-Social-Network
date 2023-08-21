@@ -42,6 +42,7 @@ var bodyParser = require("body-parser");
 var bcrypt = require("bcrypt");
 var persist_1 = require("../persist");
 var cookieManager_1 = require("../cookieManager");
+var server_1 = require("../server");
 router.use(bodyParser.json()); // Parse JSON request bodies
 // Authenticate user
 function checkPasswordHash(username, password) {
@@ -84,6 +85,9 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 message = { message: loginSuccess.message };
                 if (loginSuccess.ok === true) {
                     maxAge = rememberMeChecked ? 864000000 : 1800000;
+                    if (req.cookies.tempPass !== undefined) {
+                        server_1.default.delete(req.cookies.tempPass);
+                    }
                     cookieManager_1.default.createNewCookies(res, maxAge, username);
                     res.status(200).json(message);
                 }

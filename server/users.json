@@ -18,5 +18,25 @@
     "followers": [],
     "posts": [],
     "currentPostId": 0
+  },
+  {
+    "username": "hypno4555",
+    "password": "$2b$10$tg6G.psd8lk8IlROmdeGbukyGklb28VhJzra9tC/3nUj8fLQ8XnEq",
+    "email": "dushabell@gmail.com",
+    "isAdmin": false,
+    "following": [],
+    "followers": [],
+    "posts": [],
+    "currentPostId": 0
+  },
+  {
+    "username": "hypno5",
+    "password": "$2b$10$FvbBjxcuZHJFq66W6/PH0.9AjyN5/8oFv4PB63cJBVAm.3b1qmaKW",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "following": [],
+    "followers": [],
+    "posts": [],
+    "currentPostId": 0
   }
 ]

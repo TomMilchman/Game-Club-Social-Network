@@ -43,6 +43,23 @@ var server_1 = require("../server");
 var bodyParser = require("body-parser");
 var Post_1 = require("../Post");
 router.use(bodyParser.json()); // Parse JSON request bodies
+router.route("/:username").get(function (req, res) {
+    try {
+        var username = req.params.username;
+        for (var i = 0; i < persist_1.default.usersData.length; i++) {
+            var user = persist_1.default.usersData[i];
+            if (user.username === username) {
+                res.status(200).json(user);
+                return;
+            }
+        }
+        res.status(404); // Set status code for user not found
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error"); // Handle loading error with status code
+    }
+});
 router.route("/:username/createpost").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var content, tempPass, username_1, user, currentPostId, timestamp, post, error_1;
     return __generator(this, function (_a) {
