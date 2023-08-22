@@ -37,11 +37,11 @@ router.post("/", async (req, res) => {
     const message = { message: loginSuccess.message };
 
     if (loginSuccess.ok === true) {
-      const maxAge = rememberMeChecked ? 864000000 : 1800000;
+      const maxAge = rememberMeChecked ? 864000000 : 120000;
       if (req.cookies.tempPass !== undefined) {
         loggedInUsers.delete(req.cookies.tempPass);
       }
-      cookieManager.createNewCookies(res, maxAge, username);
+      cookieManager.createNewCookies(res, maxAge, lowerCaseUsername);
       res.status(200).json(message);
     } else {
       res.status(401).json(message);

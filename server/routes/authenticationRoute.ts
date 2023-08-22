@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 
   try {
     if (tempPass !== undefined) {
-      const username = loggedInUsers.get(tempPass);
+      const username = loggedInUsers.get(tempPass).username;
       if (username !== undefined) {
         console.log(`User ${username} authentication successful`);
         cookieManager.refreshCookies(res, tempPass, maxAge);

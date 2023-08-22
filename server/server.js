@@ -83,6 +83,19 @@ app.listen(port, function () { return __awaiter(void 0, void 0, void 0, function
             case 1:
                 _a.usersData = _b.sent();
                 console.log("User data loaded from disk:", persist_1.default.usersData);
+                // Set up a setInterval function to periodically check for expired tokens
+                setInterval(function () {
+                    var currentTime = Date.now();
+                    // Convert loggedInUsers Map entries to an array for iteration
+                    var entriesArray = Array.from(loggedInUsers.entries());
+                    for (var _i = 0, entriesArray_1 = entriesArray; _i < entriesArray_1.length; _i++) {
+                        var _a = entriesArray_1[_i], tempPass = _a[0], _b = _a[1], username = _b.username, expirationTime = _b.expirationTime;
+                        if (expirationTime <= currentTime) {
+                            loggedInUsers.delete(tempPass);
+                            console.log("Expired token removed: ".concat(tempPass, ", user ").concat(username));
+                        }
+                    }
+                }, 60000);
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _b.sent();

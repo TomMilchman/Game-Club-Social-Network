@@ -11,14 +11,20 @@ router.use(cookieParser());
 //Check if user is admin
 router.get("/", function (req, res) {
     try {
-        var tempPass_1 = req.cookies.tempPass;
-        if (tempPass_1 !== undefined) {
-            var users = persist_1.default.usersData;
-            var user = users.find(function (user) { return user.username === server_1.default.get(tempPass_1); });
-            if (user !== undefined) {
-                if (user.isAdmin === true) {
-                    res.status(200).json({ message: "User is an admin" });
-                    console.log("User is an admin");
+        var tempPass = req.cookies.tempPass;
+        if (tempPass !== undefined) {
+            if (server_1.default.get(tempPass) !== undefined) {
+                var username_1 = server_1.default.get(tempPass).username;
+                var user = persist_1.default.usersData.find(function (user) { return user.username === username_1; });
+                if (user !== undefined) {
+                    if (user.isAdmin === true) {
+                        res.status(200).json({ message: "User is an admin" });
+                        console.log("User is an admin");
+                    }
+                    else {
+                        res.status(401).json({ message: "User is not an admin" });
+                        console.log("User is not an admin");
+                    }
                 }
                 else {
                     res.status(401).json({ message: "User is not an admin" });
@@ -27,7 +33,7 @@ router.get("/", function (req, res) {
             }
             else {
                 res.status(401).json({ message: "User is not an admin" });
-                console.log("User is not an admin");
+                console.log("User is not an admin ");
             }
         }
         else {

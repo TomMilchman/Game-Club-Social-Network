@@ -10,10 +10,15 @@ router.use(bodyParser.json()); // Parse JSON request bodies
 router.get("/", async (req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
-    const username = loggedInUsers.get(tempPass);
-    res.status(200).json({ username: username });
+    if (loggedInUsers.get(tempPass) !== undefined) {
+      const username = loggedInUsers.get(tempPass).username;
+      res.status(200).json({ username: username });
+    } else {
+      res.status(401).json({ message: "User is not authenticated" });
+    }
   } catch (error) {
     res.status(500).json({ message: error });
+    console.log("Error fetching feed: ", error);
   }
 });
 

@@ -12,15 +12,20 @@ router.patch("/", function (req, res) {
     try {
         var tempPass = req.cookies.tempPass;
         var maxAge = req.cookies.timeToLive;
-        var username = server_1.default.get(tempPass);
-        cookieManager_1.default.deleteCookies(res, tempPass, maxAge);
-        res
-            .status(200)
-            .json({ message: "User ".concat(username, " successfully logged out") });
-        console.log("User ".concat(username, " successfully logged out"));
+        if (server_1.default.get(tempPass) !== undefined) {
+            cookieManager_1.default.deleteCookies(res, tempPass, maxAge);
+            var username = server_1.default.get(tempPass).username;
+            res
+                .status(200)
+                .json({ message: "User ".concat(username, " successfully logged out") });
+            console.log("User ".concat(username, " successfully logged out"));
+        }
+        else {
+            res.status(400).json({ message: "No user is signed in to log out" });
+        }
     }
     catch (error) {
-        console.error("Error during signup:", error);
+        console.error("Error during logout:", error);
         res.status(500).json({ message: error });
     }
 });

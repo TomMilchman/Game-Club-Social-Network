@@ -13,14 +13,19 @@ router.patch("/", (req, res) => {
   try {
     const tempPass: string = req.cookies.tempPass;
     const maxAge: number = req.cookies.timeToLive;
-    const username = loggedInUsers.get(tempPass);
-    cookieManager.deleteCookies(res, tempPass, maxAge);
-    res
-      .status(200)
-      .json({ message: `User ${username} successfully logged out` });
-    console.log(`User ${username} successfully logged out`);
+
+    if (loggedInUsers.get(tempPass) !== undefined) {
+      cookieManager.deleteCookies(res, tempPass, maxAge);
+      const username = loggedInUsers.get(tempPass).username;
+      res
+        .status(200)
+        .json({ message: `User ${username} successfully logged out` });
+      console.log(`User ${username} successfully logged out`);
+    } else {
+      res.status(400).json({ message: "No user is signed in to log out" });
+    }
   } catch (error) {
-    console.error("Error during signup:", error);
+    console.error("Error during logout:", error);
     res.status(500).json({ message: error });
   }
 });

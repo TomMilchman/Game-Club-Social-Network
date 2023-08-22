@@ -46,11 +46,17 @@ router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, f
     return __generator(this, function (_a) {
         try {
             tempPass = req.cookies.tempPass;
-            username = server_1.default.get(tempPass);
-            res.status(200).json({ username: username });
+            if (server_1.default.get(tempPass) !== undefined) {
+                username = server_1.default.get(tempPass).username;
+                res.status(200).json({ username: username });
+            }
+            else {
+                res.status(401).json({ message: "User is not authenticated" });
+            }
         }
         catch (error) {
             res.status(500).json({ message: error });
+            console.log("Error fetching feed: ", error);
         }
         return [2 /*return*/];
     });

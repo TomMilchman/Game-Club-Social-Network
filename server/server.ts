@@ -16,7 +16,10 @@ import authenticationRoute from "./routes/authenticationRoute";
 import cookieManager from "./cookieManager";
 import adminRoute from "./routes/adminRoute";
 
-let loggedInUsers = new Map<string, string>();
+const loggedInUsers = new Map<
+  string,
+  { username: string; expirationTime: number }
+>();
 
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(cookieParser());
@@ -47,6 +50,21 @@ app.listen(port, async () => {
     console.log(`Server is running on port ${port}`);
     persist.usersData = await persist.loadUsersData();
     console.log("User data loaded from disk:", persist.usersData);
+
+    // Set up a setInterval function to periodically check for expired tokens
+    setInterval(() => {
+      const currentTime = Date.now();
+
+      // Convert loggedInUsers Map entries to an array for iteration
+      const entriesArray = Array.from(loggedInUsers.entries());
+
+      for (const [tempPass, { username, expirationTime }] of entriesArray) {
+        if (expirationTime <= currentTime) {
+          loggedInUsers.delete(tempPass);
+          console.log(`Expired token removed: ${tempPass}, user ${username}`);
+        }
+      }
+    }, 60000);
   } catch (error) {
     console.error("Error loading user data:", error);
   }

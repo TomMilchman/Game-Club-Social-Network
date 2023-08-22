@@ -1,25 +1,32 @@
 import { v4 as uuidv4 } from "uuid";
 import loggedInUsers from "./server";
 
+function calculateExpirationTime(maxAge: number) {
+  return Date.now() + maxAge;
+}
+
 //Extend cookie's time to live
 function refreshCookies(res, tempPass: string, maxAge: number) {
   attachCookiesToRes(res, tempPass, maxAge);
-  console.log(`Refreshed cookies for user ${loggedInUsers.get(tempPass)}`);
+  console.log(
+    `Refreshed cookies for user ${loggedInUsers.get(tempPass).username}`
+  );
 }
 
 function createNewCookies(res, maxAge: number, username: string) {
   const tempPass = uuidv4();
+  const expirationTime = calculateExpirationTime(maxAge);
   attachCookiesToRes(res, tempPass, maxAge);
-  loggedInUsers.set(tempPass, username);
+  loggedInUsers.set(tempPass, { username, expirationTime });
   console.log(
-    `Created cookies for user ${loggedInUsers.get(
-      tempPass
-    )}, temp pass: ${tempPass}`
+    `Created cookies for user ${
+      loggedInUsers.get(tempPass).username
+    }, temp pass: ${tempPass}`
   );
 }
 
 function deleteCookies(res, tempPass: string, maxAge: number) {
-  const username = loggedInUsers.get(tempPass);
+  const username = loggedInUsers.get(tempPass).username;
   loggedInUsers.delete(tempPass);
   res.cookie("tempPass", tempPass, {
     maxAge: -1,

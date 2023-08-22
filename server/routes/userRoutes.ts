@@ -29,7 +29,7 @@ function followOrUnfollowUser(req, res, action) {
   try {
     const tempPass = req.cookies.tempPass;
     const requestingUser = persist.usersData.find(
-      (user) => user.username === loggedInUsers.get(tempPass)
+      (user) => user.username === loggedInUsers.get(tempPass).username
     );
     const userToSearch = persist.usersData.find(
       (user) => user.username === req.params.username
@@ -85,7 +85,7 @@ router.route("/:username/createpost").post(async (req, res) => {
 
   try {
     const tempPass = req.cookies.tempPass;
-    const username = loggedInUsers.get(tempPass);
+    const username = loggedInUsers.get(tempPass).username;
     const user = persist.usersData.find((user) => user.username === username);
     const currentPostId = user.currentPostId;
     const timestamp = new Date();
@@ -109,7 +109,7 @@ router.route("/:username/posts/:postid/deletepost").post(async (req, res) => {
 
   try {
     const tempPass = req.cookies.tempPass;
-    const username = loggedInUsers.get(tempPass);
+    const username = loggedInUsers.get(tempPass).username;
     const user = persist.usersData.find((user) => user.username === username);
     const post = user.posts.find((post) => post.postId === postid);
     user.deletePostById(post.postId);
@@ -146,7 +146,7 @@ router.route("/:username/posts").get((req, res) => {
 async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
   try {
     const tempPass = req.cookies.tempPass;
-    const requestingUsername = loggedInUsers.get(tempPass);
+    const requestingUsername = loggedInUsers.get(tempPass).username;
     const requestedUser = persist.usersData.find(
       (user) => user.username === req.params.username
     );

@@ -14,21 +14,27 @@ router.get("/", (req, res) => {
   try {
     const tempPass: string = req.cookies.tempPass;
     if (tempPass !== undefined) {
-      const users = persist.usersData;
-      const user = users.find(
-        (user) => user.username === loggedInUsers.get(tempPass)
-      );
-      if (user !== undefined) {
-        if (user.isAdmin === true) {
-          res.status(200).json({ message: "User is an admin" });
-          console.log("User is an admin");
+      if (loggedInUsers.get(tempPass) !== undefined) {
+        const username = loggedInUsers.get(tempPass).username;
+        const user = persist.usersData.find(
+          (user) => user.username === username
+        );
+
+        if (user !== undefined) {
+          if (user.isAdmin === true) {
+            res.status(200).json({ message: "User is an admin" });
+            console.log("User is an admin");
+          } else {
+            res.status(401).json({ message: "User is not an admin" });
+            console.log("User is not an admin");
+          }
         } else {
           res.status(401).json({ message: "User is not an admin" });
           console.log("User is not an admin");
         }
       } else {
         res.status(401).json({ message: "User is not an admin" });
-        console.log("User is not an admin");
+        console.log("User is not an admin ");
       }
     } else {
       res.status(401).json({ message: "User is not an admin" });

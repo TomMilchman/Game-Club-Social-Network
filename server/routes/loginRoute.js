@@ -83,11 +83,11 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 loginSuccess = _b.sent();
                 message = { message: loginSuccess.message };
                 if (loginSuccess.ok === true) {
-                    maxAge = rememberMeChecked ? 864000000 : 1800000;
+                    maxAge = rememberMeChecked ? 864000000 : 120000;
                     if (req.cookies.tempPass !== undefined) {
                         server_1.default.delete(req.cookies.tempPass);
                     }
-                    cookieManager_1.default.createNewCookies(res, maxAge, username);
+                    cookieManager_1.default.createNewCookies(res, maxAge, lowerCaseUsername);
                     res.status(200).json(message);
                 }
                 else {

@@ -63,7 +63,7 @@ router.route("/:username/userpage").get(function (req, res) {
 function followOrUnfollowUser(req, res, action) {
     try {
         var tempPass_1 = req.cookies.tempPass;
-        var requestingUser_1 = persist_1.default.usersData.find(function (user) { return user.username === server_1.default.get(tempPass_1); });
+        var requestingUser_1 = persist_1.default.usersData.find(function (user) { return user.username === server_1.default.get(tempPass_1).username; });
         var userToSearch = persist_1.default.usersData.find(function (user) { return user.username === req.params.username; });
         if (userToSearch !== undefined) {
             var isFollowing = userToSearch.followers.some(function (user) { return user.username === requestingUser_1.username; });
@@ -112,7 +112,7 @@ router.route("/:username/createpost").post(function (req, res) { return __awaite
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 tempPass = req.cookies.tempPass;
-                username_1 = server_1.default.get(tempPass);
+                username_1 = server_1.default.get(tempPass).username;
                 user = persist_1.default.usersData.find(function (user) { return user.username === username_1; });
                 currentPostId = user.currentPostId;
                 timestamp = new Date();
@@ -144,7 +144,7 @@ router.route("/:username/posts/:postid/deletepost").post(function (req, res) { r
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 tempPass = req.cookies.tempPass;
-                username_2 = server_1.default.get(tempPass);
+                username_2 = server_1.default.get(tempPass).username;
                 user = persist_1.default.usersData.find(function (user) { return user.username === username_2; });
                 post = user.posts.find(function (post) { return post.postId === postid; });
                 user.deletePostById(post.postId);
@@ -190,7 +190,7 @@ function handleLikeUnlike(req, res, isLikeOperation) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     tempPass = req.cookies.tempPass;
-                    requestingUsername = server_1.default.get(tempPass);
+                    requestingUsername = server_1.default.get(tempPass).username;
                     requestedUser = persist_1.default.usersData.find(function (user) { return user.username === req.params.username; });
                     postId_1 = parseInt(req.params.postid);
                     post = requestedUser.posts.find(function (post) { return post.postId === postId_1; });
