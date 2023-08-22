@@ -32,7 +32,7 @@ export default function SignUpPage() {
       if (response.ok) {
         // Successfully registered
         console.log("Registered:", responseData.message);
-        navigate("/feed", { replace: true });
+        navigate("/", { replace: true });
       } else {
         // Error handling if registration failed
         console.error("Registration failed:", responseData.message);

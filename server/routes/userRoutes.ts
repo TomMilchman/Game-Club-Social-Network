@@ -28,12 +28,10 @@ router.route("/:username/userpage").get((req, res) => {
 function followOrUnfollowUser(req, res, action) {
   try {
     const tempPass = req.cookies.tempPass;
-    const requestingUser = persist.usersData.find(
-      (user) => user.username === loggedInUsers.get(tempPass).username
+    const requestingUser = persist.findUserByUsername(
+      loggedInUsers.get(tempPass).username
     );
-    const userToSearch = persist.usersData.find(
-      (user) => user.username === req.params.username
-    );
+    const userToSearch = persist.findUserByUsername(req.params.username);
 
     if (userToSearch !== undefined) {
       const isFollowing = userToSearch.followers.some(
@@ -86,7 +84,7 @@ router.route("/:username/createpost").post(async (req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
     const username = loggedInUsers.get(tempPass).username;
-    const user = persist.usersData.find((user) => user.username === username);
+    const user = persist.findUserByUsername(username);
     const currentPostId = user.currentPostId;
     const timestamp = new Date();
 
@@ -94,7 +92,7 @@ router.route("/:username/createpost").post(async (req, res) => {
     user.currentPostId++;
     user.addPost(post);
 
-    await persist.saveUsersData(persist.usersData);
+    await persist.saveUsersData();
 
     res
       .status(200)
@@ -110,11 +108,11 @@ router.route("/:username/posts/:postid/deletepost").post(async (req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
     const username = loggedInUsers.get(tempPass).username;
-    const user = persist.usersData.find((user) => user.username === username);
+    const user = persist.findUserByUsername(username);
     const post = user.posts.find((post) => post.postId === postid);
     user.deletePostById(post.postId);
 
-    await persist.saveUsersData(persist.usersData);
+    await persist.saveUsersData();
 
     res
       .status(200)
@@ -127,7 +125,7 @@ router.route("/:username/posts/:postid/deletepost").post(async (req, res) => {
 router.route("/:username/posts").get((req, res) => {
   try {
     const username = req.params.username;
-    const user = persist.usersData.find((user) => user.username === username);
+    const user = persist.findUserByUsername(username);
 
     if (user) {
       const orderedPosts = user.posts.sort((a, b) => {
@@ -147,9 +145,7 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
   try {
     const tempPass = req.cookies.tempPass;
     const requestingUsername = loggedInUsers.get(tempPass).username;
-    const requestedUser = persist.usersData.find(
-      (user) => user.username === req.params.username
-    );
+    const requestedUser = persist.findUserByUsername(req.params.username);
     const postId = parseInt(req.params.postid);
     const post = requestedUser.posts.find((post) => post.postId === postId);
 
@@ -157,7 +153,7 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
       ? post.likePost(requestingUsername)
       : post.unlikePost(requestingUsername);
 
-    await persist.saveUsersData(persist.usersData);
+    await persist.saveUsersData();
 
     res.status(200).json({
       message: `User ${requestingUsername} ${

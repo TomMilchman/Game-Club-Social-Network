@@ -1,5 +1,5 @@
 import { promises as fs } from "fs";
-import User from "./User";
+import { User } from "./User";
 
 let usersData: User[] = []; //holds up to date users' data
 
@@ -9,7 +9,14 @@ async function loadData(filePath: string) {
     const userObjects = JSON.parse(jsonData);
 
     const users = userObjects.map((u) => {
-      return new User(u.username, u.password, u.email, u.isAdmin);
+      return new User(
+        u.username,
+        u.password,
+        u.email,
+        u.isAdmin,
+        u.currentPostId,
+        u.loginActivity
+      );
     });
     return users;
   } catch (error) {
@@ -18,10 +25,9 @@ async function loadData(filePath: string) {
   }
 }
 
-async function saveData(filePath: string, data: User[]) {
+async function saveData(filePath: string) {
   try {
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
-    usersData = data;
+    await fs.writeFile(filePath, JSON.stringify(usersData, null, 2), "utf-8");
     console.log("Data saved successfully");
   } catch (error) {
     console.error("Error saving data:", error);
@@ -33,9 +39,12 @@ async function loadUsersData() {
   return usersData;
 }
 
-async function saveUsersData(data) {
-  await saveData("./users.json", data);
-  usersData = data;
+async function saveUsersData() {
+  await saveData("./users.json");
 }
 
-export default { loadUsersData, saveUsersData, usersData };
+function findUserByUsername(username: string) {
+  return usersData.find((u) => u.username === username);
+}
+
+export default { loadUsersData, saveUsersData, usersData, findUserByUsername };

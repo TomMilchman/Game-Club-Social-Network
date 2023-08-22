@@ -40,18 +40,30 @@ var express = require("express");
 var router = express.Router();
 var bodyParser = require("body-parser");
 var server_1 = require("../server");
+var persist_1 = require("../persist");
 router.use(bodyParser.json()); // Parse JSON request bodies
+//Return the posts of all the users that the requesting user follows by date (newest first)
 router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var tempPass, username;
+    var tempPass_1, requestingUser, followedUsers, posts, i;
     return __generator(this, function (_a) {
         try {
-            tempPass = req.cookies.tempPass;
-            if (server_1.default.get(tempPass) !== undefined) {
-                username = server_1.default.get(tempPass).username;
-                res.status(200).json({ username: username });
+            tempPass_1 = req.cookies.tempPass;
+            if (server_1.default.get(tempPass_1) !== undefined) {
+                requestingUser = persist_1.default.usersData.find(function (user) { return user.username === server_1.default.get(tempPass_1).username; });
+                followedUsers = requestingUser.following;
+                posts = [];
+                for (i = 0; i < followedUsers.length; i++) {
+                    posts.push.apply(posts, followedUsers[i].posts);
+                }
+                posts.sort(function (a, b) {
+                    return b.timestamp.getTime() - a.timestamp.getTime();
+                });
+                res.status(200).json({ username: requestingUser.username, posts: posts });
             }
             else {
-                res.status(401).json({ message: "User is not authenticated" });
+                res
+                    .status(401)
+                    .json({ message: "User is not authenticated to view feed" });
             }
         }
         catch (error) {

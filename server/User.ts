@@ -1,4 +1,10 @@
 import Post from "./Post";
+import persist from "./persist";
+
+enum LoginActivityType {
+  LOGIN,
+  LOGOUT,
+}
 
 class User {
   public username: string;
@@ -9,12 +15,15 @@ class User {
   public followers: User[];
   public posts: Post[];
   public currentPostId: number; //When a new post is created, this will be its id
+  public loginActivity: { type: LoginActivityType; timestamp: Date }[]; //An array holding the activity of the user
 
   constructor(
     username: string,
     password: string,
     email: string,
-    isAdmin: boolean
+    isAdmin: boolean,
+    currentPostId: number,
+    loginActivity: { type: LoginActivityType; timestamp: Date }[]
   ) {
     this.username = username;
     this.password = password;
@@ -23,8 +32,8 @@ class User {
     this.following = [];
     this.followers = [];
     this.posts = [];
-    this.currentPostId = 0;
-    //this.lastLogin = lastLogin;
+    this.currentPostId = currentPostId;
+    this.loginActivity = loginActivity;
   }
 
   addPost(post: Post) {
@@ -50,6 +59,22 @@ class User {
   removeFollowing(user: User) {
     this.following.filter((following) => following.username != user.username);
   }
+
+  addLogin() {
+    this.loginActivity.push({
+      type: LoginActivityType.LOGIN,
+      timestamp: new Date(),
+    });
+    persist.saveUsersData();
+  }
+
+  addLogout() {
+    this.loginActivity.push({
+      type: LoginActivityType.LOGOUT,
+      timestamp: new Date(),
+    });
+    persist.saveUsersData();
+  }
 }
 
-export default User;
+export { User, LoginActivityType };

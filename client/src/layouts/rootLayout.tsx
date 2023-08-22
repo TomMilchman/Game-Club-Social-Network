@@ -73,9 +73,6 @@ export default function RootLayout() {
   useEffect(() => {
     authenticate();
     checkIfAdmin();
-    if (location.pathname === "/" && authenticated) {
-      navigate("/feed", { replace: true });
-    }
   }, []);
 
   return authenticated ? (

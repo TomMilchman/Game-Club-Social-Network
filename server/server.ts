@@ -49,7 +49,10 @@ app.listen(port, async () => {
   try {
     console.log(`Server is running on port ${port}`);
     persist.usersData = await persist.loadUsersData();
-    console.log("User data loaded from disk:", persist.usersData);
+    console.log(
+      "User data loaded from disk:",
+      JSON.stringify(persist.usersData, null, 2)
+    );
 
     // Set up a setInterval function to periodically check for expired tokens
     setInterval(() => {

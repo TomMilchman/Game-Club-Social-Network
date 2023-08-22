@@ -82,7 +82,7 @@ app.listen(port, function () { return __awaiter(void 0, void 0, void 0, function
                 return [4 /*yield*/, persist_1.default.loadUsersData()];
             case 1:
                 _a.usersData = _b.sent();
-                console.log("User data loaded from disk:", persist_1.default.usersData);
+                console.log("User data loaded from disk:", JSON.stringify(persist_1.default.usersData, null, 2));
                 // Set up a setInterval function to periodically check for expired tokens
                 setInterval(function () {
                     var currentTime = Date.now();

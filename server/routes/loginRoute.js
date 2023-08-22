@@ -56,7 +56,6 @@ function checkPasswordHash(username, password) {
                     return [4 /*yield*/, bcrypt.compare(password, user.password)];
                 case 1:
                     if (_a.sent()) {
-                        console.log("User ".concat(username, " login successful"));
                         return [2 /*return*/, {
                                 ok: true,
                                 message: "User ".concat(username, " login successful"),
@@ -69,7 +68,7 @@ function checkPasswordHash(username, password) {
     });
 }
 router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, rememberMeChecked, lowerCaseUsername, loginSuccess, message, maxAge, error_1;
+    var _a, username, password, rememberMeChecked, lowerCaseUsername, loginSuccess, message, maxAge, tempPass, previousUser, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -84,10 +83,18 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 message = { message: loginSuccess.message };
                 if (loginSuccess.ok === true) {
                     maxAge = rememberMeChecked ? 864000000 : 120000;
-                    if (req.cookies.tempPass !== undefined) {
-                        server_1.default.delete(req.cookies.tempPass);
+                    tempPass = req.cookies.tempPass;
+                    if (tempPass !== undefined) {
+                        previousUser = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
+                        if (previousUser !== undefined) {
+                            previousUser.addLogout();
+                            console.log("Previous user ".concat(previousUser.username, " logged out"));
+                        }
+                        server_1.default.delete(tempPass);
                     }
                     cookieManager_1.default.createNewCookies(res, maxAge, lowerCaseUsername);
+                    persist_1.default.findUserByUsername(lowerCaseUsername).addLogin();
+                    console.log("User ".concat(lowerCaseUsername, " login successful"));
                     res.status(200).json(message);
                 }
                 else {

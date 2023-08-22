@@ -5,6 +5,7 @@ import bodyParser = require("body-parser");
 
 import loggedInUsers from "../server";
 import cookieManager from "../cookieManager";
+import persist from "../persist";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
@@ -15,8 +16,10 @@ router.patch("/", (req, res) => {
     const maxAge: number = req.cookies.timeToLive;
 
     if (loggedInUsers.get(tempPass) !== undefined) {
-      cookieManager.deleteCookies(res, tempPass, maxAge);
       const username = loggedInUsers.get(tempPass).username;
+      const user = persist.findUserByUsername(username);
+      user.addLogout();
+      cookieManager.deleteCookies(res, tempPass, maxAge);
       res
         .status(200)
         .json({ message: `User ${username} successfully logged out` });

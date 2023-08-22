@@ -4,7 +4,7 @@ import bodyParser = require("body-parser");
 import TrieSearch from "trie-search";
 
 import persist from "../persist";
-import User from "../User";
+import { User } from "../User";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 

@@ -58,7 +58,7 @@ function registerUser(user) {
                     hashedPassword = _a.sent();
                     user.password = hashedPassword;
                     users.push(user);
-                    return [4 /*yield*/, persist_1.default.saveUsersData(users)];
+                    return [4 /*yield*/, persist_1.default.saveUsersData()];
                 case 2:
                     _a.sent();
                     return [2 /*return*/, { message: "User ".concat(user.username, " registration successful") }];
@@ -71,7 +71,7 @@ function registerUser(user) {
     });
 }
 router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var username, password, email, rememberMeChecked, lowerCaseUsername_1, user, maxAge, users, signupSuccess, message, error_2;
+    var username, password, email, rememberMeChecked, lowerCaseUsername_1, loginActivity, user, maxAge, users, signupSuccess, message, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -99,7 +99,10 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                     res.status(400).json({ message: "invalid email format" });
                     return [2 /*return*/];
                 }
-                user = new User_1.default(lowerCaseUsername_1, password, email, false);
+                loginActivity = [
+                    { type: User_1.LoginActivityType.LOGIN, timestamp: new Date() },
+                ];
+                user = new User_1.User(lowerCaseUsername_1, password, email, false, 0, loginActivity);
                 maxAge = rememberMeChecked ? 864000000 : 1800000;
                 users = persist_1.default.usersData;
                 if (!users.find(function (u) { return u.username === lowerCaseUsername_1; })) return [3 /*break*/, 2];

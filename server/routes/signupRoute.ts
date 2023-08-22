@@ -5,7 +5,7 @@ import bcrypt = require("bcrypt");
 
 import cookieManager from "../cookieManager";
 import persist from "../persist";
-import User from "../User";
+import { User, LoginActivityType } from "../User";
 import loggedInUsers from "../server";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
@@ -16,7 +16,7 @@ async function registerUser(user: User) {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
     users.push(user);
-    await persist.saveUsersData(users);
+    await persist.saveUsersData();
     return { message: `User ${user.username} registration successful` };
   } catch (error) {
     return { message: error };
@@ -49,7 +49,19 @@ router.post("/", async (req, res) => {
       return;
     }
 
-    const user = new User(lowerCaseUsername, password, email, false);
+    const loginActivity = [
+      { type: LoginActivityType.LOGIN, timestamp: new Date() },
+    ];
+
+    const user = new User(
+      lowerCaseUsername,
+      password,
+      email,
+      false,
+      0,
+      loginActivity
+    );
+
     const maxAge = rememberMeChecked ? 864000000 : 1800000; // 10 days : 10 minutes
     const users = persist.usersData;
 

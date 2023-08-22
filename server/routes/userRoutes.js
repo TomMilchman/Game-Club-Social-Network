@@ -62,9 +62,9 @@ router.route("/:username/userpage").get(function (req, res) {
 });
 function followOrUnfollowUser(req, res, action) {
     try {
-        var tempPass_1 = req.cookies.tempPass;
-        var requestingUser_1 = persist_1.default.usersData.find(function (user) { return user.username === server_1.default.get(tempPass_1).username; });
-        var userToSearch = persist_1.default.usersData.find(function (user) { return user.username === req.params.username; });
+        var tempPass = req.cookies.tempPass;
+        var requestingUser_1 = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
+        var userToSearch = persist_1.default.findUserByUsername(req.params.username);
         if (userToSearch !== undefined) {
             var isFollowing = userToSearch.followers.some(function (user) { return user.username === requestingUser_1.username; });
             if ((isFollowing && action === "follow") ||
@@ -103,7 +103,7 @@ router.route("/:username/unfollow").patch(function (req, res) {
     followOrUnfollowUser(req, res, "unfollow");
 });
 router.route("/:username/createpost").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var content, tempPass, username_1, user, currentPostId, timestamp, post, error_1;
+    var content, tempPass, username, user, currentPostId, timestamp, post, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -112,19 +112,19 @@ router.route("/:username/createpost").post(function (req, res) { return __awaite
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 tempPass = req.cookies.tempPass;
-                username_1 = server_1.default.get(tempPass).username;
-                user = persist_1.default.usersData.find(function (user) { return user.username === username_1; });
+                username = server_1.default.get(tempPass).username;
+                user = persist_1.default.findUserByUsername(username);
                 currentPostId = user.currentPostId;
                 timestamp = new Date();
                 post = new Post_1.default(currentPostId, content, timestamp);
                 user.currentPostId++;
                 user.addPost(post);
-                return [4 /*yield*/, persist_1.default.saveUsersData(persist_1.default.usersData)];
+                return [4 /*yield*/, persist_1.default.saveUsersData()];
             case 2:
                 _a.sent();
                 res
                     .status(200)
-                    .json({ message: "Successfully created post for user ".concat(username_1) });
+                    .json({ message: "Successfully created post for user ".concat(username) });
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
@@ -135,7 +135,7 @@ router.route("/:username/createpost").post(function (req, res) { return __awaite
     });
 }); });
 router.route("/:username/posts/:postid/deletepost").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var postid, tempPass, username_2, user, post, error_2;
+    var postid, tempPass, username, user, post, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -144,16 +144,16 @@ router.route("/:username/posts/:postid/deletepost").post(function (req, res) { r
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 tempPass = req.cookies.tempPass;
-                username_2 = server_1.default.get(tempPass).username;
-                user = persist_1.default.usersData.find(function (user) { return user.username === username_2; });
+                username = server_1.default.get(tempPass).username;
+                user = persist_1.default.findUserByUsername(username);
                 post = user.posts.find(function (post) { return post.postId === postid; });
                 user.deletePostById(post.postId);
-                return [4 /*yield*/, persist_1.default.saveUsersData(persist_1.default.usersData)];
+                return [4 /*yield*/, persist_1.default.saveUsersData()];
             case 2:
                 _a.sent();
                 res
                     .status(200)
-                    .json({ message: "Successfully created post for user ".concat(username_2) });
+                    .json({ message: "Successfully created post for user ".concat(username) });
                 return [3 /*break*/, 4];
             case 3:
                 error_2 = _a.sent();
@@ -165,8 +165,8 @@ router.route("/:username/posts/:postid/deletepost").post(function (req, res) { r
 }); });
 router.route("/:username/posts").get(function (req, res) {
     try {
-        var username_3 = req.params.username;
-        var user = persist_1.default.usersData.find(function (user) { return user.username === username_3; });
+        var username = req.params.username;
+        var user = persist_1.default.findUserByUsername(username);
         if (user) {
             var orderedPosts = user.posts.sort(function (a, b) {
                 return b.timestamp.getTime() - a.timestamp.getTime();
@@ -191,13 +191,13 @@ function handleLikeUnlike(req, res, isLikeOperation) {
                     _a.trys.push([0, 2, , 3]);
                     tempPass = req.cookies.tempPass;
                     requestingUsername = server_1.default.get(tempPass).username;
-                    requestedUser = persist_1.default.usersData.find(function (user) { return user.username === req.params.username; });
+                    requestedUser = persist_1.default.findUserByUsername(req.params.username);
                     postId_1 = parseInt(req.params.postid);
                     post = requestedUser.posts.find(function (post) { return post.postId === postId_1; });
                     isLikeOperation
                         ? post.likePost(requestingUsername)
                         : post.unlikePost(requestingUsername);
-                    return [4 /*yield*/, persist_1.default.saveUsersData(persist_1.default.usersData)];
+                    return [4 /*yield*/, persist_1.default.saveUsersData()];
                 case 1:
                     _a.sent();
                     res.status(200).json({

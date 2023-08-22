@@ -14,7 +14,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/" element={<RootLayout />}>
-            <Route path="feed" element={<FeedPage />} />
+            <Route index element={<FeedPage />} />
             <Route path="users/:username" element={<UserPage />} />
           </Route>
           <Route path="*" element={<p>Error 404: Page not found</p>} />

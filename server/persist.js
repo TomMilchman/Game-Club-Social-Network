@@ -51,7 +51,7 @@ function loadData(filePath) {
                     jsonData = _a.sent();
                     userObjects = JSON.parse(jsonData);
                     users = userObjects.map(function (u) {
-                        return new User_1.default(u.username, u.password, u.email, u.isAdmin);
+                        return new User_1.User(u.username, u.password, u.email, u.isAdmin, u.currentPostId, u.loginActivity);
                     });
                     return [2 /*return*/, users];
                 case 2:
@@ -63,17 +63,16 @@ function loadData(filePath) {
         });
     });
 }
-function saveData(filePath, data) {
+function saveData(filePath) {
     return __awaiter(this, void 0, void 0, function () {
         var error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fs_1.promises.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8")];
+                    return [4 /*yield*/, fs_1.promises.writeFile(filePath, JSON.stringify(usersData, null, 2), "utf-8")];
                 case 1:
                     _a.sent();
-                    usersData = data;
                     console.log("Data saved successfully");
                     return [3 /*break*/, 3];
                 case 2:
@@ -97,18 +96,20 @@ function loadUsersData() {
         });
     });
 }
-function saveUsersData(data) {
+function saveUsersData() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, saveData("./users.json", data)];
+                case 0: return [4 /*yield*/, saveData("./users.json")];
                 case 1:
                     _a.sent();
-                    usersData = data;
                     return [2 /*return*/];
             }
         });
     });
 }
-exports.default = { loadUsersData: loadUsersData, saveUsersData: saveUsersData, usersData: usersData };
+function findUserByUsername(username) {
+    return usersData.find(function (u) { return u.username === username; });
+}
+exports.default = { loadUsersData: loadUsersData, saveUsersData: saveUsersData, usersData: usersData, findUserByUsername: findUserByUsername };
 //# sourceMappingURL=persist.js.map

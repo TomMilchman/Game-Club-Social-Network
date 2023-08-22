@@ -30,7 +30,7 @@ export default function LoginPage() {
       if (response.ok) {
         // Successfully logged in
         console.log("Logged in:", responseData.message);
-        navigate("/feed", { replace: true });
+        navigate("/", { replace: true });
         return null;
       } else {
         // Error handling if login failed

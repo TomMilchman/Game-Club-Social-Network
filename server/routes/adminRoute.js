@@ -18,27 +18,29 @@ router.get("/", function (req, res) {
                 var user = persist_1.default.usersData.find(function (user) { return user.username === username_1; });
                 if (user !== undefined) {
                     if (user.isAdmin === true) {
-                        res.status(200).json({ message: "User is an admin" });
-                        console.log("User is an admin");
+                        res.status(200).json({ message: "User ".concat(username_1, " is an admin") });
+                        console.log("User ".concat(username_1, " is an admin"));
                     }
                     else {
-                        res.status(401).json({ message: "User is not an admin" });
-                        console.log("User is not an admin");
+                        res
+                            .status(401)
+                            .json({ message: "User ".concat(username_1, " is not an admin") });
+                        console.log("User ".concat(username_1, " is not an admin"));
                     }
                 }
                 else {
-                    res.status(401).json({ message: "User is not an admin" });
-                    console.log("User is not an admin");
+                    res.status(401).json({ message: "This user is not logged in" });
+                    console.log("This user is not logged in");
                 }
             }
             else {
-                res.status(401).json({ message: "User is not an admin" });
-                console.log("User is not an admin ");
+                res.status(401).json({ message: "This user is not logged in" });
+                console.log("This user is not logged in");
             }
         }
         else {
-            res.status(401).json({ message: "User is not an admin" });
-            console.log("User is not an admin ");
+            res.status(401).json({ message: "This user is not logged in" });
+            console.log("This user is not logged in");
         }
     }
     catch (error) {
