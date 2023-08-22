@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import GameClubLogo from "../images/GameClubLogo.png";
 import SearchBar from "../components/SearchBar";
 import { useEffect, useState } from "react";
@@ -80,7 +80,11 @@ export default function RootLayout() {
       <div id="navbar">
         <img src={GameClubLogo} width={90} height={57} />
         <SearchBar />
-        {isAdmin && <button>Admin page</button>}
+        {isAdmin && (
+          <Link to="/admin">
+            <button>Admin page</button>
+          </Link>
+        )}
         <p>This is the root</p>
         <button onClick={handleLogout}>LOGOUT</button>
       </div>

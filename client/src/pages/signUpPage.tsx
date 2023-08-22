@@ -6,6 +6,7 @@ export default function SignUpPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [rememberMeChecked, setRememberMeChecked] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -15,7 +16,7 @@ export default function SignUpPage() {
       username,
       password,
       email,
-      rememberMeChecked: false, //CHANGE!!!
+      rememberMeChecked,
     };
 
     try {
@@ -73,7 +74,12 @@ export default function SignUpPage() {
       </div>
       <div className="input-container">
         <label>Remember me</label>
-        <input type="checkbox"></input>
+        <input
+          className="remember-me-input"
+          type="checkbox"
+          checked={rememberMeChecked}
+          onChange={(e) => setRememberMeChecked(e.target.checked)}
+        />
       </div>
       <button type="submit" id="signup-btn">
         SIGN UP

@@ -5,6 +5,7 @@ import SignUpPage from "./pages/SignUpPage";
 import RootLayout from "./layouts/RootLayout";
 import FeedPage from "./pages/FeedPage";
 import UserPage from "./pages/UserPage";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<RootLayout />}>
             <Route index element={<FeedPage />} />
             <Route path="users/:username" element={<UserPage />} />
+            <Route path="admin" element={<AdminPage />} />
           </Route>
           <Route path="*" element={<p>Error 404: Page not found</p>} />
         </Routes>

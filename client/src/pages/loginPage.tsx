@@ -5,6 +5,7 @@ import GameClubLogo from "../images/GameClubLogo.png";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMeChecked, setRememberMeChecked] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -13,7 +14,7 @@ export default function LoginPage() {
     const userData = {
       username,
       password,
-      rememberMeChecked: false, //CHANGE!!!
+      rememberMeChecked,
     };
 
     try {
@@ -65,7 +66,12 @@ export default function LoginPage() {
       </div>
       <div className="input-container">
         <label>Remember me</label>
-        <input className="checkbox-input" type="checkbox" />
+        <input
+          className="remember-me-input"
+          type="checkbox"
+          checked={rememberMeChecked}
+          onChange={(e) => setRememberMeChecked(e.target.checked)}
+        />
       </div>
       <button type="submit" id="login-btn">
         LOGIN

@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
     const message = { message: loginSuccess.message };
 
     if (loginSuccess.ok === true) {
-      const maxAge = rememberMeChecked ? 864000000 : 120000;
+      const maxAge = rememberMeChecked ? 864000000 : 1800000; // 10 days or 30 minutes
       const tempPass = req.cookies.tempPass;
       if (tempPass !== undefined) {
         const previousUser = persist.findUserByUsername(
