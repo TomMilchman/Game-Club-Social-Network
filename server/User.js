@@ -44,14 +44,14 @@ var LoginActivityType;
     LoginActivityType[LoginActivityType["LOGOUT"] = 1] = "LOGOUT";
 })(LoginActivityType || (exports.LoginActivityType = LoginActivityType = {}));
 var User = /** @class */ (function () {
-    function User(username, password, email, isAdmin, currentPostId, loginActivity) {
+    function User(username, password, email, isAdmin, following, followers, posts, currentPostId, loginActivity) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.isAdmin = isAdmin;
-        this.following = [];
-        this.followers = [];
-        this.posts = [];
+        this.following = following;
+        this.followers = followers;
+        this.posts = posts;
         this.currentPostId = currentPostId;
         this.loginActivity = loginActivity;
     }

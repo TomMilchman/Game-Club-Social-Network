@@ -58,6 +58,9 @@ router.post("/", async (req, res) => {
       password,
       email,
       false,
+      [],
+      [],
+      [],
       0,
       loginActivity
     );

@@ -6,8 +6,16 @@
     "isAdmin": true,
     "following": [],
     "followers": [],
-    "posts": [],
-    "currentPostId": 2,
+    "posts": [
+      {
+        "postId": 0,
+        "title": "Yo Mortal Kombat 1 be kinda hype",
+        "content": "HYPEEEEEE",
+        "timestamp": "2023-08-23T11:19:49.139Z",
+        "usernamesWhoLiked": []
+      }
+    ],
+    "currentPostId": 1,
     "loginActivity": [
       {
         "type": 0,
@@ -92,6 +100,30 @@
       {
         "type": 1,
         "timestamp": "2023-08-23T10:18:08.752Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T10:59:53.995Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T11:13:30.590Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T11:19:33.010Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-23T11:19:52.930Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T12:06:08.620Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-23T12:10:26.912Z"
       }
     ]
   },
@@ -102,8 +134,16 @@
     "isAdmin": false,
     "following": [],
     "followers": [],
-    "posts": [],
-    "currentPostId": 2,
+    "posts": [
+      {
+        "postId": 0,
+        "title": "Test Post Please Ignore",
+        "content": "Ignore :(",
+        "timestamp": "2023-08-23T11:19:13.523Z",
+        "usernamesWhoLiked": []
+      }
+    ],
+    "currentPostId": 1,
     "loginActivity": [
       {
         "type": 0,
@@ -228,6 +268,54 @@
       {
         "type": 1,
         "timestamp": "2023-08-23T10:35:36.779Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T10:54:55.127Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-23T10:58:25.297Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T11:12:04.924Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T11:19:07.409Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-23T11:19:20.993Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T11:30:34.956Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-23T11:31:14.154Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T11:35:50.390Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T11:40:22.327Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-23T11:41:05.491Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-23T11:41:56.041Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-23T11:43:11.330Z"
       }
     ]
   },

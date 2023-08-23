@@ -102,7 +102,7 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 loginActivity = [
                     { type: User_1.LoginActivityType.LOGIN, timestamp: new Date() },
                 ];
-                user = new User_1.User(lowerCaseUsername_1, password, email, false, 0, loginActivity);
+                user = new User_1.User(lowerCaseUsername_1, password, email, false, [], [], [], 0, loginActivity);
                 maxAge = rememberMeChecked ? 864000000 : 1800000;
                 users = persist_1.default.usersData;
                 if (!users.find(function (u) { return u.username === lowerCaseUsername_1; })) return [3 /*break*/, 2];

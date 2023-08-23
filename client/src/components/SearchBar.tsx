@@ -41,7 +41,7 @@ export default function SearchBar() {
           autoComplete="off"
         />
         <button id="search-bar-btn" onClick={onSearch}>
-          Search
+          SEARCH
         </button>
       </div>
       <div className="dropdown">

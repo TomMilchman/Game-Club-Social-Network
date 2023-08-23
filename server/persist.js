@@ -51,7 +51,7 @@ function loadData(filePath) {
                     jsonData = _a.sent();
                     userObjects = JSON.parse(jsonData);
                     users = userObjects.map(function (u) {
-                        return new User_1.User(u.username, u.password, u.email, u.isAdmin, u.currentPostId, u.loginActivity);
+                        return new User_1.User(u.username, u.password, u.email, u.isAdmin, u.following, u.followers, u.posts, u.currentPostId, u.loginActivity);
                     });
                     return [2 /*return*/, users];
                 case 2:

@@ -3,6 +3,7 @@ import CreatePost from "../components/CreatePost";
 
 export default function FeedPage() {
   const [username, setUsername] = useState("");
+  const [createPostClicked, setCreatePostClicked] = useState(false);
 
   const getFeed = async () => {
     try {
@@ -15,7 +16,8 @@ export default function FeedPage() {
       if (response.ok) {
         setUsername(responseData.username);
       } else {
-        console.log("An error occurred server side:", responseData.message);
+        console.log(responseData.message);
+        alert("Please log in to view your feed.");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -29,7 +31,15 @@ export default function FeedPage() {
   return (
     <div className="feed">
       <h1>{username}'s Feed</h1>
-      <CreatePost />
+      {!createPostClicked && (
+        <button onClick={() => setCreatePostClicked(true)}>CREATE POST</button>
+      )}
+      {createPostClicked && (
+        <>
+          <CreatePost />
+          <button onClick={() => setCreatePostClicked(false)}>CANCEL</button>
+        </>
+      )}
     </div>
   );
 }

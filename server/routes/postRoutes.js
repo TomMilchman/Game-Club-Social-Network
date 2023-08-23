@@ -77,7 +77,7 @@ router.route("/createpost").post(function (req, res) { return __awaiter(void 0, 
                 });
                 return [3 /*break*/, 4];
             case 3:
-                res.status(401).json({ message: "User not logged in" });
+                res.status(401).json({ message: "User not logged in to post" });
                 _a.label = 4;
             case 4: return [3 /*break*/, 6];
             case 5:
@@ -112,7 +112,7 @@ router.route("/deletepost/:postid").post(function (req, res) { return __awaiter(
                     .json({ message: "Successfully created post for user ".concat(username) });
                 return [3 /*break*/, 4];
             case 3:
-                res.status(401).json({ message: "User not logged in" });
+                res.status(401).json({ message: "User not logged in to delete post" });
                 _a.label = 4;
             case 4: return [3 /*break*/, 6];
             case 5:
@@ -148,7 +148,7 @@ function handleLikeUnlike(req, res, isLikeOperation) {
                     });
                     return [3 /*break*/, 3];
                 case 2:
-                    res.status(401).json({ message: "User not logged in" });
+                    res.status(401).json({ message: "User not logged in to like/unlike" });
                     _a.label = 3;
                 case 3: return [3 /*break*/, 5];
                 case 4:

@@ -4,13 +4,17 @@ import { useParams } from "react-router-dom";
 export default function UserPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [numOfFollowing, setNumOfFollowing] = useState(0);
+  const [numOfFollowers, setNumOfFollowers] = useState(0);
+  const [posts, setPosts] = useState([]);
   const [userFound, setUserFound] = useState(false);
+
   const params = useParams();
 
   const getUserInfo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/users/${params.username}/userpage`,
+        `http://localhost:3000/users/${params.username}/data`,
         {
           method: "GET",
           credentials: "include",
@@ -21,8 +25,12 @@ export default function UserPage() {
       if (response.ok) {
         setUsername(responseData.username);
         setEmail(responseData.email);
+        setNumOfFollowing(responseData.following.length);
+        setNumOfFollowers(responseData.followers.length);
+        setPosts(responseData.posts);
         setUserFound(true);
-      } else {
+      } else if (response.status === 404) {
+        console.log(responseData.message);
         setUserFound(false);
       }
     } catch (error) {

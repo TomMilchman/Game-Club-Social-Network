@@ -65,8 +65,9 @@ function followOrUnfollowUser(req, res, action) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
+                    _a.trys.push([0, 8, , 9]);
                     tempPass = req.cookies.tempPass;
+                    if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 6];
                     requestingUser_1 = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
                     userToSearch = persist_1.default.findUserByUsername(req.params.username);
                     if (!(userToSearch !== undefined)) return [3 /*break*/, 4];
@@ -99,11 +100,17 @@ function followOrUnfollowUser(req, res, action) {
                     _a.label = 5;
                 case 5: return [3 /*break*/, 7];
                 case 6:
+                    res
+                        .status(401)
+                        .json({ message: "User not logged in to follow/unfollow" });
+                    _a.label = 7;
+                case 7: return [3 /*break*/, 9];
+                case 8:
                     error_1 = _a.sent();
                     console.error(error_1);
                     res.status(500).send("Internal Server Error");
-                    return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+                    return [3 /*break*/, 9];
+                case 9: return [2 /*return*/];
             }
         });
     });

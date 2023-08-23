@@ -31,9 +31,7 @@ router.get("/", async (req, res) => {
 
       res.status(200).json({ username: requestingUser.username, posts: posts });
     } else {
-      res
-        .status(401)
-        .json({ message: "User is not authenticated to view feed" });
+      res.status(401).json({ message: "User is not logged in to view feed" });
     }
   } catch (error) {
     res.status(500).json({ message: error });

@@ -74,7 +74,7 @@ export default function RootLayout() {
   useEffect(() => {
     authenticate();
     checkIfAdmin();
-  }, []);
+  }, [<Outlet />]);
 
   return authenticated ? (
     <div className="root-layout">
@@ -83,10 +83,9 @@ export default function RootLayout() {
         <SearchBar />
         {isAdmin && (
           <Link to="/admin">
-            <button>Admin page</button>
+            <button>ADMIN PAGE</button>
           </Link>
         )}
-        <p>This is the root</p>
         <button onClick={handleLogout}>LOGOUT</button>
       </div>
       <Outlet />

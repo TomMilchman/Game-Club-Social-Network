@@ -22,6 +22,9 @@ class User {
     password: string,
     email: string,
     isAdmin: boolean,
+    following: User[],
+    followers: User[],
+    posts: Post[],
     currentPostId: number,
     loginActivity: { type: LoginActivityType; timestamp: Date }[]
   ) {
@@ -29,9 +32,9 @@ class User {
     this.password = password;
     this.email = email;
     this.isAdmin = isAdmin;
-    this.following = [];
-    this.followers = [];
-    this.posts = [];
+    this.following = following;
+    this.followers = followers;
+    this.posts = posts;
     this.currentPostId = currentPostId;
     this.loginActivity = loginActivity;
   }

@@ -38,7 +38,7 @@ router.route("/createpost").post(async (req, res) => {
         message: `Successfully created post for user ${username}, post ID: ${currentPostId}`,
       });
     } else {
-      res.status(401).json({ message: "User not logged in" });
+      res.status(401).json({ message: "User not logged in to post" });
     }
   } catch (error) {
     res.status(500).json({ message: `Failed to create post: ${error}` });
@@ -64,7 +64,7 @@ router.route("/deletepost/:postid").post(async (req, res) => {
         .status(200)
         .json({ message: `Successfully created post for user ${username}` });
     } else {
-      res.status(401).json({ message: "User not logged in" });
+      res.status(401).json({ message: "User not logged in to delete post" });
     }
   } catch (error) {
     res.status(500).json({ message: `Failed to create post: ${error}` });
@@ -94,7 +94,7 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
         updatedLikeNum: post.numOfLikes,
       });
     } else {
-      res.status(401).json({ message: "User not logged in" });
+      res.status(401).json({ message: "User not logged in to like/unlike" });
     }
   } catch (error) {
     res.status(500).json({

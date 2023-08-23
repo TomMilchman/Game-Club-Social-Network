@@ -14,6 +14,9 @@ async function loadData(filePath: string) {
         u.password,
         u.email,
         u.isAdmin,
+        u.following,
+        u.followers,
+        u.posts,
         u.currentPostId,
         u.loginActivity
       );

@@ -3,14 +3,24 @@ import { ChangeEvent, useState } from "react";
 export default function Post() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const maxCharCount = 300;
+  const maxContentCharCount = 300;
+  const maxTitleCharCount = 40;
+
+  const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputContent = event.target.value;
+    if (inputContent.length <= maxTitleCharCount) {
+      setTitle(event.target.value);
+    } else {
+      setTitle(inputContent.slice(0, maxTitleCharCount));
+    }
+  };
 
   const handleContentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const inputContent = event.target.value;
-    if (inputContent.length <= maxCharCount) {
+    if (inputContent.length <= maxContentCharCount) {
       setContent(event.target.value);
     } else {
-      setContent(inputContent.slice(0, maxCharCount));
+      setContent(inputContent.slice(0, maxContentCharCount));
     }
   };
 
@@ -54,12 +64,12 @@ export default function Post() {
     <div className="create-post-container">
       <h2>Create a post:</h2>
       <div className="title-container">
-        <label htmlFor="post-title">Title:</label>
+        <label htmlFor="post-title">Title (40 character limit):</label>
         <input
           type="text"
           id="post-title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleTitleChange}
           required
         />
       </div>
@@ -72,7 +82,8 @@ export default function Post() {
           value={content}
           onChange={handleContentChange}
           placeholder="Share a gaming experience..."
-          rows={1}
+          rows={5}
+          cols={50}
           style={{ resize: "none" }}
         ></textarea>
       </div>
