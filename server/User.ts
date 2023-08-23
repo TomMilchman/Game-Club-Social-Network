@@ -60,20 +60,20 @@ class User {
     this.following.filter((following) => following.username != user.username);
   }
 
-  addLogin() {
+  async addLogin() {
     this.loginActivity.push({
       type: LoginActivityType.LOGIN,
       timestamp: new Date(),
     });
-    persist.saveUsersData();
+    await persist.saveUsersData();
   }
 
-  addLogout() {
+  async addLogout() {
     this.loginActivity.push({
       type: LoginActivityType.LOGOUT,
       timestamp: new Date(),
     });
-    persist.saveUsersData();
+    await persist.saveUsersData();
   }
 }
 

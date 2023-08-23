@@ -8,12 +8,12 @@ const port = 3000;
 import persist from "./persist";
 import feedRoute from "./routes/feedRoute";
 import userRoutes from "./routes/userRoutes";
+import postRoutes from "./routes/postRoutes";
 import loginRoute from "./routes/loginRoute";
 import logoutRoute from "./routes/logoutRoute";
 import signupRoute from "./routes/signupRoute";
 import searchRoute from "./routes/searchRoute";
 import authenticationRoute from "./routes/authenticationRoute";
-import cookieManager from "./cookieManager";
 import adminRoute from "./routes/adminRoute";
 
 const loggedInUsers = new Map<
@@ -36,6 +36,7 @@ app.use("/logout", logoutRoute);
 app.use("/authentication", authenticationRoute);
 app.use("/feed", feedRoute);
 app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 app.use("/search", searchRoute);
 app.use("/admin", adminRoute);
 

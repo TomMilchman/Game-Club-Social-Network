@@ -41,7 +41,6 @@ var persist_1 = require("../persist");
 var router = express.Router();
 var server_1 = require("../server");
 var bodyParser = require("body-parser");
-var Post_1 = require("../Post");
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.route("/:username/userpage").get(function (req, res) {
     try {
@@ -61,105 +60,71 @@ router.route("/:username/userpage").get(function (req, res) {
     }
 });
 function followOrUnfollowUser(req, res, action) {
-    try {
-        var tempPass = req.cookies.tempPass;
-        var requestingUser_1 = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
-        var userToSearch = persist_1.default.findUserByUsername(req.params.username);
-        if (userToSearch !== undefined) {
-            var isFollowing = userToSearch.followers.some(function (user) { return user.username === requestingUser_1.username; });
-            if ((isFollowing && action === "follow") ||
-                (!isFollowing && action === "unfollow")) {
-                res.status(400).json({
-                    message: "You are already ".concat(action === "follow" ? "following" : "not following", " this user"),
-                });
+    return __awaiter(this, void 0, void 0, function () {
+        var tempPass, requestingUser_1, userToSearch, isFollowing, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 6, , 7]);
+                    tempPass = req.cookies.tempPass;
+                    requestingUser_1 = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
+                    userToSearch = persist_1.default.findUserByUsername(req.params.username);
+                    if (!(userToSearch !== undefined)) return [3 /*break*/, 4];
+                    isFollowing = userToSearch.followers.some(function (user) { return user.username === requestingUser_1.username; });
+                    if (!((isFollowing && action === "follow") ||
+                        (!isFollowing && action === "unfollow"))) return [3 /*break*/, 1];
+                    res.status(400).json({
+                        message: "You are already ".concat(action === "follow" ? "following" : "not following", " this user"),
+                    });
+                    return [3 /*break*/, 3];
+                case 1:
+                    if (action === "follow") {
+                        userToSearch.addFollower(requestingUser_1);
+                        requestingUser_1.addFollowing(userToSearch);
+                    }
+                    else {
+                        userToSearch.removeFollower(requestingUser_1);
+                        requestingUser_1.removeFollowing(userToSearch);
+                    }
+                    return [4 /*yield*/, persist_1.default.saveUsersData()];
+                case 2:
+                    _a.sent();
+                    res.status(200).json({
+                        message: "User ".concat(requestingUser_1.username, " is ").concat(action === "follow" ? "now following" : "no longer following", " user ").concat(userToSearch.username),
+                    });
+                    _a.label = 3;
+                case 3: return [3 /*break*/, 5];
+                case 4:
+                    res.status(404).json({ message: "User not found" });
+                    _a.label = 5;
+                case 5: return [3 /*break*/, 7];
+                case 6:
+                    error_1 = _a.sent();
+                    console.error(error_1);
+                    res.status(500).send("Internal Server Error");
+                    return [3 /*break*/, 7];
+                case 7: return [2 /*return*/];
             }
-            else {
-                if (action === "follow") {
-                    userToSearch.addFollower(requestingUser_1);
-                    requestingUser_1.addFollowing(userToSearch);
-                }
-                else {
-                    userToSearch.removeFollower(requestingUser_1);
-                    requestingUser_1.removeFollowing(userToSearch);
-                }
-                res.status(200).json({
-                    message: "User ".concat(requestingUser_1.username, " is ").concat(action === "follow" ? "now following" : "no longer following", " user ").concat(userToSearch.username),
-                });
-            }
-        }
-        else {
-            res.status(404).json({ message: "User not found" });
-        }
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
-    }
+        });
+    });
 }
-router.route("/:username/follow").patch(function (req, res) {
-    followOrUnfollowUser(req, res, "follow");
-});
-router.route("/:username/unfollow").patch(function (req, res) {
-    followOrUnfollowUser(req, res, "unfollow");
-});
-router.route("/:username/createpost").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var content, tempPass, username, user, currentPostId, timestamp, post, error_1;
+router.route("/:username/follow").patch(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                content = req.body.content;
-                _a.label = 1;
+            case 0: return [4 /*yield*/, followOrUnfollowUser(req, res, "follow")];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                tempPass = req.cookies.tempPass;
-                username = server_1.default.get(tempPass).username;
-                user = persist_1.default.findUserByUsername(username);
-                currentPostId = user.currentPostId;
-                timestamp = new Date();
-                post = new Post_1.default(currentPostId, content, timestamp);
-                user.currentPostId++;
-                user.addPost(post);
-                return [4 /*yield*/, persist_1.default.saveUsersData()];
-            case 2:
                 _a.sent();
-                res
-                    .status(200)
-                    .json({ message: "Successfully created post for user ".concat(username) });
-                return [3 /*break*/, 4];
-            case 3:
-                error_1 = _a.sent();
-                res.status(500).json({ message: "Failed to create post: ".concat(error_1) });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [2 /*return*/];
         }
     });
 }); });
-router.route("/:username/posts/:postid/deletepost").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var postid, tempPass, username, user, post, error_2;
+router.route("/:username/unfollow").patch(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                postid = parseInt(req.params.postid);
-                _a.label = 1;
+            case 0: return [4 /*yield*/, followOrUnfollowUser(req, res, "unfollow")];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                tempPass = req.cookies.tempPass;
-                username = server_1.default.get(tempPass).username;
-                user = persist_1.default.findUserByUsername(username);
-                post = user.posts.find(function (post) { return post.postId === postid; });
-                user.deletePostById(post.postId);
-                return [4 /*yield*/, persist_1.default.saveUsersData()];
-            case 2:
                 _a.sent();
-                res
-                    .status(200)
-                    .json({ message: "Successfully created post for user ".concat(username) });
-                return [3 /*break*/, 4];
-            case 3:
-                error_2 = _a.sent();
-                res.status(500).json({ message: "Failed to create post: ".concat(error_2) });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [2 /*return*/];
         }
     });
 }); });
@@ -182,59 +147,5 @@ router.route("/:username/posts").get(function (req, res) {
         res.status(500).send("Internal Server Error");
     }
 });
-function handleLikeUnlike(req, res, isLikeOperation) {
-    return __awaiter(this, void 0, void 0, function () {
-        var tempPass, requestingUsername, requestedUser, postId_1, post, error_3;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    tempPass = req.cookies.tempPass;
-                    requestingUsername = server_1.default.get(tempPass).username;
-                    requestedUser = persist_1.default.findUserByUsername(req.params.username);
-                    postId_1 = parseInt(req.params.postid);
-                    post = requestedUser.posts.find(function (post) { return post.postId === postId_1; });
-                    isLikeOperation
-                        ? post.likePost(requestingUsername)
-                        : post.unlikePost(requestingUsername);
-                    return [4 /*yield*/, persist_1.default.saveUsersData()];
-                case 1:
-                    _a.sent();
-                    res.status(200).json({
-                        message: "User ".concat(requestingUsername, " ").concat(isLikeOperation ? "liked" : "unliked", " user ").concat(req.params.username, "'s post number ").concat(postId_1),
-                        updatedLikeNum: post.numOfLikes,
-                    });
-                    return [3 /*break*/, 3];
-                case 2:
-                    error_3 = _a.sent();
-                    res.status(500).json({
-                        message: "Error ".concat(isLikeOperation ? "liking" : "unliking", " post: ").concat(error_3),
-                    });
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
-            }
-        });
-    });
-}
-router.route("/:username/posts/:postid/like").patch(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, handleLikeUnlike(req, res, true)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
-    });
-}); });
-router.route("/:username/posts/:postid/unlike").patch(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, handleLikeUnlike(req, res, false)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
-    });
-}); });
 exports.default = router;
 //# sourceMappingURL=userRoutes.js.map

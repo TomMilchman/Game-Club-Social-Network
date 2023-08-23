@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CreatePost from "../components/CreatePost";
 
 export default function FeedPage() {
   const [username, setUsername] = useState("");
@@ -27,7 +28,8 @@ export default function FeedPage() {
 
   return (
     <div className="feed">
-      <p>This is the feed for user {username}</p>
+      <h1>{username}'s Feed</h1>
+      <CreatePost />
     </div>
   );
 }

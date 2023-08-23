@@ -75,38 +75,42 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 _a = req.body, username = _a.username, password = _a.password, rememberMeChecked = _a.rememberMeChecked;
                 _b.label = 1;
             case 1:
-                _b.trys.push([1, 3, , 4]);
+                _b.trys.push([1, 8, , 9]);
                 lowerCaseUsername = username.toLowerCase();
                 return [4 /*yield*/, checkPasswordHash(lowerCaseUsername, password)];
             case 2:
                 loginSuccess = _b.sent();
                 message = { message: loginSuccess.message };
-                if (loginSuccess.ok === true) {
-                    maxAge = rememberMeChecked ? 864000000 : 1800000;
-                    tempPass = req.cookies.tempPass;
-                    if (tempPass !== undefined) {
-                        previousUser = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
-                        if (previousUser !== undefined) {
-                            previousUser.addLogout();
-                            console.log("Previous user ".concat(previousUser.username, " logged out"));
-                        }
-                        server_1.default.delete(tempPass);
-                    }
-                    cookieManager_1.default.createNewCookies(res, maxAge, lowerCaseUsername);
-                    persist_1.default.findUserByUsername(lowerCaseUsername).addLogin();
-                    console.log("User ".concat(lowerCaseUsername, " login successful"));
-                    res.status(200).json(message);
-                }
-                else {
-                    res.status(401).json(message);
-                }
-                return [3 /*break*/, 4];
+                if (!(loginSuccess.ok === true)) return [3 /*break*/, 6];
+                maxAge = rememberMeChecked ? 864000000 : 1800000;
+                tempPass = req.cookies.tempPass;
+                if (!(tempPass !== undefined)) return [3 /*break*/, 4];
+                if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 4];
+                previousUser = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
+                return [4 /*yield*/, previousUser.addLogout()];
             case 3:
+                _b.sent();
+                console.log("Previous user ".concat(previousUser.username, " logged out"));
+                server_1.default.delete(tempPass);
+                _b.label = 4;
+            case 4:
+                cookieManager_1.default.createNewCookies(res, maxAge, lowerCaseUsername);
+                return [4 /*yield*/, persist_1.default.findUserByUsername(lowerCaseUsername).addLogin()];
+            case 5:
+                _b.sent();
+                console.log("User ".concat(lowerCaseUsername, " login successful"));
+                res.status(200).json(message);
+                return [3 /*break*/, 7];
+            case 6:
+                res.status(401).json(message);
+                _b.label = 7;
+            case 7: return [3 /*break*/, 9];
+            case 8:
                 error_1 = _b.sent();
                 console.error("Error during login:", error_1);
                 res.status(500).json({ message: error_1 });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 9];
+            case 9: return [2 /*return*/];
         }
     });
 }); });

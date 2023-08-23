@@ -20,6 +20,7 @@ export default function RootLayout() {
 
       const responseData = await response.json();
       console.log(responseData.message);
+      setAuthenticated(false);
       navigate("/login");
     } catch (error) {
       console.error("Error:", error);

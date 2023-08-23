@@ -2,26 +2,28 @@ import User from "./Post";
 
 class Post {
   public postId: number;
+  public title: string;
   public content: string;
   public timestamp: Date;
   public usernamesWhoLiked: string[];
 
-  constructor(postId: number, content: string, timestamp: Date) {
+  constructor(postId: number, title: string, content: string, timestamp: Date) {
     this.postId = postId;
+    this.title = title;
     this.content = content;
     this.timestamp = timestamp;
     this.usernamesWhoLiked = [];
   }
 
-  likePost(username: string) {
-    this.usernamesWhoLiked.push(username);
+  likePost(usernameToAdd: string) {
+    this.usernamesWhoLiked.push(usernameToAdd);
   }
 
   unlikePost(usernameToRemove: string) {
     this.usernamesWhoLiked.filter((username) => username !== usernameToRemove);
   }
 
-  numOfLikes() {
+  numOfLikes(): number {
     return this.usernamesWhoLiked.length;
   }
 }

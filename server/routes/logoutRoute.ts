@@ -10,20 +10,26 @@ import persist from "../persist";
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
 
-router.patch("/", (req, res) => {
+router.patch("/", async (req, res) => {
   try {
     const tempPass: string = req.cookies.tempPass;
     const maxAge: number = req.cookies.timeToLive;
 
-    if (loggedInUsers.get(tempPass) !== undefined) {
-      const username = loggedInUsers.get(tempPass).username;
-      const user = persist.findUserByUsername(username);
-      user.addLogout();
-      cookieManager.deleteCookies(res, tempPass, maxAge);
-      res
-        .status(200)
-        .json({ message: `User ${username} successfully logged out` });
-      console.log(`User ${username} successfully logged out`);
+    if (tempPass !== undefined) {
+      if (loggedInUsers.get(tempPass) !== undefined) {
+        const username = loggedInUsers.get(tempPass).username;
+        const user = persist.findUserByUsername(username);
+        await user.addLogout();
+        cookieManager.deleteCookies(res, tempPass, maxAge);
+        res
+          .status(200)
+          .json({ message: `User ${username} successfully logged out` });
+        console.log(`User ${username} successfully logged out`);
+      } else {
+        res.status(400).json({
+          message: "User might have been logged in before server went down",
+        });
+      }
     } else {
       res.status(400).json({ message: "No user is signed in to log out" });
     }

@@ -25,7 +25,7 @@ router.route("/:username/userpage").get((req, res) => {
   }
 });
 
-function followOrUnfollowUser(req, res, action) {
+async function followOrUnfollowUser(req, res, action) {
   try {
     const tempPass = req.cookies.tempPass;
     const requestingUser = persist.findUserByUsername(
@@ -55,6 +55,9 @@ function followOrUnfollowUser(req, res, action) {
           userToSearch.removeFollower(requestingUser);
           requestingUser.removeFollowing(userToSearch);
         }
+
+        await persist.saveUsersData();
+
         res.status(200).json({
           message: `User ${requestingUser.username} is ${
             action === "follow" ? "now following" : "no longer following"
@@ -70,56 +73,12 @@ function followOrUnfollowUser(req, res, action) {
   }
 }
 
-router.route("/:username/follow").patch((req, res) => {
-  followOrUnfollowUser(req, res, "follow");
+router.route("/:username/follow").patch(async (req, res) => {
+  await followOrUnfollowUser(req, res, "follow");
 });
 
-router.route("/:username/unfollow").patch((req, res) => {
-  followOrUnfollowUser(req, res, "unfollow");
-});
-
-router.route("/:username/createpost").post(async (req, res) => {
-  const content: string = req.body.content;
-
-  try {
-    const tempPass = req.cookies.tempPass;
-    const username = loggedInUsers.get(tempPass).username;
-    const user = persist.findUserByUsername(username);
-    const currentPostId = user.currentPostId;
-    const timestamp = new Date();
-
-    const post = new Post(currentPostId, content, timestamp);
-    user.currentPostId++;
-    user.addPost(post);
-
-    await persist.saveUsersData();
-
-    res
-      .status(200)
-      .json({ message: `Successfully created post for user ${username}` });
-  } catch (error) {
-    res.status(500).json({ message: `Failed to create post: ${error}` });
-  }
-});
-
-router.route("/:username/posts/:postid/deletepost").post(async (req, res) => {
-  const postid = parseInt(req.params.postid);
-
-  try {
-    const tempPass = req.cookies.tempPass;
-    const username = loggedInUsers.get(tempPass).username;
-    const user = persist.findUserByUsername(username);
-    const post = user.posts.find((post) => post.postId === postid);
-    user.deletePostById(post.postId);
-
-    await persist.saveUsersData();
-
-    res
-      .status(200)
-      .json({ message: `Successfully created post for user ${username}` });
-  } catch (error) {
-    res.status(500).json({ message: `Failed to create post: ${error}` });
-  }
+router.route("/:username/unfollow").patch(async (req, res) => {
+  await followOrUnfollowUser(req, res, "unfollow");
 });
 
 router.route("/:username/posts").get((req, res) => {
@@ -139,43 +98,6 @@ router.route("/:username/posts").get((req, res) => {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
-});
-
-async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
-  try {
-    const tempPass = req.cookies.tempPass;
-    const requestingUsername = loggedInUsers.get(tempPass).username;
-    const requestedUser = persist.findUserByUsername(req.params.username);
-    const postId = parseInt(req.params.postid);
-    const post = requestedUser.posts.find((post) => post.postId === postId);
-
-    isLikeOperation
-      ? post.likePost(requestingUsername)
-      : post.unlikePost(requestingUsername);
-
-    await persist.saveUsersData();
-
-    res.status(200).json({
-      message: `User ${requestingUsername} ${
-        isLikeOperation ? "liked" : "unliked"
-      } user ${req.params.username}'s post number ${postId}`,
-      updatedLikeNum: post.numOfLikes,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: `Error ${
-        isLikeOperation ? "liking" : "unliking"
-      } post: ${error}`,
-    });
-  }
-}
-
-router.route("/:username/posts/:postid/like").patch(async (req, res) => {
-  await handleLikeUnlike(req, res, true);
-});
-
-router.route("/:username/posts/:postid/unlike").patch(async (req, res) => {
-  await handleLikeUnlike(req, res, false);
 });
 
 export default router;

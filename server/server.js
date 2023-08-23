@@ -45,6 +45,7 @@ var port = 3000;
 var persist_1 = require("./persist");
 var feedRoute_1 = require("./routes/feedRoute");
 var userRoutes_1 = require("./routes/userRoutes");
+var postRoutes_1 = require("./routes/postRoutes");
 var loginRoute_1 = require("./routes/loginRoute");
 var logoutRoute_1 = require("./routes/logoutRoute");
 var signupRoute_1 = require("./routes/signupRoute");
@@ -64,6 +65,7 @@ app.use("/logout", logoutRoute_1.default);
 app.use("/authentication", authenticationRoute_1.default);
 app.use("/feed", feedRoute_1.default);
 app.use("/users", userRoutes_1.default);
+app.use("/posts", postRoutes_1.default);
 app.use("/search", searchRoute_1.default);
 app.use("/admin", adminRoute_1.default);
 //Error 404 for non-existing pages

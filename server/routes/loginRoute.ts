@@ -39,17 +39,17 @@ router.post("/", async (req, res) => {
       const maxAge = rememberMeChecked ? 864000000 : 1800000; // 10 days or 30 minutes
       const tempPass = req.cookies.tempPass;
       if (tempPass !== undefined) {
-        const previousUser = persist.findUserByUsername(
-          loggedInUsers.get(tempPass).username
-        );
-        if (previousUser !== undefined) {
-          previousUser.addLogout();
+        if (loggedInUsers.get(tempPass) !== undefined) {
+          const previousUser = persist.findUserByUsername(
+            loggedInUsers.get(tempPass).username
+          );
+          await previousUser.addLogout();
           console.log(`Previous user ${previousUser.username} logged out`);
+          loggedInUsers.delete(tempPass);
         }
-        loggedInUsers.delete(tempPass);
       }
       cookieManager.createNewCookies(res, maxAge, lowerCaseUsername);
-      persist.findUserByUsername(lowerCaseUsername).addLogin();
+      await persist.findUserByUsername(lowerCaseUsername).addLogin();
       console.log(`User ${lowerCaseUsername} login successful`);
       res.status(200).json(message);
     } else {
