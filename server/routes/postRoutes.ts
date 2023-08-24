@@ -46,7 +46,7 @@ router.route("/createpost").post(async (req, res) => {
 });
 
 //User deletes their own post
-router.route("/deletepost/:postid").post(async (req, res) => {
+router.route("/deletepost/:postid").delete(async (req, res) => {
   const postid = parseInt(req.params.postid);
 
   try {
@@ -78,21 +78,36 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
     if (loggedInUsers.get(tempPass) !== undefined) {
       const requestingUsername = loggedInUsers.get(tempPass).username;
       const requestedUser = persist.findUserByUsername(req.params.username);
+      const posts = requestedUser.posts;
       const postId = parseInt(req.params.postid);
-      const post = requestedUser.posts.find((post) => post.postId === postId);
 
-      isLikeOperation
-        ? post.likePost(requestingUsername)
-        : post.unlikePost(requestingUsername);
+      if (isNaN(postId)) {
+        res.status(400).json({ message: "Invalid post ID" });
+        return;
+      }
 
-      await persist.saveUsersData();
+      const post = posts.find((post) => post.postId === postId);
 
-      res.status(200).json({
-        message: `User ${requestingUsername} ${
-          isLikeOperation ? "liked" : "unliked"
-        } user ${req.params.username}'s post number ${postId}`,
-        updatedLikeNum: post.numOfLikes,
-      });
+      if (post !== undefined) {
+        isLikeOperation
+          ? post.usernamesWhoLiked.push(requestingUsername)
+          : (post.usernamesWhoLiked = post.usernamesWhoLiked.filter(
+              (username) => username !== requestingUsername
+            ));
+
+        await persist.saveUsersData();
+
+        res.status(200).json({
+          message: `User ${requestingUsername} ${
+            isLikeOperation ? "liked" : "unliked"
+          } user ${req.params.username}'s post number ${postId}`,
+          updatedLikeNum: post.usernamesWhoLiked.length,
+        });
+      } else {
+        res.status(404).json({
+          message: `Post with ID ${postId} not found for user ${req.params.username}`,
+        });
+      }
     } else {
       res.status(401).json({ message: "User not logged in to like/unlike" });
     }

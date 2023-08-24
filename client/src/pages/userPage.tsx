@@ -6,6 +6,7 @@ import PostClass from "../../../server/Post";
 export default function UserPage() {
   const [posts, setPosts] = useState<PostClass[]>([]);
   const [userFound, setUserFound] = useState(false);
+  const [requestingUsername, setRequestingUsername] = useState("");
 
   const params = useParams();
   const username = params.username;
@@ -22,7 +23,8 @@ export default function UserPage() {
 
       const responseData = await response.json();
       if (response.ok) {
-        const posts: PostClass[] = responseData;
+        const posts: PostClass[] = responseData.posts;
+        setRequestingUsername(responseData.requestingUsername);
         setPosts(posts);
         setUserFound(true);
       } else if (response.status === 404) {
@@ -53,16 +55,25 @@ export default function UserPage() {
           <PostComponent
             key={post.postId}
             username={username!}
+            postId={post.postId}
             title={post.title}
             timestamp={post.timestamp}
             content={post.content}
             numOfLikes={post.usernamesWhoLiked.length}
+            didUserLikePost={post.usernamesWhoLiked.includes(
+              requestingUsername
+            )}
           />
         ))}
       </>
     );
   } else if (userFound && posts.length === 0) {
-    return <h2>User has not made any posts yet.</h2>;
+    return (
+      <>
+        <h1>User {username}'s page</h1>
+        <h2>User has not made any posts yet.</h2>
+      </>
+    );
   } else {
     return <p>Error 404: user not found</p>;
   }

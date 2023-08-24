@@ -89,7 +89,7 @@ router.route("/createpost").post(function (req, res) { return __awaiter(void 0, 
     });
 }); });
 //User deletes their own post
-router.route("/deletepost/:postid").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.route("/deletepost/:postid").delete(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var postid, tempPass, username, user, post, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -125,39 +125,51 @@ router.route("/deletepost/:postid").post(function (req, res) { return __awaiter(
 }); });
 function handleLikeUnlike(req, res, isLikeOperation) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, requestingUsername, requestedUser, postId_1, post, error_3;
+        var tempPass, requestingUsername_1, requestedUser, posts, postId_1, post, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 4, , 5]);
+                    _a.trys.push([0, 6, , 7]);
                     tempPass = req.cookies.tempPass;
-                    if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 2];
-                    requestingUsername = server_1.default.get(tempPass).username;
+                    if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 4];
+                    requestingUsername_1 = server_1.default.get(tempPass).username;
                     requestedUser = persist_1.default.findUserByUsername(req.params.username);
+                    posts = requestedUser.posts;
                     postId_1 = parseInt(req.params.postid);
-                    post = requestedUser.posts.find(function (post) { return post.postId === postId_1; });
+                    if (isNaN(postId_1)) {
+                        res.status(400).json({ message: "Invalid post ID" });
+                        return [2 /*return*/];
+                    }
+                    post = posts.find(function (post) { return post.postId === postId_1; });
+                    if (!(post !== undefined)) return [3 /*break*/, 2];
                     isLikeOperation
-                        ? post.likePost(requestingUsername)
-                        : post.unlikePost(requestingUsername);
+                        ? post.usernamesWhoLiked.push(requestingUsername_1)
+                        : (post.usernamesWhoLiked = post.usernamesWhoLiked.filter(function (username) { return username !== requestingUsername_1; }));
                     return [4 /*yield*/, persist_1.default.saveUsersData()];
                 case 1:
                     _a.sent();
                     res.status(200).json({
-                        message: "User ".concat(requestingUsername, " ").concat(isLikeOperation ? "liked" : "unliked", " user ").concat(req.params.username, "'s post number ").concat(postId_1),
-                        updatedLikeNum: post.numOfLikes,
+                        message: "User ".concat(requestingUsername_1, " ").concat(isLikeOperation ? "liked" : "unliked", " user ").concat(req.params.username, "'s post number ").concat(postId_1),
+                        updatedLikeNum: post.usernamesWhoLiked.length,
                     });
                     return [3 /*break*/, 3];
                 case 2:
-                    res.status(401).json({ message: "User not logged in to like/unlike" });
+                    res.status(404).json({
+                        message: "Post with ID ".concat(postId_1, " not found for user ").concat(req.params.username),
+                    });
                     _a.label = 3;
                 case 3: return [3 /*break*/, 5];
                 case 4:
+                    res.status(401).json({ message: "User not logged in to like/unlike" });
+                    _a.label = 5;
+                case 5: return [3 /*break*/, 7];
+                case 6:
                     error_3 = _a.sent();
                     res.status(500).json({
                         message: "Error ".concat(isLikeOperation ? "liking" : "unliking", " post: ").concat(error_3),
                     });
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/];
+                    return [3 /*break*/, 7];
+                case 7: return [2 /*return*/];
             }
         });
     });

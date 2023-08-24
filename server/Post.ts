@@ -1,5 +1,3 @@
-import User from "./Post";
-
 class Post {
   public postId: number;
   public title: string;
@@ -13,18 +11,6 @@ class Post {
     this.content = content;
     this.timestamp = timestamp;
     this.usernamesWhoLiked = [];
-  }
-
-  likePost(usernameToAdd: string) {
-    this.usernamesWhoLiked.push(usernameToAdd);
-  }
-
-  unlikePost(usernameToRemove: string) {
-    this.usernamesWhoLiked.filter((username) => username !== usernameToRemove);
-  }
-
-  numOfLikes(): number {
-    return this.usernamesWhoLiked.length;
   }
 }
 
