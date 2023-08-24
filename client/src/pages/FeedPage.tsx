@@ -17,7 +17,6 @@ export default function FeedPage() {
         setUsername(responseData.username);
       } else {
         console.log(responseData.message);
-        alert("Please log in to view your feed.");
       }
     } catch (error) {
       console.error("Error fetching data:", error);

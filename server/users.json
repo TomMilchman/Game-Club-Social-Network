@@ -13,9 +13,16 @@
         "content": "HYPEEEEEE",
         "timestamp": "2023-08-23T11:19:49.139Z",
         "usernamesWhoLiked": []
+      },
+      {
+        "postId": 1,
+        "title": "Second test post, please ignore",
+        "content": "Please ignore!!!",
+        "timestamp": "2023-08-24T10:55:16.445Z",
+        "usernamesWhoLiked": []
       }
     ],
-    "currentPostId": 1,
+    "currentPostId": 2,
     "loginActivity": [
       {
         "type": 0,
@@ -124,6 +131,22 @@
       {
         "type": 1,
         "timestamp": "2023-08-23T12:10:26.912Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-24T10:37:52.838Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-24T11:11:45.079Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-24T11:13:25.306Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-24T11:27:42.991Z"
       }
     ]
   },
@@ -316,6 +339,26 @@
       {
         "type": 1,
         "timestamp": "2023-08-23T11:43:11.330Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-24T10:26:10.668Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-24T10:27:45.989Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-24T10:30:00.798Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-24T10:32:25.456Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-24T10:33:01.767Z"
       }
     ]
   },

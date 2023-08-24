@@ -69,16 +69,13 @@ router.route("/:username/unfollow").patch(async (req, res) => {
   await followOrUnfollowUser(req, res, "unfollow");
 });
 
-router.route("/:username/data").get((req, res) => {
+router.route("/:username/posts").get((req, res) => {
   try {
     const username = req.params.username;
     const user = persist.findUserByUsername(username);
 
-    if (user) {
-      user.posts.sort((a, b) => {
-        return b.timestamp.getTime() - a.timestamp.getTime();
-      });
-      res.status(200).json(user);
+    if (user !== undefined) {
+      res.status(200).json(user.posts);
     } else {
       res.status(404).json({ message: "User not found" });
     }

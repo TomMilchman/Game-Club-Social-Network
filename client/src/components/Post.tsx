@@ -3,6 +3,7 @@ import { useState } from "react";
 
 interface Props {
   username: string;
+  title: string;
   timestamp: Date;
   content: string;
   numOfLikes: number;
@@ -29,8 +30,9 @@ export default function Post(props: Props) {
   return (
     <div className="post-container">
       <div className="post-top">
-        <h2 className="post-username">{props.username}</h2>
-        <h3 className="post-timestamp">{formattedTimestamp}</h3>
+        <h2 className="post-title">{props.title}</h2>
+        <h3 className="post-username">{props.username}</h3>
+        <h4 className="post-timestamp">{formattedTimestamp}</h4>
       </div>
       <div className="post-content-container">
         <p className="post-content">{props.content}</p>

@@ -42,23 +42,6 @@ var router = express.Router();
 var server_1 = require("../server");
 var bodyParser = require("body-parser");
 router.use(bodyParser.json()); // Parse JSON request bodies
-router.route("/:username/userpage").get(function (req, res) {
-    try {
-        var username = req.params.username;
-        for (var i = 0; i < persist_1.default.usersData.length; i++) {
-            var user = persist_1.default.usersData[i];
-            if (user.username === username) {
-                res.status(200).json(user);
-                return;
-            }
-        }
-        res.status(404); // Set status code for user not found
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error"); // Handle loading error with status code
-    }
-});
 function followOrUnfollowUser(req, res, action) {
     return __awaiter(this, void 0, void 0, function () {
         var tempPass, requestingUser_1, userToSearch, isFollowing, error_1;
@@ -139,11 +122,8 @@ router.route("/:username/posts").get(function (req, res) {
     try {
         var username = req.params.username;
         var user = persist_1.default.findUserByUsername(username);
-        if (user) {
-            var orderedPosts = user.posts.sort(function (a, b) {
-                return b.timestamp.getTime() - a.timestamp.getTime();
-            });
-            res.status(200).json(orderedPosts);
+        if (user !== undefined) {
+            res.status(200).json(user.posts);
         }
         else {
             res.status(404).json({ message: "User not found" });

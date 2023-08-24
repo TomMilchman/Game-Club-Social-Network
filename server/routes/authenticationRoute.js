@@ -12,7 +12,7 @@ router.get("/", function (req, res) {
     var tempPass = req.cookies.tempPass;
     var maxAge = req.cookies.timeToLive;
     try {
-        if (tempPass !== undefined) {
+        if (server_1.default.get(tempPass) !== undefined) {
             var username = server_1.default.get(tempPass).username;
             if (username !== undefined) {
                 console.log("User ".concat(username, " authentication successful"));

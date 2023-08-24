@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
   const maxAge: number = req.cookies.timeToLive;
 
   try {
-    if (tempPass !== undefined) {
+    if (loggedInUsers.get(tempPass) !== undefined) {
       const username = loggedInUsers.get(tempPass).username;
       if (username !== undefined) {
         console.log(`User ${username} authentication successful`);

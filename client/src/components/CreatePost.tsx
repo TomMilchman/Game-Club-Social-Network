@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 
-export default function Post() {
+export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const maxContentCharCount = 300;

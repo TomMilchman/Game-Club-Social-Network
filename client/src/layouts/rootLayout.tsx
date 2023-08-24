@@ -74,13 +74,16 @@ export default function RootLayout() {
   useEffect(() => {
     authenticate();
     checkIfAdmin();
-  }, [<Outlet />]);
+  }, []);
 
   return authenticated ? (
     <div className="root-layout">
       <div id="navbar">
         <img src={GameClubLogo} width={90} height={57} />
         <SearchBar />
+        <Link to="/">
+          <button>USER FEED</button>
+        </Link>
         {isAdmin && (
           <Link to="/admin">
             <button>ADMIN PAGE</button>
