@@ -44,20 +44,17 @@ var persist_1 = require("../persist");
 router.use(bodyParser.json()); // Parse JSON request bodies
 //Return the posts of all the users that the requesting user follows by date (newest first)
 router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var tempPass_1, requestingUser, followedUsers, posts, i;
+    var tempPass_1, requestingUser, followedUsers, posts;
     return __generator(this, function (_a) {
         try {
             tempPass_1 = req.cookies.tempPass;
             if (server_1.default.get(tempPass_1) !== undefined) {
                 requestingUser = persist_1.default.usersData.find(function (user) { return user.username === server_1.default.get(tempPass_1).username; });
-                followedUsers = requestingUser.following;
+                followedUsers = requestingUser.followedUsernames;
                 posts = [];
-                for (i = 0; i < followedUsers.length; i++) {
-                    posts.push.apply(posts, followedUsers[i].posts);
-                }
-                posts.sort(function (a, b) {
-                    return b.timestamp.getTime() - a.timestamp.getTime();
-                });
+                // for (let i = 0; i < followedUsers.length; i++) {
+                //   posts.push(...persist.findUserByUsername(followedUsers[i]).posts);
+                // }
                 res.status(200).json({ username: requestingUser.username, posts: posts });
             }
             else {
@@ -66,7 +63,7 @@ router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, f
         }
         catch (error) {
             res.status(500).json({ message: error });
-            console.log("Error fetching feed: ", error);
+            console.log("Error fetching feed: ", error.message);
         }
         return [2 /*return*/];
     });

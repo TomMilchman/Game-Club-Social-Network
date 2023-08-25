@@ -1,6 +1,5 @@
 import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import GameClubLogo from "../images/GameClubLogo.png";
-import SearchBar from "../components/SearchBar";
 import { useEffect, useState } from "react";
 
 export default function RootLayout() {
@@ -74,15 +73,18 @@ export default function RootLayout() {
   useEffect(() => {
     authenticate();
     checkIfAdmin();
-  }, []);
+  }, [<Outlet />]);
 
   return authenticated ? (
     <div className="root-layout">
       <div id="navbar">
         <img src={GameClubLogo} width={90} height={57} />
-        <SearchBar />
+        <br />
         <Link to="/">
           <button>USER FEED</button>
+        </Link>
+        <Link to="/following">
+          <button>FOLLOWING</button>
         </Link>
         {isAdmin && (
           <Link to="/admin">

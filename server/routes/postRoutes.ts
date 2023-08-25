@@ -31,8 +31,7 @@ router.route("/createpost").post(async (req, res) => {
       const post = new Post(currentPostId, title, content, timestamp);
       user.currentPostId++;
       user.addPost(post);
-
-      await persist.saveUsersData();
+      user.addNewPostActivity();
 
       res.status(200).json({
         message: `Successfully created post for user ${username}, post ID: ${currentPostId}`,
@@ -41,7 +40,9 @@ router.route("/createpost").post(async (req, res) => {
       res.status(401).json({ message: "User not logged in to post" });
     }
   } catch (error) {
-    res.status(500).json({ message: `Failed to create post: ${error}` });
+    res
+      .status(500)
+      .json({ message: `Failed to create post: ${error.message}` });
   }
 });
 
@@ -67,7 +68,9 @@ router.route("/deletepost/:postid").delete(async (req, res) => {
       res.status(401).json({ message: "User not logged in to delete post" });
     }
   } catch (error) {
-    res.status(500).json({ message: `Failed to create post: ${error}` });
+    res
+      .status(500)
+      .json({ message: `Failed to create post: ${error.message}` });
   }
 });
 
@@ -113,9 +116,9 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
     }
   } catch (error) {
     res.status(500).json({
-      message: `Error ${
-        isLikeOperation ? "liking" : "unliking"
-      } post: ${error}`,
+      message: `Error ${isLikeOperation ? "liking" : "unliking"} post: ${
+        error.message
+      }`,
     });
   }
 }

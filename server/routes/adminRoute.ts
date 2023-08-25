@@ -43,8 +43,10 @@ router.get("/", (req, res) => {
       console.log(`This user is not logged in`);
     }
   } catch (error) {
-    res.status(500).json({ message: `Error checking if admin: ${error}` });
-    console.log(`Error checking if admin: ${error}`);
+    res
+      .status(500)
+      .json({ message: `Error checking if admin: ${error.message}` });
+    console.log(`Error checking if admin: ${error.message}`);
   }
 });
 

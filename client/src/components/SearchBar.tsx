@@ -49,7 +49,10 @@ export default function SearchBar() {
           <ul>
             {searchResults
               .map((user: any) => (
-                <li onClick={() => setQuery(user.username)} key={user.username}>
+                <li
+                  onClick={() => setQuery(user.username)}
+                  key={`${user.username}-search-result`}
+                >
                   {user.username}
                 </li>
               ))

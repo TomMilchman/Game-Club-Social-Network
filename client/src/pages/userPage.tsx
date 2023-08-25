@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PostComponent from "../components/Post";
 import PostClass from "../../../server/Post";
+import FollowUnfollowButton from "../components/FollowUnfollowButton";
 
 export default function UserPage() {
   const [posts, setPosts] = useState<PostClass[]>([]);
@@ -51,6 +52,10 @@ export default function UserPage() {
     return (
       <>
         <h1>User {username}'s page</h1>
+        <FollowUnfollowButton
+          requestedUsername={username!}
+          requestingUsername={requestingUsername}
+        />
         {sortedPosts.map((post: PostClass) => (
           <PostComponent
             key={post.postId}
@@ -71,6 +76,10 @@ export default function UserPage() {
     return (
       <>
         <h1>User {username}'s page</h1>
+        <FollowUnfollowButton
+          requestedUsername={username!}
+          requestingUsername={requestingUsername}
+        />
         <h2>User has not made any posts yet.</h2>
       </>
     );

@@ -42,6 +42,7 @@ var LoginActivityType;
 (function (LoginActivityType) {
     LoginActivityType[LoginActivityType["LOGIN"] = 0] = "LOGIN";
     LoginActivityType[LoginActivityType["LOGOUT"] = 1] = "LOGOUT";
+    LoginActivityType[LoginActivityType["NEWPOST"] = 2] = "NEWPOST";
 })(LoginActivityType || (exports.LoginActivityType = LoginActivityType = {}));
 var User = /** @class */ (function () {
     function User(username, password, email, isAdmin, following, followers, posts, currentPostId, loginActivity) {
@@ -49,8 +50,8 @@ var User = /** @class */ (function () {
         this.password = password;
         this.email = email;
         this.isAdmin = isAdmin;
-        this.following = following;
-        this.followers = followers;
+        this.followedUsernames = following;
+        this.followersUsernames = followers;
         this.posts = posts;
         this.currentPostId = currentPostId;
         this.loginActivity = loginActivity;
@@ -61,19 +62,19 @@ var User = /** @class */ (function () {
     User.prototype.deletePostById = function (postId) {
         this.posts.filter(function (post) { return post.postId != postId; });
     };
-    User.prototype.addFollower = function (user) {
-        this.followers.push(user);
+    User.prototype.addFollower = function (usernameToAdd) {
+        this.followersUsernames.push(usernameToAdd);
     };
-    User.prototype.removeFollower = function (user) {
-        this.followers.filter(function (follower) { return follower.username != user.username; });
+    User.prototype.removeFollower = function (userToRemove) {
+        this.followersUsernames = this.followersUsernames.filter(function (follower) { return follower !== userToRemove; });
     };
-    User.prototype.addFollowing = function (user) {
-        this.following.push(user);
+    User.prototype.addFollowing = function (usernameToAdd) {
+        this.followedUsernames.push(usernameToAdd);
     };
-    User.prototype.removeFollowing = function (user) {
-        this.following.filter(function (following) { return following.username != user.username; });
+    User.prototype.removeFollowing = function (usernameToRemove) {
+        this.followedUsernames = this.followedUsernames.filter(function (following) { return following !== usernameToRemove; });
     };
-    User.prototype.addLogin = function () {
+    User.prototype.addLoginActivity = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -90,13 +91,30 @@ var User = /** @class */ (function () {
             });
         });
     };
-    User.prototype.addLogout = function () {
+    User.prototype.addLogoutActivity = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         this.loginActivity.push({
                             type: LoginActivityType.LOGOUT,
+                            timestamp: new Date(),
+                        });
+                        return [4 /*yield*/, persist_1.default.saveUsersData()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    User.prototype.addNewPostActivity = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.loginActivity.push({
+                            type: LoginActivityType.NEWPOST,
                             timestamp: new Date(),
                         });
                         return [4 /*yield*/, persist_1.default.saveUsersData()];

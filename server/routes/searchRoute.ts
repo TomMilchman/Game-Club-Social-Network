@@ -17,7 +17,7 @@ router.get("/:username", (req, res) => {
     const resultUsernames = trie.search(inputUsername);
     res.status(200).json(resultUsernames);
   } catch (error) {
-    res.status(500).json("An error occured: " + error);
+    res.status(500).json("An error occured while searching: " + error.message);
   }
 });
 

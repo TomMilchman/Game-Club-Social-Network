@@ -57,7 +57,7 @@ router.patch("/", function (req, res) { return __awaiter(void 0, void 0, void 0,
                 if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 2];
                 username = server_1.default.get(tempPass).username;
                 user = persist_1.default.findUserByUsername(username);
-                return [4 /*yield*/, user.addLogout()];
+                return [4 /*yield*/, user.addLogoutActivity()];
             case 1:
                 _a.sent();
                 cookieManager_1.default.deleteCookies(res, tempPass, maxAge);
@@ -78,8 +78,8 @@ router.patch("/", function (req, res) { return __awaiter(void 0, void 0, void 0,
             case 5: return [3 /*break*/, 7];
             case 6:
                 error_1 = _a.sent();
-                console.error("Error during logout:", error_1);
-                res.status(500).json({ message: error_1 });
+                console.error("Error during logout:", error_1.message);
+                res.status(500).json({ message: error_1.message });
                 return [3 /*break*/, 7];
             case 7: return [2 /*return*/];
         }

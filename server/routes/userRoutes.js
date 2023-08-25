@@ -60,7 +60,7 @@ function followOrUnfollowUser(req, res, action) {
                     });
                     return [3 /*break*/, 4];
                 case 1:
-                    isFollowing = userToSearch.followers.some(function (user) { return user.username === requestingUser_1.username; });
+                    isFollowing = userToSearch.followersUsernames.some(function (username) { return username === requestingUser_1.username; });
                     if (!((isFollowing && action === "follow") ||
                         (!isFollowing && action === "unfollow"))) return [3 /*break*/, 2];
                     res.status(400).json({
@@ -69,12 +69,12 @@ function followOrUnfollowUser(req, res, action) {
                     return [3 /*break*/, 4];
                 case 2:
                     if (action === "follow") {
-                        userToSearch.addFollower(requestingUser_1);
-                        requestingUser_1.addFollowing(userToSearch);
+                        userToSearch.addFollower(requestingUser_1.username);
+                        requestingUser_1.addFollowing(userToSearch.username);
                     }
                     else {
-                        userToSearch.removeFollower(requestingUser_1);
-                        requestingUser_1.removeFollowing(userToSearch);
+                        userToSearch.removeFollower(requestingUser_1.username);
+                        requestingUser_1.removeFollowing(userToSearch.username);
                     }
                     return [4 /*yield*/, persist_1.default.saveUsersData()];
                 case 3:
@@ -96,8 +96,8 @@ function followOrUnfollowUser(req, res, action) {
                 case 8: return [3 /*break*/, 10];
                 case 9:
                     error_1 = _a.sent();
-                    console.error(error_1);
-                    res.status(500).send("Internal Server Error");
+                    console.error(error_1.message);
+                    res.status(500).send("Internal Server Error" + error_1.message);
                     return [3 /*break*/, 10];
                 case 10: return [2 /*return*/];
             }
@@ -124,6 +124,33 @@ router.route("/:username/unfollow").patch(function (req, res) { return __awaiter
         }
     });
 }); });
+router.route("/:username/followinfo").get(function (req, res) {
+    try {
+        var tempPass = req.cookies.tempPass;
+        if (server_1.default.get(tempPass) !== undefined) {
+            var requestingUser_2 = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
+            var userToSearch = persist_1.default.findUserByUsername(req.params.username);
+            if (userToSearch !== undefined && requestingUser_2 !== undefined) {
+                var isFollowing = userToSearch.followersUsernames.some(function (username) { return username === requestingUser_2.username; });
+                res.status(200).json({
+                    message: "User ".concat(requestingUser_2.username, " following user ").concat(userToSearch.username, ": ").concat(isFollowing),
+                    isFollowing: isFollowing,
+                    numOfFollowers: userToSearch.followersUsernames.length,
+                });
+            }
+            else {
+                res.status(404).json({ message: "User not found" });
+            }
+        }
+        else {
+            res.status(401).json({ message: "User not logged in" });
+        }
+    }
+    catch (error) {
+        console.error("Error while checking if following: ".concat(error));
+        res.status(500).send("Internal Server Error: ".concat(error));
+    }
+});
 router.route("/:username/posts").get(function (req, res) {
     try {
         var requestedUsername = req.params.username;
@@ -144,8 +171,29 @@ router.route("/:username/posts").get(function (req, res) {
         }
     }
     catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+        console.error(error.message);
+        res.status(500).send("Internal Server Error: " + error.message);
+    }
+});
+router.route("/following").get(function (req, res) {
+    try {
+        var tempPass = req.cookies.tempPass;
+        if (server_1.default.get(tempPass) !== undefined) {
+            var requestingUser = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
+            var followedUsers = requestingUser.followedUsernames;
+            console.log("User ".concat(requestingUser.username, " is following ").concat(followedUsers.length, " users}"));
+            res.status(200).json({
+                followedUsers: followedUsers,
+                requestingUser: requestingUser.username,
+            });
+        }
+        else {
+            res.status(401).json({ message: "User not logged in" });
+        }
+    }
+    catch (error) {
+        console.error("Error while checking followed users: ".concat(error.message));
+        res.status(500).send("Internal Server Error: ".concat(error.message));
     }
 });
 exports.default = router;

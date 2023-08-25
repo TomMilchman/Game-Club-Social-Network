@@ -43,21 +43,21 @@ router.post("/", async (req, res) => {
           const previousUser = persist.findUserByUsername(
             loggedInUsers.get(tempPass).username
           );
-          await previousUser.addLogout();
+          await previousUser.addLogoutActivity();
           console.log(`Previous user ${previousUser.username} logged out`);
           loggedInUsers.delete(tempPass);
         }
       }
       cookieManager.createNewCookies(res, maxAge, lowerCaseUsername);
-      await persist.findUserByUsername(lowerCaseUsername).addLogin();
+      await persist.findUserByUsername(lowerCaseUsername).addLoginActivity();
       console.log(`User ${lowerCaseUsername} login successful`);
       res.status(200).json(message);
     } else {
       res.status(401).json(message);
     }
   } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ message: error });
+    console.error("Error during login:", error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 

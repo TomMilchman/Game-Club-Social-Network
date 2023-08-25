@@ -1,4 +1,4 @@
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import { useState } from "react";
 
 interface Props {

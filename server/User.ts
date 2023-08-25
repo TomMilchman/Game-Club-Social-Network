@@ -4,6 +4,7 @@ import persist from "./persist";
 enum LoginActivityType {
   LOGIN,
   LOGOUT,
+  NEWPOST,
 }
 
 class User {
@@ -11,8 +12,8 @@ class User {
   public password: string;
   public email: string;
   public isAdmin: boolean;
-  public following: User[];
-  public followers: User[];
+  public followedUsernames: string[];
+  public followersUsernames: string[];
   public posts: Post[];
   public currentPostId: number; //When a new post is created, this will be its id
   public loginActivity: { type: LoginActivityType; timestamp: Date }[]; //An array holding the activity of the user
@@ -22,8 +23,8 @@ class User {
     password: string,
     email: string,
     isAdmin: boolean,
-    following: User[],
-    followers: User[],
+    following: string[],
+    followers: string[],
     posts: Post[],
     currentPostId: number,
     loginActivity: { type: LoginActivityType; timestamp: Date }[]
@@ -32,8 +33,8 @@ class User {
     this.password = password;
     this.email = email;
     this.isAdmin = isAdmin;
-    this.following = following;
-    this.followers = followers;
+    this.followedUsernames = following;
+    this.followersUsernames = followers;
     this.posts = posts;
     this.currentPostId = currentPostId;
     this.loginActivity = loginActivity;
@@ -47,23 +48,27 @@ class User {
     this.posts.filter((post) => post.postId != postId);
   }
 
-  addFollower(user: User) {
-    this.followers.push(user);
+  addFollower(usernameToAdd: string) {
+    this.followersUsernames.push(usernameToAdd);
   }
 
-  removeFollower(user: User) {
-    this.followers.filter((follower) => follower.username != user.username);
+  removeFollower(userToRemove: string) {
+    this.followersUsernames = this.followersUsernames.filter(
+      (follower) => follower !== userToRemove
+    );
   }
 
-  addFollowing(user: User) {
-    this.following.push(user);
+  addFollowing(usernameToAdd: string) {
+    this.followedUsernames.push(usernameToAdd);
   }
 
-  removeFollowing(user: User) {
-    this.following.filter((following) => following.username != user.username);
+  removeFollowing(usernameToRemove: string) {
+    this.followedUsernames = this.followedUsernames.filter(
+      (following) => following !== usernameToRemove
+    );
   }
 
-  async addLogin() {
+  async addLoginActivity() {
     this.loginActivity.push({
       type: LoginActivityType.LOGIN,
       timestamp: new Date(),
@@ -71,9 +76,17 @@ class User {
     await persist.saveUsersData();
   }
 
-  async addLogout() {
+  async addLogoutActivity() {
     this.loginActivity.push({
       type: LoginActivityType.LOGOUT,
+      timestamp: new Date(),
+    });
+    await persist.saveUsersData();
+  }
+
+  async addNewPostActivity() {
+    this.loginActivity.push({
+      type: LoginActivityType.NEWPOST,
       timestamp: new Date(),
     });
     await persist.saveUsersData();

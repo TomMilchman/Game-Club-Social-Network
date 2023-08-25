@@ -30,7 +30,9 @@ router.get("/", function (req, res) {
         }
     }
     catch (error) {
-        res.status(500).json({ message: "Error authenticating user: ".concat(error) });
+        res
+            .status(500)
+            .json({ message: "Error authenticating user: ".concat(error.message) });
     }
 });
 exports.default = router;

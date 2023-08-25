@@ -101,7 +101,7 @@ app.listen(port, function () { return __awaiter(void 0, void 0, void 0, function
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _b.sent();
-                console.error("Error loading user data:", error_1);
+                console.error("Error loading user data:", error_1.message);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

@@ -29,7 +29,9 @@ router.get("/", (req, res) => {
       res.status(401).json({ message: "User is not authenticated" });
     }
   } catch (error) {
-    res.status(500).json({ message: `Error authenticating user: ${error}` });
+    res
+      .status(500)
+      .json({ message: `Error authenticating user: ${error.message}` });
   }
 });
 

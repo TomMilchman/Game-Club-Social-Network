@@ -18,16 +18,12 @@ router.get("/", async (req, res) => {
         (user) => user.username === loggedInUsers.get(tempPass).username
       );
 
-      const followedUsers: User[] = requestingUser.following;
+      const followedUsers: string[] = requestingUser.followedUsernames;
       const posts: Post[] = [];
 
-      for (let i = 0; i < followedUsers.length; i++) {
-        posts.push(...followedUsers[i].posts);
-      }
-
-      posts.sort((a, b) => {
-        return b.timestamp.getTime() - a.timestamp.getTime();
-      });
+      // for (let i = 0; i < followedUsers.length; i++) {
+      //   posts.push(...persist.findUserByUsername(followedUsers[i]).posts);
+      // }
 
       res.status(200).json({ username: requestingUser.username, posts: posts });
     } else {
@@ -35,7 +31,7 @@ router.get("/", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: error });
-    console.log("Error fetching feed: ", error);
+    console.log("Error fetching feed: ", error.message);
   }
 });
 

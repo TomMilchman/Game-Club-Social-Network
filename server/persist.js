@@ -51,12 +51,12 @@ function loadData(filePath) {
                     jsonData = _a.sent();
                     userObjects = JSON.parse(jsonData);
                     users = userObjects.map(function (u) {
-                        return new User_1.User(u.username, u.password, u.email, u.isAdmin, u.following, u.followers, u.posts, u.currentPostId, u.loginActivity);
+                        return new User_1.User(u.username, u.password, u.email, u.isAdmin, u.followedUsernames, u.followersUsernames, u.posts, u.currentPostId, u.loginActivity);
                     });
                     return [2 /*return*/, users];
                 case 2:
                     error_1 = _a.sent();
-                    console.error("Error loading data:", error_1);
+                    console.error("Error loading data:", error_1.message);
                     throw error_1;
                 case 3: return [2 /*return*/];
             }
@@ -77,7 +77,7 @@ function saveData(filePath) {
                     return [3 /*break*/, 3];
                 case 2:
                     error_2 = _a.sent();
-                    console.error("Error saving data:", error_2);
+                    console.error("Error saving data:", error_2.message);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }

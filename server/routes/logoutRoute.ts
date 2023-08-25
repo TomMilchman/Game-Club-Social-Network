@@ -19,7 +19,7 @@ router.patch("/", async (req, res) => {
       if (loggedInUsers.get(tempPass) !== undefined) {
         const username = loggedInUsers.get(tempPass).username;
         const user = persist.findUserByUsername(username);
-        await user.addLogout();
+        await user.addLogoutActivity();
         cookieManager.deleteCookies(res, tempPass, maxAge);
         res
           .status(200)
@@ -34,8 +34,8 @@ router.patch("/", async (req, res) => {
       res.status(400).json({ message: "No user is signed in to log out" });
     }
   } catch (error) {
-    console.error("Error during logout:", error);
-    res.status(500).json({ message: error });
+    console.error("Error during logout:", error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 

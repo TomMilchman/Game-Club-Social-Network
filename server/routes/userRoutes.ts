@@ -22,8 +22,8 @@ async function followOrUnfollowUser(req, res, action) {
             message: "You cannot follow/unfollow yourself",
           });
         } else {
-          const isFollowing = userToSearch.followers.some(
-            (user) => user.username === requestingUser.username
+          const isFollowing = userToSearch.followersUsernames.some(
+            (username) => username === requestingUser.username
           );
 
           if (
@@ -37,11 +37,11 @@ async function followOrUnfollowUser(req, res, action) {
             });
           } else {
             if (action === "follow") {
-              userToSearch.addFollower(requestingUser);
-              requestingUser.addFollowing(userToSearch);
+              userToSearch.addFollower(requestingUser.username);
+              requestingUser.addFollowing(userToSearch.username);
             } else {
-              userToSearch.removeFollower(requestingUser);
-              requestingUser.removeFollowing(userToSearch);
+              userToSearch.removeFollower(requestingUser.username);
+              requestingUser.removeFollowing(userToSearch.username);
             }
 
             await persist.saveUsersData();
@@ -62,8 +62,8 @@ async function followOrUnfollowUser(req, res, action) {
         .json({ message: "User not logged in to follow/unfollow" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
+    console.error(error.message);
+    res.status(500).send("Internal Server Error" + error.message);
   }
 }
 
@@ -73,6 +73,38 @@ router.route("/:username/follow").patch(async (req, res) => {
 
 router.route("/:username/unfollow").patch(async (req, res) => {
   await followOrUnfollowUser(req, res, "unfollow");
+});
+
+router.route("/:username/followinfo").get((req, res) => {
+  try {
+    const tempPass = req.cookies.tempPass;
+
+    if (loggedInUsers.get(tempPass) !== undefined) {
+      const requestingUser = persist.findUserByUsername(
+        loggedInUsers.get(tempPass).username
+      );
+      const userToSearch = persist.findUserByUsername(req.params.username);
+
+      if (userToSearch !== undefined && requestingUser !== undefined) {
+        const isFollowing = userToSearch.followersUsernames.some(
+          (username) => username === requestingUser.username
+        );
+
+        res.status(200).json({
+          message: `User ${requestingUser.username} following user ${userToSearch.username}: ${isFollowing}`,
+          isFollowing: isFollowing,
+          numOfFollowers: userToSearch.followersUsernames.length,
+        });
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
+    } else {
+      res.status(401).json({ message: "User not logged in" });
+    }
+  } catch (error) {
+    console.error(`Error while checking if following: ${error}`);
+    res.status(500).send(`Internal Server Error: ${error}`);
+  }
 });
 
 router.route("/:username/posts").get((req, res) => {
@@ -93,8 +125,35 @@ router.route("/:username/posts").get((req, res) => {
       res.status(401).json({ message: "User not logged in" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
+    console.error(error.message);
+    res.status(500).send("Internal Server Error: " + error.message);
+  }
+});
+
+router.route("/following").get((req, res) => {
+  try {
+    const tempPass = req.cookies.tempPass;
+
+    if (loggedInUsers.get(tempPass) !== undefined) {
+      const requestingUser = persist.findUserByUsername(
+        loggedInUsers.get(tempPass).username
+      );
+
+      const followedUsers: string[] = requestingUser.followedUsernames;
+
+      console.log(
+        `User ${requestingUser.username} is following ${followedUsers.length} users}`
+      );
+      res.status(200).json({
+        followedUsers: followedUsers,
+        requestingUser: requestingUser.username,
+      });
+    } else {
+      res.status(401).json({ message: "User not logged in" });
+    }
+  } catch (error) {
+    console.error(`Error while checking followed users: ${error.message}`);
+    res.status(500).send(`Internal Server Error: ${error.message}`);
   }
 });
 

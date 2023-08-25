@@ -70,7 +70,7 @@ app.listen(port, async () => {
       }
     }, 60000);
   } catch (error) {
-    console.error("Error loading user data:", error);
+    console.error("Error loading user data:", error.message);
   }
 });
 

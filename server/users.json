@@ -1,210 +1,23 @@
 [
   {
     "username": "admin",
-    "password": "$2b$10$VCJIER2wyJ64YmDWTiWjRem5idwPvHt/yhD1mwxh4rRuzrWruEOX2",
-    "email": "admin@fakemail.com",
-    "isAdmin": true,
-    "following": [],
-    "followers": [],
-    "posts": [
-      {
-        "postId": 0,
-        "title": "Yo Mortal Kombat 1 be kinda hype",
-        "content": "HYPEEEEEE",
-        "timestamp": "2023-08-23T11:19:49.139Z",
-        "usernamesWhoLiked": [
-          "hypno"
-        ]
-      },
-      {
-        "postId": 1,
-        "title": "Second test post, please ignore",
-        "content": "Please ignore!!!",
-        "timestamp": "2023-08-24T10:55:16.445Z",
-        "usernamesWhoLiked": [
-          "hypno"
-        ]
-      }
-    ],
-    "currentPostId": 2,
-    "loginActivity": [
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T13:58:52.201Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T13:59:16.806Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T13:59:16.807Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T14:00:00.204Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T14:20:49.839Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T14:22:34.816Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T14:22:42.095Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T14:23:17.499Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T14:25:07.134Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T14:25:11.086Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T15:45:07.968Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T15:45:13.487Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T15:45:21.710Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T15:45:22.990Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T08:44:55.327Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T08:44:59.119Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T08:48:58.160Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T08:49:57.002Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:13:31.870Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:17:33.264Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T10:18:08.752Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:59:53.995Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T11:13:30.590Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T11:19:33.010Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T11:19:52.930Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T12:06:08.620Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T12:10:26.912Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T10:37:52.838Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T11:11:45.079Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T11:13:25.306Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-24T11:27:42.991Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T12:06:34.758Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-24T12:12:00.254Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T12:13:30.621Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-24T12:17:26.714Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T12:17:59.961Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-24T12:22:24.262Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:50:04.967Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:53:09.662Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-24T13:53:38.284Z"
-      }
-    ]
-  },
-  {
-    "username": "hypno",
-    "password": "$2b$10$jW2.eF7d1h0kq17BGHqIzOt2JrUvOwKa05NNsSoXu/9mKVeWZt80C",
-    "email": "afafa@afafa",
+    "password": "$2b$10$VYCg8GFQy2N5dxqXkyvPx.ik57E3CZD8Dd//CWsG7/.7e7bw5dcK.",
+    "email": "fakemail@lol.com",
     "isAdmin": false,
-    "following": [],
-    "followers": [],
+    "followedUsernames": [
+      "hypno",
+      "hypno2"
+    ],
+    "followersUsernames": [
+      "hypno"
+    ],
     "posts": [
       {
         "postId": 0,
         "title": "Test Post Please Ignore",
-        "content": "Ignore :(",
-        "timestamp": "2023-08-23T11:19:13.523Z",
+        "content": "Ignore please",
+        "timestamp": "2023-08-25T13:58:03.716Z",
         "usernamesWhoLiked": [
-          "admin",
           "hypno"
         ]
       }
@@ -213,343 +26,101 @@
     "loginActivity": [
       {
         "type": 0,
-        "timestamp": "2023-08-22T13:58:34.467Z"
+        "timestamp": "2023-08-25T13:57:34.156Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-25T13:58:03.716Z"
       },
       {
         "type": 1,
-        "timestamp": "2023-08-22T13:58:36.382Z"
+        "timestamp": "2023-08-25T13:58:24.666Z"
       },
       {
         "type": 0,
-        "timestamp": "2023-08-22T14:00:18.699Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T14:20:36.442Z"
+        "timestamp": "2023-08-25T14:16:19.506Z"
       },
       {
         "type": 1,
-        "timestamp": "2023-08-22T14:20:38.492Z"
-      },
+        "timestamp": "2023-08-25T14:16:57.842Z"
+      }
+    ]
+  },
+  {
+    "username": "hypno",
+    "password": "$2b$10$Lj53b/fNiRniBTJ/Jhnw/uV64bBn/k4q1OMUuHhgi.32He65U27am",
+    "email": "fakemail@lol.com",
+    "isAdmin": false,
+    "followedUsernames": [
+      "admin",
+      "hypno2"
+    ],
+    "followersUsernames": [
+      "admin"
+    ],
+    "posts": [
+      {
+        "postId": 0,
+        "title": "Yo Mortal Kombat 1 be kinda hype",
+        "content": "Like seriously, can't wait",
+        "timestamp": "2023-08-25T14:08:50.340Z",
+        "usernamesWhoLiked": [
+          "hypno"
+        ]
+      }
+    ],
+    "currentPostId": 1,
+    "loginActivity": [
       {
         "type": 0,
-        "timestamp": "2023-08-23T08:42:26.966Z"
+        "timestamp": "2023-08-25T13:58:40.939Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-25T14:08:50.340Z"
       },
       {
         "type": 1,
-        "timestamp": "2023-08-23T08:42:28.783Z"
+        "timestamp": "2023-08-25T14:09:46.106Z"
       },
       {
         "type": 0,
-        "timestamp": "2023-08-23T08:42:33.129Z"
+        "timestamp": "2023-08-25T14:10:11.202Z"
       },
       {
         "type": 1,
-        "timestamp": "2023-08-23T08:43:47.646Z"
+        "timestamp": "2023-08-25T14:10:33.591Z"
       },
       {
         "type": 0,
-        "timestamp": "2023-08-23T08:43:57.163Z"
+        "timestamp": "2023-08-25T14:14:20.824Z"
       },
       {
         "type": 1,
-        "timestamp": "2023-08-23T08:43:59.985Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T08:44:40.807Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T08:44:44.394Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T08:45:05.238Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T08:45:07.831Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T08:48:37.482Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T08:52:29.016Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T08:52:51.983Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T08:53:54.081Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T08:54:12.937Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T08:54:14.529Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:09:08.226Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T10:13:15.391Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:19:36.645Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:30:45.861Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:31:08.765Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:33:50.762Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:34:17.828Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T10:35:08.267Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:35:15.337Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T10:35:36.779Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T10:54:55.127Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T10:58:25.297Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T11:12:04.924Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T11:19:07.409Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T11:19:20.993Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T11:30:34.956Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T11:31:14.154Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T11:35:50.390Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T11:40:22.327Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T11:41:05.491Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-23T11:41:56.041Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-23T11:43:11.330Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T10:26:10.668Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-24T10:27:45.989Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T10:30:00.798Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T10:32:25.456Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-24T10:33:01.767Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T12:23:05.057Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T12:26:57.852Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T12:36:20.132Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T12:43:01.584Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T12:43:29.958Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T12:44:18.687Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:01:07.188Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:03:36.249Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:04:41.283Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:07:58.006Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:11:17.144Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:16:47.737Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:18:32.674Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:20:58.811Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:25:43.796Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:30:02.872Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:45:07.229Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:53:44.930Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:58:09.913Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-24T13:59:37.127Z"
+        "timestamp": "2023-08-25T14:15:35.221Z"
       }
     ]
   },
   {
     "username": "hypno2",
-    "password": "$2b$10$5sgDzowuJDlwiui6/1og2uQTPaiuxKLmVIdkWaL96wtVa3/xxNtS6",
-    "email": "afafa@afafa",
+    "password": "$2b$10$ImhedeUyqJvey4XalKmAheaOarZLD.mBqsXJknoZWwCBVcFbDcPIy",
+    "email": "fakemail@lol.com",
     "isAdmin": false,
-    "following": [],
-    "followers": [],
+    "followedUsernames": [],
+    "followersUsernames": [
+      "hypno",
+      "admin"
+    ],
     "posts": [],
     "currentPostId": 0,
     "loginActivity": [
       {
         "type": 0,
-        "timestamp": "2023-08-22T14:00:42.527Z"
+        "timestamp": "2023-08-25T14:10:01.653Z"
       },
       {
         "type": 1,
-        "timestamp": "2023-08-22T14:00:58.812Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T14:23:22.659Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T14:23:30.439Z"
-      }
-    ]
-  },
-  {
-    "username": "hypno3",
-    "password": "$2b$10$YcVXYeBQcOjSrJAeeCGL6uN0LmACPWWv3zR6GWuHM4FEcIcsSLRSO",
-    "email": "afafa@afafa",
-    "isAdmin": false,
-    "following": [],
-    "followers": [],
-    "posts": [],
-    "currentPostId": 0,
-    "loginActivity": [
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T15:45:30.474Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T15:45:42.528Z"
-      }
-    ]
-  },
-  {
-    "username": "hypno4",
-    "password": "$2b$10$bjP19Onz914udoHlN10tUezGB02lLLZY9S2GnpnETIF2iWt3gKCtu",
-    "email": "afafa@afafa",
-    "isAdmin": false,
-    "following": [],
-    "followers": [],
-    "posts": [],
-    "currentPostId": 0,
-    "loginActivity": [
-      {
-        "type": 0,
-        "timestamp": "2023-08-22T15:45:49.934Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-22T15:45:53.128Z"
+        "timestamp": "2023-08-25T14:10:05.724Z"
       }
     ]
   }

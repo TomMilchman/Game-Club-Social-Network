@@ -87,7 +87,7 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 if (!(tempPass !== undefined)) return [3 /*break*/, 4];
                 if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 4];
                 previousUser = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
-                return [4 /*yield*/, previousUser.addLogout()];
+                return [4 /*yield*/, previousUser.addLogoutActivity()];
             case 3:
                 _b.sent();
                 console.log("Previous user ".concat(previousUser.username, " logged out"));
@@ -95,7 +95,7 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 _b.label = 4;
             case 4:
                 cookieManager_1.default.createNewCookies(res, maxAge, lowerCaseUsername);
-                return [4 /*yield*/, persist_1.default.findUserByUsername(lowerCaseUsername).addLogin()];
+                return [4 /*yield*/, persist_1.default.findUserByUsername(lowerCaseUsername).addLoginActivity()];
             case 5:
                 _b.sent();
                 console.log("User ".concat(lowerCaseUsername, " login successful"));
@@ -107,8 +107,8 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
             case 7: return [3 /*break*/, 9];
             case 8:
                 error_1 = _b.sent();
-                console.error("Error during login:", error_1);
-                res.status(500).json({ message: error_1 });
+                console.error("Error during login:", error_1.message);
+                res.status(500).json({ message: error_1.message });
                 return [3 /*break*/, 9];
             case 9: return [2 /*return*/];
         }

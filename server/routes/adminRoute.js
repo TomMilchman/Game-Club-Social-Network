@@ -44,8 +44,10 @@ router.get("/", function (req, res) {
         }
     }
     catch (error) {
-        res.status(500).json({ message: "Error checking if admin: ".concat(error) });
-        console.log("Error checking if admin: ".concat(error));
+        res
+            .status(500)
+            .json({ message: "Error checking if admin: ".concat(error.message) });
+        console.log("Error checking if admin: ".concat(error.message));
     }
 });
 exports.default = router;

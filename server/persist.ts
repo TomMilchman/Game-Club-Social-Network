@@ -8,14 +8,14 @@ async function loadData(filePath: string) {
     const jsonData = await fs.readFile(filePath, "utf-8");
     const userObjects = JSON.parse(jsonData);
 
-    const users = userObjects.map((u) => {
+    const users = userObjects.map((u: User) => {
       return new User(
         u.username,
         u.password,
         u.email,
         u.isAdmin,
-        u.following,
-        u.followers,
+        u.followedUsernames,
+        u.followersUsernames,
         u.posts,
         u.currentPostId,
         u.loginActivity
@@ -23,7 +23,7 @@ async function loadData(filePath: string) {
     });
     return users;
   } catch (error) {
-    console.error("Error loading data:", error);
+    console.error("Error loading data:", error.message);
     throw error;
   }
 }
@@ -33,7 +33,7 @@ async function saveData(filePath: string) {
     await fs.writeFile(filePath, JSON.stringify(usersData, null, 2), "utf-8");
     console.log("Data saved successfully");
   } catch (error) {
-    console.error("Error saving data:", error);
+    console.error("Error saving data:", error.message);
   }
 }
 
