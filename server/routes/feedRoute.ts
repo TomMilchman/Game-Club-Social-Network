@@ -3,29 +3,35 @@ let router = express.Router();
 import bodyParser = require("body-parser");
 
 import loggedInUsers from "../server";
-import { User } from "../User";
 import persist from "../persist";
 import Post from "../Post";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 
-//Return the posts of all the users that the requesting user follows by date (newest first)
+//Return the posts of all the users that the requesting user follows
 router.get("/", async (req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
     if (loggedInUsers.get(tempPass) !== undefined) {
-      const requestingUser: User = persist.usersData.find(
-        (user) => user.username === loggedInUsers.get(tempPass).username
+      const requestingUser = persist.findUserByUsername(
+        loggedInUsers.get(tempPass).username
       );
 
       const followedUsers: string[] = requestingUser.followedUsernames;
       const posts: Post[] = [];
 
-      // for (let i = 0; i < followedUsers.length; i++) {
-      //   posts.push(...persist.findUserByUsername(followedUsers[i]).posts);
-      // }
+      for (let i = 0; i < followedUsers.length; i++) {
+        const user = persist.findUserByUsername(followedUsers[i]);
+        const userPostsWithUsername = user.posts.map((post) => ({
+          ...post,
+          username: user.username, // Add the username to the post
+        }));
+        posts.push(...userPostsWithUsername);
+      }
 
-      res.status(200).json({ username: requestingUser.username, posts: posts });
+      res
+        .status(200)
+        .json({ posts: posts, requestingUsername: requestingUser.username });
     } else {
       res.status(401).json({ message: "User is not logged in to view feed" });
     }

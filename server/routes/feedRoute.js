@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -42,20 +53,27 @@ var bodyParser = require("body-parser");
 var server_1 = require("../server");
 var persist_1 = require("../persist");
 router.use(bodyParser.json()); // Parse JSON request bodies
-//Return the posts of all the users that the requesting user follows by date (newest first)
+//Return the posts of all the users that the requesting user follows
 router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var tempPass_1, requestingUser, followedUsers, posts;
+    var tempPass, requestingUser, followedUsers, posts, _loop_1, i;
     return __generator(this, function (_a) {
         try {
-            tempPass_1 = req.cookies.tempPass;
-            if (server_1.default.get(tempPass_1) !== undefined) {
-                requestingUser = persist_1.default.usersData.find(function (user) { return user.username === server_1.default.get(tempPass_1).username; });
+            tempPass = req.cookies.tempPass;
+            if (server_1.default.get(tempPass) !== undefined) {
+                requestingUser = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
                 followedUsers = requestingUser.followedUsernames;
                 posts = [];
-                // for (let i = 0; i < followedUsers.length; i++) {
-                //   posts.push(...persist.findUserByUsername(followedUsers[i]).posts);
-                // }
-                res.status(200).json({ username: requestingUser.username, posts: posts });
+                _loop_1 = function (i) {
+                    var user = persist_1.default.findUserByUsername(followedUsers[i]);
+                    var userPostsWithUsername = user.posts.map(function (post) { return (__assign(__assign({}, post), { username: user.username })); });
+                    posts.push.apply(posts, userPostsWithUsername);
+                };
+                for (i = 0; i < followedUsers.length; i++) {
+                    _loop_1(i);
+                }
+                res
+                    .status(200)
+                    .json({ posts: posts, requestingUsername: requestingUser.username });
             }
             else {
                 res.status(401).json({ message: "User is not logged in to view feed" });

@@ -3,7 +3,7 @@
     "username": "admin",
     "password": "$2b$10$VYCg8GFQy2N5dxqXkyvPx.ik57E3CZD8Dd//CWsG7/.7e7bw5dcK.",
     "email": "fakemail@lol.com",
-    "isAdmin": false,
+    "isAdmin": true,
     "followedUsernames": [
       "hypno",
       "hypno2"
@@ -20,9 +20,16 @@
         "usernamesWhoLiked": [
           "hypno"
         ]
+      },
+      {
+        "postId": 1,
+        "title": "Gotta say, Persona 3 Reload looking good",
+        "content": "Looking goooooooood",
+        "timestamp": "2023-08-26T09:29:08.996Z",
+        "usernamesWhoLiked": []
       }
     ],
-    "currentPostId": 1,
+    "currentPostId": 2,
     "loginActivity": [
       {
         "type": 0,
@@ -43,6 +50,58 @@
       {
         "type": 1,
         "timestamp": "2023-08-25T14:16:57.842Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:06:54.719Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:07:39.544Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:08:21.172Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:08:28.855Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:10:29.385Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:13:48.055Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:20:32.073Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:20:48.688Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:28:33.218Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-26T09:29:08.996Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:39:36.708Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:41:18.557Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:45:51.209Z"
       }
     ]
   },
@@ -98,6 +157,46 @@
       {
         "type": 1,
         "timestamp": "2023-08-25T14:15:35.221Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:03:58.175Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:05:00.651Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:05:05.955Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:05:09.387Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:05:24.540Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:06:50.459Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:20:53.142Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:21:59.506Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:45:55.621Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:46:11.740Z"
       }
     ]
   },
@@ -111,8 +210,18 @@
       "hypno",
       "admin"
     ],
-    "posts": [],
-    "currentPostId": 0,
+    "posts": [
+      {
+        "postId": 0,
+        "title": "Armored Core 6 is awesome!",
+        "content": "Go buy it :D",
+        "timestamp": "2023-08-26T09:41:10.782Z",
+        "usernamesWhoLiked": [
+          "admin"
+        ]
+      }
+    ],
+    "currentPostId": 1,
     "loginActivity": [
       {
         "type": 0,
@@ -121,6 +230,18 @@
       {
         "type": 1,
         "timestamp": "2023-08-25T14:10:05.724Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-26T09:40:41.216Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-26T09:41:10.782Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-26T09:41:13.207Z"
       }
     ]
   }
