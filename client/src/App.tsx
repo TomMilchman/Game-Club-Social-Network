@@ -7,6 +7,8 @@ import FeedPage from "./pages/FeedPage";
 import UserPage from "./pages/UserPage";
 import AdminPage from "./pages/AdminPage";
 import FollowUsersPage from "./pages/FollowUsersPage";
+import UpcomingReleasesPage from "./pages/UpcomingReleasesPage";
+import GamingTriviaPage from "./pages/GamingTriviaPage";
 
 function App() {
   return (
@@ -19,6 +21,11 @@ function App() {
             <Route index element={<FeedPage />} />
             <Route path="users/:username" element={<UserPage />} />
             <Route path="following" element={<FollowUsersPage />} />
+            <Route
+              path="upcoming-releases"
+              element={<UpcomingReleasesPage />}
+            />
+            <Route path="gaming-trivia" element={<GamingTriviaPage />} />
             <Route path="admin" element={<AdminPage />} />
           </Route>
           <Route path="*" element={<p>Error 404: Page not found</p>} />

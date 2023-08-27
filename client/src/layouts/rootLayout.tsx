@@ -86,6 +86,12 @@ export default function RootLayout() {
         <Link to="/following">
           <button>FOLLOWING</button>
         </Link>
+        <Link to="/upcoming-releases">
+          <button>UPCOMING RELEASES</button>
+        </Link>
+        <Link to="/gaming-trivia">
+          <button>GAMING TRIVIA</button>
+        </Link>
         {isAdmin && (
           <Link to="/admin">
             <button>ADMIN PAGE</button>
