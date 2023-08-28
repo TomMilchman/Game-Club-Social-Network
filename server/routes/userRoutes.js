@@ -196,5 +196,18 @@ router.route("/following").get(function (req, res) {
         res.status(500).send("Internal Server Error: ".concat(error.message));
     }
 });
+//Returns an array of all users' usernames registered in the system
+router.route("/all").get(function (req, res) {
+    try {
+        var allUsers = persist_1.default.usersData.map(function (user) { return user.username; });
+        res.status(200).json({
+            usernames: allUsers,
+        });
+    }
+    catch (error) {
+        console.error("Error while checking followed users: ".concat(error.message));
+        res.status(500).send("Internal Server Error: ".concat(error.message));
+    }
+});
 exports.default = router;
 //# sourceMappingURL=userRoutes.js.map

@@ -35,6 +35,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -87,15 +114,25 @@ app.listen(port, function () { return __awaiter(void 0, void 0, void 0, function
                 console.log("User data loaded from disk:", JSON.stringify(persist_1.default.usersData, null, 2));
                 // Set up a setInterval function to periodically check for expired tokens
                 setInterval(function () {
+                    var e_1, _a;
                     var currentTime = Date.now();
                     // Convert loggedInUsers Map entries to an array for iteration
                     var entriesArray = Array.from(loggedInUsers.entries());
-                    for (var _i = 0, entriesArray_1 = entriesArray; _i < entriesArray_1.length; _i++) {
-                        var _a = entriesArray_1[_i], tempPass = _a[0], _b = _a[1], username = _b.username, expirationTime = _b.expirationTime;
-                        if (expirationTime <= currentTime) {
-                            loggedInUsers.delete(tempPass);
-                            console.log("Expired token removed: ".concat(tempPass, ", user ").concat(username));
+                    try {
+                        for (var entriesArray_1 = __values(entriesArray), entriesArray_1_1 = entriesArray_1.next(); !entriesArray_1_1.done; entriesArray_1_1 = entriesArray_1.next()) {
+                            var _b = __read(entriesArray_1_1.value, 2), tempPass = _b[0], _c = _b[1], username = _c.username, expirationTime = _c.expirationTime;
+                            if (expirationTime <= currentTime) {
+                                loggedInUsers.delete(tempPass);
+                                console.log("Expired token removed: ".concat(tempPass, ", user ").concat(username));
+                            }
                         }
+                    }
+                    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                    finally {
+                        try {
+                            if (entriesArray_1_1 && !entriesArray_1_1.done && (_a = entriesArray_1.return)) _a.call(entriesArray_1);
+                        }
+                        finally { if (e_1) throw e_1.error; }
                     }
                 }, 60000);
                 return [3 /*break*/, 3];

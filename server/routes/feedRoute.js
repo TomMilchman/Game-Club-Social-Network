@@ -46,6 +46,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
@@ -66,7 +91,7 @@ router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 _loop_1 = function (i) {
                     var user = persist_1.default.findUserByUsername(followedUsers[i]);
                     var userPostsWithUsername = user.posts.map(function (post) { return (__assign(__assign({}, post), { username: user.username })); });
-                    posts.push.apply(posts, userPostsWithUsername);
+                    posts.push.apply(posts, __spreadArray([], __read(userPostsWithUsername), false));
                 };
                 for (i = 0; i < followedUsers.length; i++) {
                     _loop_1(i);

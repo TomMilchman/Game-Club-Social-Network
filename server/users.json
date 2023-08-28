@@ -5,13 +5,10 @@
     "email": "fakemail@lol.com",
     "isAdmin": true,
     "followedUsernames": [
-      "hypno",
-      "hypno2",
-      "amit123"
+      "hypno"
     ],
     "followersUsernames": [
-      "hypno",
-      "amit123"
+      "hypno"
     ],
     "posts": [
       {
@@ -20,8 +17,7 @@
         "content": "Ignore please",
         "timestamp": "2023-08-25T13:58:03.716Z",
         "usernamesWhoLiked": [
-          "hypno",
-          "amit123"
+          "hypno"
         ]
       },
       {
@@ -29,9 +25,7 @@
         "title": "Gotta say, Persona 3 Reload looking good",
         "content": "Looking goooooooood",
         "timestamp": "2023-08-26T09:29:08.996Z",
-        "usernamesWhoLiked": [
-          "amit123"
-        ]
+        "usernamesWhoLiked": []
       },
       {
         "postId": 2,
@@ -144,6 +138,30 @@
       {
         "type": 2,
         "timestamp": "2023-08-28T09:56:16.719Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T11:08:26.140Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T11:08:42.716Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T11:21:35.556Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T11:34:43.035Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-28T11:35:44.568Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T11:39:34.252Z"
       }
     ]
   },
@@ -153,12 +171,10 @@
     "email": "fakemail@lol.com",
     "isAdmin": false,
     "followedUsernames": [
-      "admin",
-      "hypno2"
+      "admin"
     ],
     "followersUsernames": [
-      "admin",
-      "amit123"
+      "admin"
     ],
     "posts": [
       {
@@ -167,8 +183,7 @@
         "content": "Like seriously, can't wait",
         "timestamp": "2023-08-25T14:08:50.340Z",
         "usernamesWhoLiked": [
-          "hypno",
-          "amit123"
+          "hypno"
         ]
       }
     ],
@@ -257,91 +272,6 @@
       {
         "type": 1,
         "timestamp": "2023-08-28T09:48:52.416Z"
-      }
-    ]
-  },
-  {
-    "username": "hypno2",
-    "password": "$2b$10$ImhedeUyqJvey4XalKmAheaOarZLD.mBqsXJknoZWwCBVcFbDcPIy",
-    "email": "fakemail@lol.com",
-    "isAdmin": false,
-    "followedUsernames": [],
-    "followersUsernames": [
-      "hypno",
-      "admin"
-    ],
-    "posts": [
-      {
-        "postId": 0,
-        "title": "Armored Core 6 is awesome!",
-        "content": "Go buy it :D",
-        "timestamp": "2023-08-26T09:41:10.782Z",
-        "usernamesWhoLiked": [
-          "admin"
-        ]
-      }
-    ],
-    "currentPostId": 1,
-    "loginActivity": [
-      {
-        "type": 0,
-        "timestamp": "2023-08-25T14:10:01.653Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-25T14:10:05.724Z"
-      },
-      {
-        "type": 0,
-        "timestamp": "2023-08-26T09:40:41.216Z"
-      },
-      {
-        "type": 2,
-        "timestamp": "2023-08-26T09:41:10.782Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-26T09:41:13.207Z"
-      }
-    ]
-  },
-  {
-    "username": "amit123",
-    "password": "$2b$10$jvnHhw.KE6uu1HrM0t7xo.Vw7Dm4SzSwuuXzcy6vi6Q5gHc2qJY22",
-    "email": "fakemail@lol.com",
-    "isAdmin": false,
-    "followedUsernames": [
-      "hypno",
-      "admin"
-    ],
-    "followersUsernames": [
-      "admin"
-    ],
-    "posts": [
-      {
-        "postId": 0,
-        "title": "BG3 be kinda hype tho",
-        "content": "I have been playing it for so long, send help",
-        "timestamp": "2023-08-27T12:39:48.016Z",
-        "usernamesWhoLiked": [
-          "amit123",
-          "admin"
-        ]
-      }
-    ],
-    "currentPostId": 1,
-    "loginActivity": [
-      {
-        "type": 0,
-        "timestamp": "2023-08-27T12:38:40.355Z"
-      },
-      {
-        "type": 2,
-        "timestamp": "2023-08-27T12:39:48.016Z"
-      },
-      {
-        "type": 1,
-        "timestamp": "2023-08-27T12:43:16.785Z"
       }
     ]
   }

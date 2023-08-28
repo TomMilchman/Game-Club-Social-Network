@@ -157,4 +157,18 @@ router.route("/following").get((req, res) => {
   }
 });
 
+//Returns an array of all users' usernames registered in the system
+router.route("/all").get((req, res) => {
+  try {
+    const allUsers = persist.usersData.map((user) => user.username);
+
+    res.status(200).json({
+      usernames: allUsers,
+    });
+  } catch (error) {
+    console.error(`Error while checking followed users: ${error.message}`);
+    res.status(500).send(`Internal Server Error: ${error.message}`);
+  }
+});
+
 export default router;

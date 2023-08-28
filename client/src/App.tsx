@@ -10,6 +10,7 @@ import FollowUsersPage from "./pages/FollowUsersPage";
 import UpcomingReleasesPage from "./pages/UpcomingReleasesPage";
 import GamingTriviaPage from "./pages/GamingTriviaPage";
 import LoginActivityPage from "./pages/LoginActivityPage";
+import DeleteUserPage from "./pages/DeleteUserPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="gaming-trivia" element={<GamingTriviaPage />} />
             <Route path="admin" element={<AdminPage />}>
               <Route path="login-activity" element={<LoginActivityPage />} />
+              <Route path="delete-user" element={<DeleteUserPage />} />
             </Route>
           </Route>
           <Route path="*" element={<p>Error 404: Page not found</p>} />

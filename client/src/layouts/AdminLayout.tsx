@@ -40,7 +40,9 @@ export default function AdminLayout() {
           <button>LOGIN ACTIVITY</button>
         </Link>
         <button>DISABLE/ENABLE FEATURES</button>
-        <button>DELETE USERS</button>
+        <Link to="/admin/delete-user">
+          <button>DELETE USERS</button>
+        </Link>
         <Outlet />
       </>
     );
