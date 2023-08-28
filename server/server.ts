@@ -14,7 +14,7 @@ import logoutRoute from "./routes/logoutRoute";
 import signupRoute from "./routes/signupRoute";
 import searchRoute from "./routes/searchRoute";
 import authenticationRoute from "./routes/authenticationRoute";
-import adminRoute from "./routes/adminRoute";
+import adminRoute from "./routes/adminRoutes";
 
 const loggedInUsers = new Map<
   string,

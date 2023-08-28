@@ -6,10 +6,12 @@
     "isAdmin": true,
     "followedUsernames": [
       "hypno",
-      "hypno2"
+      "hypno2",
+      "amit123"
     ],
     "followersUsernames": [
-      "hypno"
+      "hypno",
+      "amit123"
     ],
     "posts": [
       {
@@ -18,7 +20,8 @@
         "content": "Ignore please",
         "timestamp": "2023-08-25T13:58:03.716Z",
         "usernamesWhoLiked": [
-          "hypno"
+          "hypno",
+          "amit123"
         ]
       },
       {
@@ -26,10 +29,21 @@
         "title": "Gotta say, Persona 3 Reload looking good",
         "content": "Looking goooooooood",
         "timestamp": "2023-08-26T09:29:08.996Z",
-        "usernamesWhoLiked": []
+        "usernamesWhoLiked": [
+          "amit123"
+        ]
+      },
+      {
+        "postId": 2,
+        "title": "I love gaming",
+        "content": "It's so fun!",
+        "timestamp": "2023-08-28T09:56:16.719Z",
+        "usernamesWhoLiked": [
+          "admin"
+        ]
       }
     ],
-    "currentPostId": 2,
+    "currentPostId": 3,
     "loginActivity": [
       {
         "type": 0,
@@ -110,6 +124,26 @@
       {
         "type": 1,
         "timestamp": "2023-08-27T09:24:57.473Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T09:42:03.008Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T09:48:58.108Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T09:51:28.064Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T09:54:18.367Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-28T09:56:16.719Z"
       }
     ]
   },
@@ -123,7 +157,8 @@
       "hypno2"
     ],
     "followersUsernames": [
-      "admin"
+      "admin",
+      "amit123"
     ],
     "posts": [
       {
@@ -132,7 +167,8 @@
         "content": "Like seriously, can't wait",
         "timestamp": "2023-08-25T14:08:50.340Z",
         "usernamesWhoLiked": [
-          "hypno"
+          "hypno",
+          "amit123"
         ]
       }
     ],
@@ -213,6 +249,14 @@
       {
         "type": 1,
         "timestamp": "2023-08-27T09:50:07.410Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T09:48:49.493Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-28T09:48:52.416Z"
       }
     ]
   },
@@ -258,6 +302,46 @@
       {
         "type": 1,
         "timestamp": "2023-08-26T09:41:13.207Z"
+      }
+    ]
+  },
+  {
+    "username": "amit123",
+    "password": "$2b$10$jvnHhw.KE6uu1HrM0t7xo.Vw7Dm4SzSwuuXzcy6vi6Q5gHc2qJY22",
+    "email": "fakemail@lol.com",
+    "isAdmin": false,
+    "followedUsernames": [
+      "hypno",
+      "admin"
+    ],
+    "followersUsernames": [
+      "admin"
+    ],
+    "posts": [
+      {
+        "postId": 0,
+        "title": "BG3 be kinda hype tho",
+        "content": "I have been playing it for so long, send help",
+        "timestamp": "2023-08-27T12:39:48.016Z",
+        "usernamesWhoLiked": [
+          "amit123",
+          "admin"
+        ]
+      }
+    ],
+    "currentPostId": 1,
+    "loginActivity": [
+      {
+        "type": 0,
+        "timestamp": "2023-08-27T12:38:40.355Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-27T12:39:48.016Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-27T12:43:16.785Z"
       }
     ]
   }

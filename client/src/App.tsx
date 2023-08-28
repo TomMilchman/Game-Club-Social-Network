@@ -5,10 +5,11 @@ import SignUpPage from "./pages/SignUpPage";
 import RootLayout from "./layouts/RootLayout";
 import FeedPage from "./pages/FeedPage";
 import UserPage from "./pages/UserPage";
-import AdminPage from "./pages/AdminPage";
+import AdminPage from "./layouts/AdminLayout";
 import FollowUsersPage from "./pages/FollowUsersPage";
 import UpcomingReleasesPage from "./pages/UpcomingReleasesPage";
 import GamingTriviaPage from "./pages/GamingTriviaPage";
+import LoginActivityPage from "./pages/LoginActivityPage";
 
 function App() {
   return (
@@ -26,7 +27,9 @@ function App() {
               element={<UpcomingReleasesPage />}
             />
             <Route path="gaming-trivia" element={<GamingTriviaPage />} />
-            <Route path="admin" element={<AdminPage />} />
+            <Route path="admin" element={<AdminPage />}>
+              <Route path="login-activity" element={<LoginActivityPage />} />
+            </Route>
           </Route>
           <Route path="*" element={<p>Error 404: Page not found</p>} />
         </Routes>

@@ -9,7 +9,7 @@ var persist_1 = require("../persist");
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
 //Check if user is admin
-router.get("/", function (req, res) {
+router.get("/checkadmin", function (req, res) {
     try {
         var tempPass = req.cookies.tempPass;
         if (tempPass !== undefined) {
@@ -50,5 +50,27 @@ router.get("/", function (req, res) {
         console.log("Error checking if admin: ".concat(error.message));
     }
 });
+router.get("/loginactivity", function (req, res) {
+    try {
+        var allActivities_1 = [];
+        persist_1.default.usersData.forEach(function (user) {
+            user.loginActivity.forEach(function (activity) {
+                var userActivity = {
+                    username: user.username,
+                    type: activity.type,
+                    timestamp: activity.timestamp,
+                };
+                allActivities_1.push(userActivity);
+            });
+        });
+        res.status(200).json({ loginActivity: allActivities_1 });
+    }
+    catch (error) {
+        res
+            .status(500)
+            .json({ message: "Error fetching login activity: ".concat(error.message) });
+        console.log("Error fetching login activity: ".concat(error.message));
+    }
+});
 exports.default = router;
-//# sourceMappingURL=adminRoute.js.map
+//# sourceMappingURL=adminRoutes.js.map

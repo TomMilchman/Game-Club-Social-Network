@@ -49,7 +49,7 @@ export default function RootLayout() {
 
   const checkIfAdmin = async () => {
     try {
-      const response = await fetch("http://localhost:3000/admin", {
+      const response = await fetch("http://localhost:3000/admin/checkadmin", {
         method: "GET",
         credentials: "include",
       });
