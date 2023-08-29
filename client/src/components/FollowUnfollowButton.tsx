@@ -7,6 +7,9 @@ interface Props {
 
 export default function FollowUnfollowButton(props: Props) {
   const [isFollowing, setIsFollowing] = useState<boolean | null>(null);
+  const [numOfFollowersEnabled, setNumOfFollowersEnabled] = useState<
+    boolean | null
+  >(null);
   const [numOfFollowers, setNumOfFollowers] = useState<number | null>(null);
 
   const handleFollowUnfollowClick = async (action: string) => {
@@ -37,13 +40,34 @@ export default function FollowUnfollowButton(props: Props) {
     }
   };
 
-  const handleFollowClick = () => {
-    handleFollowUnfollowClick("follow");
-  };
+  useEffect(() => {
+    async function checkNumOfFollowersPrivileges() {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/admin/checkprivileges",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
-  const handleUnfollowClick = () => {
-    handleFollowUnfollowClick("unfollow");
-  };
+        const responseData = await response.json();
+        if (response.ok) {
+          if (responseData.isAdmin) {
+            setNumOfFollowersEnabled(true);
+          } else {
+            setNumOfFollowersEnabled(responseData.numOfFollowersEnabled);
+          }
+        } else {
+          console.log(responseData.message);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    checkNumOfFollowersPrivileges();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -77,22 +101,26 @@ export default function FollowUnfollowButton(props: Props) {
         <button disabled title="You cannot follow/unfollow yourself!">
           FOLLOW
         </button>
-        <label>{numOfFollowers}</label>
+        {numOfFollowersEnabled && <label>{numOfFollowers}</label>}
       </>
     );
   } else {
     if (isFollowing) {
       return (
         <>
-          <button onClick={handleUnfollowClick}>UNFOLLOW</button>
-          <label>{numOfFollowers}</label>
+          <button onClick={() => handleFollowUnfollowClick("unfollow")}>
+            UNFOLLOW
+          </button>
+          {numOfFollowersEnabled && <label>{numOfFollowers}</label>}
         </>
       );
     } else {
       return (
         <>
-          <button onClick={handleFollowClick}>FOLLOW</button>
-          <label>{numOfFollowers}</label>
+          <button onClick={() => handleFollowUnfollowClick("follow")}>
+            FOLLOW
+          </button>
+          {numOfFollowersEnabled && <label>{numOfFollowers}</label>}
         </>
       );
     }

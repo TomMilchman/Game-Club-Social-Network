@@ -44,7 +44,7 @@ export default function EnableDisableFeaturesPage() {
   const enableDisableFeature = async (action: string, type: string) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/admin/${action}${type}`,
+        `http://localhost:3000/admin/${type}/${action}`,
         {
           method: "PUT",
           credentials: "include",

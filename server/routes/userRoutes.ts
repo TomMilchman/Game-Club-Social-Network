@@ -157,16 +157,18 @@ router.route("/following").get((req, res) => {
   }
 });
 
-//Returns an array of all users' usernames registered in the system
-router.route("/all").get((req, res) => {
+//Returns an array of all users' usernames registered in the system (aside from admins)
+router.route("/nonadmin").get((req, res) => {
   try {
-    const allUsers = persist.usersData.map((user) => user.username);
+    const nonAdminUsernames = persist.usersData
+      .filter((user) => user.isAdmin === false)
+      .map((user) => user.username);
 
     res.status(200).json({
-      usernames: allUsers,
+      usernames: nonAdminUsernames,
     });
   } catch (error) {
-    console.error(`Error while checking followed users: ${error.message}`);
+    console.error(`Error while getting non-admin users: ${error.message}`);
     res.status(500).send(`Internal Server Error: ${error.message}`);
   }
 });

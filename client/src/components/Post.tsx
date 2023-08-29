@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   username: string;
@@ -12,6 +12,7 @@ interface Props {
 }
 
 export default function Post(props: Props) {
+  const [unlikeEnabled, setUnlikeEnabled] = useState<boolean | null>(null);
   const [numOfLikes, setNumOfLikes] = useState(props.numOfLikes);
   const [userLikesPost, setUserLikesPost] = useState(props.didUserLikePost);
 
@@ -42,13 +43,34 @@ export default function Post(props: Props) {
     }
   };
 
-  const handleLikeClick = () => {
-    handleLikeUnlikeClick("like");
+  const checkUnlikePrivileges = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/admin/checkprivileges",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const responseData = await response.json();
+      if (response.ok) {
+        if (responseData.isAdmin) {
+          setUnlikeEnabled(true);
+        } else {
+          setUnlikeEnabled(responseData.unlikeEnabled);
+        }
+      } else {
+        console.log(responseData.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
-  const handleUnlikeClick = () => {
-    handleLikeUnlikeClick("unlike");
-  };
+  useEffect(() => {
+    checkUnlikePrivileges();
+  }, []);
 
   const formattedTimestamp = format(
     new Date(props.timestamp),
@@ -68,11 +90,18 @@ export default function Post(props: Props) {
       </div>
       <div className="like-unlike-btn-container">
         {userLikesPost ? (
-          <button className="unlike-btn" onClick={handleUnlikeClick}>
+          <button
+            className="unlike-btn"
+            onClick={() => handleLikeUnlikeClick("unlike")}
+            disabled={!unlikeEnabled}
+          >
             UNLIKE
           </button>
         ) : (
-          <button className="like-btn" onClick={handleLikeClick}>
+          <button
+            className="like-btn"
+            onClick={() => handleLikeUnlikeClick("like")}
+          >
             LIKE
           </button>
         )}

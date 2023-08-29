@@ -185,7 +185,7 @@ const enableDisableFeature = (req, res, isEnable: boolean, type: string) => {
         case "unlike":
           featureFlags.enableUnlike = isEnable;
           break;
-        case "numberoffollowers":
+        case "numoffollowers":
           featureFlags.enableNumberOfFollowers = isEnable;
           break;
         default:
@@ -208,7 +208,7 @@ const enableDisableFeature = (req, res, isEnable: boolean, type: string) => {
   }
 };
 
-router.put("/enablegamingtrivia", async (req, res) => {
+router.put("/gamingtrivia/enable", async (req, res) => {
   try {
     enableDisableFeature(req, res, true, "gamingtrivia");
   } catch (error) {
@@ -219,7 +219,7 @@ router.put("/enablegamingtrivia", async (req, res) => {
   }
 });
 
-router.put("/disablegamingtrivia", async (req, res) => {
+router.put("/gamingtrivia/disable", async (req, res) => {
   try {
     enableDisableFeature(req, res, false, "gamingtrivia");
   } catch (error) {
@@ -230,7 +230,7 @@ router.put("/disablegamingtrivia", async (req, res) => {
   }
 });
 
-router.put("/enableupcomingreleases", async (req, res) => {
+router.put("/upcomingreleases/enable", async (req, res) => {
   try {
     enableDisableFeature(req, res, true, "upcomingreleases");
   } catch (error) {
@@ -241,7 +241,7 @@ router.put("/enableupcomingreleases", async (req, res) => {
   }
 });
 
-router.put("/disableupcomingreleases", async (req, res) => {
+router.put("/upcomingreleases/disable", async (req, res) => {
   try {
     enableDisableFeature(req, res, false, "upcomingreleases");
   } catch (error) {
@@ -252,7 +252,7 @@ router.put("/disableupcomingreleases", async (req, res) => {
   }
 });
 
-router.put("/enablenumoffollowers", async (req, res) => {
+router.put("/numoffollowers/enable", async (req, res) => {
   try {
     enableDisableFeature(req, res, true, "numoffollowers");
   } catch (error) {
@@ -263,7 +263,7 @@ router.put("/enablenumoffollowers", async (req, res) => {
   }
 });
 
-router.put("/disablenumoffollowers", async (req, res) => {
+router.put("/numoffollowers/disable", async (req, res) => {
   try {
     enableDisableFeature(req, res, false, "numoffollowers");
   } catch (error) {
@@ -274,7 +274,7 @@ router.put("/disablenumoffollowers", async (req, res) => {
   }
 });
 
-router.put("/enableunlike", async (req, res) => {
+router.put("/unlike/enable", async (req, res) => {
   try {
     enableDisableFeature(req, res, true, "unlike");
   } catch (error) {
@@ -285,7 +285,7 @@ router.put("/enableunlike", async (req, res) => {
   }
 });
 
-router.put("/disableunlike", async (req, res) => {
+router.put("/unlike/disable", async (req, res) => {
   try {
     enableDisableFeature(req, res, false, "unlike");
   } catch (error) {

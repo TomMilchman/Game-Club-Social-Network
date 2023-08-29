@@ -36,7 +36,8 @@
         "timestamp": "2023-08-28T09:56:16.719Z",
         "usernamesWhoLiked": [
           "admin",
-          "hypno"
+          "hypno",
+          "hypno2"
         ]
       }
     ],
@@ -269,6 +270,66 @@
       {
         "type": 1,
         "timestamp": "2023-08-29T10:54:29.964Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:18:24.981Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:21:11.329Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:21:23.239Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:21:43.236Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:21:58.776Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:22:20.304Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:22:28.604Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:28:59.701Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:29:15.886Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:30:21.554Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:30:33.578Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:48:42.787Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:49:51.331Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:49:56.223Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:50:03.394Z"
       }
     ]
   },
@@ -291,7 +352,8 @@
         "timestamp": "2023-08-25T14:08:50.340Z",
         "usernamesWhoLiked": [
           "hypno",
-          "admin"
+          "admin",
+          "hypno2"
         ]
       },
       {
@@ -299,10 +361,21 @@
         "title": "So many good games this year!",
         "content": "It's crazy!",
         "timestamp": "2023-08-29T08:27:42.662Z",
-        "usernamesWhoLiked": []
+        "usernamesWhoLiked": [
+          "admin"
+        ]
+      },
+      {
+        "postId": 2,
+        "title": "TFW you finish a game and you feel empty",
+        "content": "me rn fr fr",
+        "timestamp": "2023-08-29T11:29:58.582Z",
+        "usernamesWhoLiked": [
+          "hypno"
+        ]
       }
     ],
-    "currentPostId": 2,
+    "currentPostId": 3,
     "loginActivity": [
       {
         "type": 0,
@@ -487,6 +560,82 @@
       {
         "type": 1,
         "timestamp": "2023-08-29T10:55:09.935Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:18:11.310Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:18:20.090Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:20:58.072Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:21:07.007Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:21:27.647Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:21:38.667Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:22:03.527Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:22:09.751Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:22:32.867Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:22:48.388Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:28:47.101Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:28:55.145Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:29:21.371Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-29T11:29:58.582Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:30:17.103Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:30:37.955Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:30:48.337Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T11:50:09.043Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T11:50:24.324Z"
       }
     ]
   }

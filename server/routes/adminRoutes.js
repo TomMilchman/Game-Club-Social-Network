@@ -277,7 +277,7 @@ var enableDisableFeature = function (req, res, isEnable, type) {
                 case "unlike":
                     featureFlags.enableUnlike = isEnable;
                     break;
-                case "numberoffollowers":
+                case "numoffollowers":
                     featureFlags.enableNumberOfFollowers = isEnable;
                     break;
                 default:
@@ -300,7 +300,7 @@ var enableDisableFeature = function (req, res, isEnable, type) {
         console.log("This user is not logged in");
     }
 };
-router.put("/enablegamingtrivia", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/gamingtrivia/enable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, true, "gamingtrivia");
@@ -314,7 +314,7 @@ router.put("/enablegamingtrivia", function (req, res) { return __awaiter(void 0,
         return [2 /*return*/];
     });
 }); });
-router.put("/disablegamingtrivia", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/gamingtrivia/disable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, false, "gamingtrivia");
@@ -328,7 +328,7 @@ router.put("/disablegamingtrivia", function (req, res) { return __awaiter(void 0
         return [2 /*return*/];
     });
 }); });
-router.put("/enableupcomingreleases", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/upcomingreleases/enable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, true, "upcomingreleases");
@@ -342,7 +342,7 @@ router.put("/enableupcomingreleases", function (req, res) { return __awaiter(voi
         return [2 /*return*/];
     });
 }); });
-router.put("/disableupcomingreleases", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/upcomingreleases/disable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, false, "upcomingreleases");
@@ -356,7 +356,7 @@ router.put("/disableupcomingreleases", function (req, res) { return __awaiter(vo
         return [2 /*return*/];
     });
 }); });
-router.put("/enablenumoffollowers", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/numoffollowers/enable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, true, "numoffollowers");
@@ -370,7 +370,7 @@ router.put("/enablenumoffollowers", function (req, res) { return __awaiter(void 
         return [2 /*return*/];
     });
 }); });
-router.put("/disablenumoffollowers", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/numoffollowers/disable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, false, "numoffollowers");
@@ -384,7 +384,7 @@ router.put("/disablenumoffollowers", function (req, res) { return __awaiter(void
         return [2 /*return*/];
     });
 }); });
-router.put("/enableunlike", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/unlike/enable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, true, "unlike");
@@ -398,7 +398,7 @@ router.put("/enableunlike", function (req, res) { return __awaiter(void 0, void 
         return [2 /*return*/];
     });
 }); });
-router.put("/disableunlike", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/unlike/disable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, false, "unlike");

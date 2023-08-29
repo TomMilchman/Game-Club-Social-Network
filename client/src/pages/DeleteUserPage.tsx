@@ -5,7 +5,7 @@ export default function DeleteUserPage() {
 
   const getUsernames = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/users/all`, {
+      const response = await fetch(`http://localhost:3000/users/nonadmin`, {
         method: "GET",
         credentials: "include",
       });
