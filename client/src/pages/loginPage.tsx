@@ -48,7 +48,7 @@ export default function LoginPage() {
       <img src={GameClubLogo} width={90} height={57} alt="Logo" />
       <h2>Login</h2>
       <div className="input-container">
-        <label>Username:</label>
+        <label>Username: </label>
         <input
           id="username-input"
           value={username}
@@ -56,7 +56,7 @@ export default function LoginPage() {
         />
       </div>
       <div className="input-container">
-        <label>Password:</label>
+        <label>Password: </label>
         <input
           id="password-input"
           type="password"
@@ -65,7 +65,7 @@ export default function LoginPage() {
         />
       </div>
       <div className="input-container">
-        <label>Remember me</label>
+        <label>Remember me </label>
         <input
           className="remember-me-input"
           type="checkbox"
@@ -77,7 +77,7 @@ export default function LoginPage() {
         LOGIN
       </button>
       <div id="other-option-container">
-        <p>Or sign up instead:</p>
+        <p>Or sign up instead: </p>
         <Link to="/signup">
           <button className="other-option-btn" id="redirect-to-signup-btn">
             SIGN UP

@@ -6,6 +6,9 @@ export default function RootLayout() {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [upcomingReleasesPrivileges, setUpcomingReleasesPrivileges] =
+    useState(false);
+  const [gamingTriviaPrivileges, setGamingTriviaPrivileges] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -47,17 +50,31 @@ export default function RootLayout() {
     }
   };
 
-  const checkIfAdmin = async () => {
+  const checkNavbarPrivileges = async () => {
     try {
-      const response = await fetch("http://localhost:3000/admin/checkadmin", {
-        method: "GET",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "http://localhost:3000/admin/checkprivileges",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
 
       const responseData = await response.json();
       if (response.ok) {
-        setIsAdmin(true);
-        console.log(responseData.message);
+        setIsAdmin(responseData.isAdmin);
+
+        if (responseData.isAdmin) {
+          setUpcomingReleasesPrivileges(true);
+          setGamingTriviaPrivileges(true);
+        } else {
+          setUpcomingReleasesPrivileges(responseData.upcomingReleasesEnabled);
+          setGamingTriviaPrivileges(responseData.gamingTriviaEnabled);
+        }
+
+        console.log(
+          `isAdmin: ${isAdmin}, upcomingReleasesPrivileges: ${upcomingReleasesPrivileges}, gamingTriviaPrivileges: ${gamingTriviaPrivileges}`
+        );
       } else if (response.status === 401) {
         setIsAdmin(false);
         console.log(responseData.message);
@@ -72,7 +89,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     authenticate();
-    checkIfAdmin();
+    checkNavbarPrivileges();
   }, [<Outlet />]);
 
   return authenticated ? (
@@ -87,10 +104,12 @@ export default function RootLayout() {
           <button>FOLLOWING</button>
         </Link>
         <Link to="/upcoming-releases">
-          <button>UPCOMING RELEASES</button>
+          <button disabled={!upcomingReleasesPrivileges}>
+            UPCOMING RELEASES
+          </button>
         </Link>
         <Link to="/gaming-trivia">
-          <button>GAMING TRIVIA</button>
+          <button disabled={!gamingTriviaPrivileges}>GAMING TRIVIA</button>
         </Link>
         {isAdmin && (
           <Link to="/admin">

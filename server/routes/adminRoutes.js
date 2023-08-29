@@ -71,30 +71,47 @@ var server_1 = require("../server");
 var persist_1 = require("../persist");
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
-//Check if user is admin
-router.get("/checkadmin", function (req, res) {
+var featureFlags = {
+    enableGamingTrivia: true,
+    enableUpcomingReleases: true,
+    enableUnlike: true,
+    enableNumberOfFollowers: true,
+};
+router.get("/checkprivileges", function (req, res) {
     try {
+        var isAdmin = false;
+        var gamingTriviaEnabled = false;
+        var upcomingReleasesEnabled = false;
+        var unlikeEnabled = false;
+        var numOfFollowersEnabled = false;
         var tempPass = req.cookies.tempPass;
         if (tempPass !== undefined) {
             if (server_1.default.get(tempPass) !== undefined) {
-                var username_1 = server_1.default.get(tempPass).username;
-                var user = persist_1.default.usersData.find(function (user) { return user.username === username_1; });
-                if (user !== undefined) {
-                    if (user.isAdmin === true) {
-                        res.status(200).json({ message: "User ".concat(username_1, " is an admin") });
-                        console.log("User ".concat(username_1, " is an admin"));
-                    }
-                    else {
-                        res
-                            .status(401)
-                            .json({ message: "User ".concat(username_1, " is not an admin") });
-                        console.log("User ".concat(username_1, " is not an admin"));
-                    }
+                var username = server_1.default.get(tempPass).username;
+                var user = persist_1.default.findUserByUsername(username);
+                if (user.isAdmin === true) {
+                    isAdmin = true;
                 }
-                else {
-                    res.status(401).json({ message: "This user is not logged in" });
-                    console.log("This user is not logged in");
+                if (featureFlags.enableUnlike === true) {
+                    unlikeEnabled = true;
                 }
+                if (featureFlags.enableNumberOfFollowers === true) {
+                    numOfFollowersEnabled = true;
+                }
+                if (featureFlags.enableGamingTrivia === true) {
+                    gamingTriviaEnabled = true;
+                }
+                if (featureFlags.enableUpcomingReleases === true) {
+                    upcomingReleasesEnabled = true;
+                }
+                res.status(200).json({
+                    isAdmin: isAdmin,
+                    gamingTriviaEnabled: gamingTriviaEnabled,
+                    upcomingReleasesEnabled: upcomingReleasesEnabled,
+                    unlikeEnabled: unlikeEnabled,
+                    numOfFollowersEnabled: numOfFollowersEnabled,
+                });
+                console.log("User ".concat(username, " is an admin: ").concat(isAdmin, ", gaming trivia enabled: ").concat(gamingTriviaEnabled, ", upcoming releases enabled: ").concat(upcomingReleasesEnabled));
             }
             else {
                 res.status(401).json({ message: "This user is not logged in" });
@@ -109,8 +126,8 @@ router.get("/checkadmin", function (req, res) {
     catch (error) {
         res
             .status(500)
-            .json({ message: "Error checking if admin: ".concat(error.message) });
-        console.log("Error checking if admin: ".concat(error.message));
+            .json({ message: "Error checking privileges ".concat(error.message) });
+        console.log("Error checking privileges: ".concat(error.message));
     }
 });
 router.get("/loginactivity", function (req, res) {
@@ -144,7 +161,7 @@ router.delete("/deleteuser/:username", function (req, res) { return __awaiter(vo
                 _p.trys.push([0, 8, , 9]);
                 tempPass = req.cookies.tempPass;
                 if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 6];
-                if (!(server_1.default.get(tempPass).username === "admin")) return [3 /*break*/, 4];
+                if (!persist_1.default.findUserByUsername(server_1.default.get(tempPass).username).isAdmin) return [3 /*break*/, 4];
                 usernameToDelete = req.params.username;
                 userToDelete = persist_1.default.findUserByUsername(usernameToDelete);
                 if (!(userToDelete !== undefined)) return [3 /*break*/, 2];
@@ -244,6 +261,155 @@ router.delete("/deleteuser/:username", function (req, res) { return __awaiter(vo
                 return [3 /*break*/, 9];
             case 9: return [2 /*return*/];
         }
+    });
+}); });
+var enableDisableFeature = function (req, res, isEnable, type) {
+    var tempPass = req.cookies.tempPass;
+    if (server_1.default.get(tempPass) !== undefined) {
+        if (persist_1.default.findUserByUsername(server_1.default.get(tempPass).username).isAdmin) {
+            switch (type) {
+                case "gamingtrivia":
+                    featureFlags.enableGamingTrivia = isEnable;
+                    break;
+                case "upcomingreleases":
+                    featureFlags.enableUpcomingReleases = isEnable;
+                    break;
+                case "unlike":
+                    featureFlags.enableUnlike = isEnable;
+                    break;
+                case "numberoffollowers":
+                    featureFlags.enableNumberOfFollowers = isEnable;
+                    break;
+                default:
+                    res.status(404).json({ message: "Feature not found" });
+                    console.log("Feature not found");
+                    return;
+            }
+            res
+                .status(200)
+                .json({ message: "Feature ".concat(type, ", updated status: ").concat(isEnable) });
+            console.log("Feature ".concat(type, ", updated status: ").concat(isEnable));
+        }
+        else {
+            res.status(401).json({ message: "This user is not an admin" });
+            console.log("This user is not an admin");
+        }
+    }
+    else {
+        res.status(404).json({ message: "This user is not logged in" });
+        console.log("This user is not logged in");
+    }
+};
+router.put("/enablegamingtrivia", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            enableDisableFeature(req, res, true, "gamingtrivia");
+        }
+        catch (error) {
+            res
+                .status(500)
+                .json({ message: "Error changing privileges: ".concat(error.message) });
+            console.log("Error changing privileges: ".concat(error.message));
+        }
+        return [2 /*return*/];
+    });
+}); });
+router.put("/disablegamingtrivia", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            enableDisableFeature(req, res, false, "gamingtrivia");
+        }
+        catch (error) {
+            res
+                .status(500)
+                .json({ message: "Error changing privileges: ".concat(error.message) });
+            console.log("Error changing privileges: ".concat(error.message));
+        }
+        return [2 /*return*/];
+    });
+}); });
+router.put("/enableupcomingreleases", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            enableDisableFeature(req, res, true, "upcomingreleases");
+        }
+        catch (error) {
+            res
+                .status(500)
+                .json({ message: "Error changing privileges: ".concat(error.message) });
+            console.log("Error changing privileges: ".concat(error.message));
+        }
+        return [2 /*return*/];
+    });
+}); });
+router.put("/disableupcomingreleases", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            enableDisableFeature(req, res, false, "upcomingreleases");
+        }
+        catch (error) {
+            res
+                .status(500)
+                .json({ message: "Error changing privileges: ".concat(error.message) });
+            console.log("Error changing privileges: ".concat(error.message));
+        }
+        return [2 /*return*/];
+    });
+}); });
+router.put("/enablenumoffollowers", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            enableDisableFeature(req, res, true, "numoffollowers");
+        }
+        catch (error) {
+            res
+                .status(500)
+                .json({ message: "Error changing privileges: ".concat(error.message) });
+            console.log("Error changing privileges: ".concat(error.message));
+        }
+        return [2 /*return*/];
+    });
+}); });
+router.put("/disablenumoffollowers", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            enableDisableFeature(req, res, false, "numoffollowers");
+        }
+        catch (error) {
+            res
+                .status(500)
+                .json({ message: "Error changing privileges: ".concat(error.message) });
+            console.log("Error changing privileges: ".concat(error.message));
+        }
+        return [2 /*return*/];
+    });
+}); });
+router.put("/enableunlike", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            enableDisableFeature(req, res, true, "unlike");
+        }
+        catch (error) {
+            res
+                .status(500)
+                .json({ message: "Error changing privileges: ".concat(error.message) });
+            console.log("Error changing privileges: ".concat(error.message));
+        }
+        return [2 /*return*/];
+    });
+}); });
+router.put("/disableunlike", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            enableDisableFeature(req, res, false, "unlike");
+        }
+        catch (error) {
+            res
+                .status(500)
+                .json({ message: "Error changing privileges: ".concat(error.message) });
+            console.log("Error changing privileges: ".concat(error.message));
+        }
+        return [2 /*return*/];
     });
 }); });
 exports.default = router;

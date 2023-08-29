@@ -49,7 +49,7 @@ export default function SignUpPage() {
       <img src={GameClubLogo} width={90} height={57} />
       <h2>Sign Up</h2>
       <div className="input-container">
-        <label>Username:</label>
+        <label>Username: </label>
         <input
           id="username-input"
           value={username}
@@ -57,7 +57,7 @@ export default function SignUpPage() {
         ></input>
       </div>
       <div className="input-container">
-        <label>Password:</label>
+        <label>Password: </label>
         <input
           id="password-input"
           value={password}
@@ -65,7 +65,7 @@ export default function SignUpPage() {
         ></input>
       </div>
       <div className="input-container">
-        <label>Email:</label>
+        <label>Email: </label>
         <input
           id="email-input"
           value={email}
@@ -73,7 +73,7 @@ export default function SignUpPage() {
         ></input>
       </div>
       <div className="input-container">
-        <label>Remember me</label>
+        <label>Remember me </label>
         <input
           className="remember-me-input"
           type="checkbox"
@@ -85,7 +85,7 @@ export default function SignUpPage() {
         SIGN UP
       </button>
       <div id="other-option-container">
-        <p>Or log in instead:</p>
+        <p>Or log in instead: </p>
         <Link to="../login">
           <button className="other-option-btn" id="redirect-to-login-btn">
             LOGIN

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
 import { LoginActivityType } from "../../../server/User";
 
 interface UserActivity {
@@ -49,7 +50,7 @@ export default function LoginActivityPage() {
   };
 
   const formattedTimestamp = (timestamp: Date) => {
-    return new Date(timestamp).toLocaleString();
+    return format(new Date(timestamp), "dd/MM/yy HH:mm");
   };
 
   if (loginActivity.length === 0) {

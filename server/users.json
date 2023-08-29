@@ -25,7 +25,9 @@
         "title": "Gotta say, Persona 3 Reload looking good",
         "content": "Looking goooooooood",
         "timestamp": "2023-08-26T09:29:08.996Z",
-        "usernamesWhoLiked": []
+        "usernamesWhoLiked": [
+          "hypno"
+        ]
       },
       {
         "postId": 2,
@@ -33,7 +35,8 @@
         "content": "It's so fun!",
         "timestamp": "2023-08-28T09:56:16.719Z",
         "usernamesWhoLiked": [
-          "admin"
+          "admin",
+          "hypno"
         ]
       }
     ],
@@ -162,6 +165,110 @@
       {
         "type": 0,
         "timestamp": "2023-08-28T11:39:34.252Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T11:44:07.620Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-28T11:44:40.425Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-28T20:13:41.014Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T08:43:14.556Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T08:43:52.661Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T09:44:04.451Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T09:46:41.418Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T09:47:08.233Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T09:47:36.351Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T09:47:41.326Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T09:47:55.129Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T09:49:41.271Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:31:03.168Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:31:16.490Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:31:43.808Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:32:35.760Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:35:15.702Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:36:35.198Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:36:47.820Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:36:54.805Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:38:18.367Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:38:25.256Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:43:45.070Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:43:54.732Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:54:06.714Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:54:29.964Z"
       }
     ]
   },
@@ -183,11 +290,19 @@
         "content": "Like seriously, can't wait",
         "timestamp": "2023-08-25T14:08:50.340Z",
         "usernamesWhoLiked": [
-          "hypno"
+          "hypno",
+          "admin"
         ]
+      },
+      {
+        "postId": 1,
+        "title": "So many good games this year!",
+        "content": "It's crazy!",
+        "timestamp": "2023-08-29T08:27:42.662Z",
+        "usernamesWhoLiked": []
       }
     ],
-    "currentPostId": 1,
+    "currentPostId": 2,
     "loginActivity": [
       {
         "type": 0,
@@ -272,6 +387,106 @@
       {
         "type": 1,
         "timestamp": "2023-08-28T09:48:52.416Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T08:25:51.239Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-29T08:27:42.662Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T08:33:01.458Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T08:33:11.626Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T08:34:01.057Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T08:34:01.059Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T08:42:12.699Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T08:42:12.701Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T08:43:09.749Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:31:21.379Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:31:39.158Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:36:40.432Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:36:43.375Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:36:59.258Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:37:01.746Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:38:12.819Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:38:14.456Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:38:29.700Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:38:36.571Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:43:59.220Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:44:01.255Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:53:42.241Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:53:44.197Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T10:54:47.829Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T10:55:09.935Z"
       }
     ]
   }

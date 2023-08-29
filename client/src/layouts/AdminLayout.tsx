@@ -6,24 +6,29 @@ export default function AdminLayout() {
 
   const checkIfAdmin = async () => {
     try {
-      const response = await fetch("http://localhost:3000/admin/checkadmin", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:3000/admin/checkprivileges",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const responseData = await response.json();
       if (response.ok) {
-        setIsAdmin(true);
+        setIsAdmin(responseData.isAdmin);
       } else if (response.status === 401) {
         setIsAdmin(false);
       } else {
+        setIsAdmin(false);
         console.log("An error occurred server side:", responseData.message);
       }
       console.log(responseData.message);
     } catch (error) {
+      setIsAdmin(false);
       console.error("Error:", error);
     }
   };
@@ -39,7 +44,9 @@ export default function AdminLayout() {
         <Link to="/admin/login-activity">
           <button>LOGIN ACTIVITY</button>
         </Link>
-        <button>DISABLE/ENABLE FEATURES</button>
+        <Link to="/admin/enable-disable-features">
+          <button>DISABLE/ENABLE FEATURES</button>
+        </Link>
         <Link to="/admin/delete-user">
           <button>DELETE USERS</button>
         </Link>
