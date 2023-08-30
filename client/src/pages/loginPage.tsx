@@ -44,46 +44,48 @@ export default function LoginPage() {
   };
 
   return (
-    <form id="login-form" onSubmit={handleSubmit}>
-      <img src={GameClubLogo} width={90} height={57} alt="Logo" />
-      <h2>Login</h2>
-      <div className="input-container">
-        <label>Username: </label>
-        <input
-          id="username-input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div className="input-container">
-        <label>Password: </label>
-        <input
-          id="password-input"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div className="input-container">
-        <label>Remember me </label>
-        <input
-          className="remember-me-input"
-          type="checkbox"
-          checked={rememberMeChecked}
-          onChange={(e) => setRememberMeChecked(e.target.checked)}
-        />
-      </div>
-      <button type="submit" id="login-btn">
-        LOGIN
-      </button>
-      <div id="other-option-container">
-        <p>Or sign up instead: </p>
-        <Link to="/signup">
-          <button className="other-option-btn" id="redirect-to-signup-btn">
-            SIGN UP
-          </button>
-        </Link>
-      </div>
-    </form>
+    <div className="form-container">
+      <img src={GameClubLogo} />
+      <form id="login-form" onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        <div className="input-container">
+          <label htmlFor="username-input">Username: </label>
+          <input
+            id="username-input"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="input-container">
+          <label htmlFor="password-input">Password: </label>
+          <input
+            id="password-input"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="input-container">
+          <label>Remember me </label>
+          <input
+            className="remember-me-input"
+            type="checkbox"
+            checked={rememberMeChecked}
+            onChange={(e) => setRememberMeChecked(e.target.checked)}
+          />
+        </div>
+        <button type="submit" id="login-btn">
+          LOGIN
+        </button>
+        <div id="other-option-container">
+          <p>Or sign up instead: </p>
+          <Link to="/signup">
+            <button className="other-option-btn" id="redirect-to-signup-btn">
+              SIGN UP
+            </button>
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 }

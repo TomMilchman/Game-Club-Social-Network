@@ -3,6 +3,7 @@ import CreatePost from "../components/CreatePost";
 import PostComponent from "../components/Post";
 
 export default function FeedPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [posts, setPosts] = useState([]);
   const [createPostClicked, setCreatePostClicked] = useState(false);
@@ -19,6 +20,7 @@ export default function FeedPage() {
         setUsername(responseData.requestingUsername);
         const posts = responseData.posts;
         setPosts(posts);
+        setIsLoading(false);
       } else {
         console.log(responseData.message);
       }
@@ -30,6 +32,10 @@ export default function FeedPage() {
   useEffect(() => {
     getFeed();
   }, []);
+
+  if (isLoading) {
+    return <p></p>;
+  }
 
   if (posts.length > 0) {
     const sortedPosts = posts.sort((a: any, b: any) => {
@@ -53,6 +59,7 @@ export default function FeedPage() {
             <button onClick={() => setCreatePostClicked(false)}>CANCEL</button>
           </>
         )}
+        <h2>Posts from users you follow:</h2>
         {sortedPosts.map((post: any) => (
           <PostComponent
             key={`${post.username}-${post.postId}`}
@@ -83,7 +90,8 @@ export default function FeedPage() {
             <button onClick={() => setCreatePostClicked(false)}>CANCEL</button>
           </>
         )}
-        <h2>Follow users to see their posts!</h2>
+        <h2>Posts from users you follow:</h2>
+        <h3>Follow users to see their posts!</h3>
       </div>
     );
   }

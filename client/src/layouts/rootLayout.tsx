@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 
 export default function RootLayout() {
   const navigate = useNavigate();
-  const [authenticated, setAuthenticated] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [upcomingReleasesPrivileges, setUpcomingReleasesPrivileges] =
     useState(false);
@@ -45,6 +46,7 @@ export default function RootLayout() {
       } else {
         console.log("An error occurred server side:", responseData.message);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -92,10 +94,14 @@ export default function RootLayout() {
     checkNavbarPrivileges();
   }, [<Outlet />]);
 
+  if (isLoading) {
+    return <p></p>;
+  }
+
   return authenticated ? (
     <div className="root-layout">
       <div id="navbar">
-        <img src={GameClubLogo} width={90} height={57} />
+        <img id="game-club-logo-layout" src={GameClubLogo} />
         <br />
         <Link to="/">
           <button>USER FEED</button>
@@ -118,7 +124,9 @@ export default function RootLayout() {
         )}
         <button onClick={handleLogout}>LOGOUT</button>
       </div>
-      <Outlet />
+      <div className="root-child">
+        <Outlet />
+      </div>
     </div>
   ) : (
     <Navigate to={"/login"} />

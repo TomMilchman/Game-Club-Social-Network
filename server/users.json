@@ -5,7 +5,8 @@
     "email": "fakemail@lol.com",
     "isAdmin": true,
     "followedUsernames": [
-      "hypno"
+      "hypno",
+      "mufugai"
     ],
     "followersUsernames": [
       "hypno"
@@ -330,6 +331,118 @@
       {
         "type": 1,
         "timestamp": "2023-08-29T11:50:03.394Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T16:55:45.530Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T16:56:20.323Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T16:58:12.497Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T16:58:31.146Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T16:59:29.529Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T17:01:03.931Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T17:10:12.562Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T17:10:27.746Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T17:12:37.118Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T17:13:39.091Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T09:40:11.307Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T09:44:31.067Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T10:16:38.349Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T10:16:46.553Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T10:20:57.261Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T10:21:02.940Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T10:37:45.390Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T10:39:37.861Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T10:49:23.013Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T12:15:01.696Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T12:19:37.949Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T12:26:41.085Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T13:02:13.502Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T13:02:17.803Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T13:06:46.082Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T13:07:01.217Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T13:07:07.335Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T13:20:17.717Z"
       }
     ]
   },
@@ -342,7 +455,8 @@
       "admin"
     ],
     "followersUsernames": [
-      "admin"
+      "admin",
+      "mufugai"
     ],
     "posts": [
       {
@@ -371,11 +485,21 @@
         "content": "me rn fr fr",
         "timestamp": "2023-08-29T11:29:58.582Z",
         "usernamesWhoLiked": [
+          "hypno",
+          "mufugai"
+        ]
+      },
+      {
+        "postId": 3,
+        "title": "An idea for a game",
+        "content": "So I had this idea for a game: It is called The Binding of Isaac. You play as a child who has to defeat monsters in the basement in order to survive and finally escape. It would use all sorts of different items and combinations between the items, which could lead to a very interesting game...",
+        "timestamp": "2023-08-30T11:38:57.235Z",
+        "usernamesWhoLiked": [
           "hypno"
         ]
       }
     ],
-    "currentPostId": 3,
+    "currentPostId": 4,
     "loginActivity": [
       {
         "type": 0,
@@ -636,6 +760,156 @@
       {
         "type": 1,
         "timestamp": "2023-08-29T11:50:24.324Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T16:54:45.546Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T16:54:54.303Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T16:56:26.192Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T16:56:35.396Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T16:57:02.146Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T16:57:06.160Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T17:01:10.168Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T17:01:21.757Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T17:13:43.812Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T17:13:57.145Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T10:09:42.982Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T10:09:49.214Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T10:27:53.262Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T10:37:40.166Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T10:39:43.773Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T10:49:12.891Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T11:21:44.606Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T11:30:58.265Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T11:31:05.638Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-30T11:38:57.236Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T12:00:28.796Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T12:21:10.322Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T12:26:19.913Z"
+      }
+    ]
+  },
+  {
+    "username": "mufugai",
+    "password": "$2b$10$XQemGkH20cgrwpyKFVElVu6IB2Pt3seIzefHrOd/O2Ii3tshLcnVa",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "followedUsernames": [
+      "hypno"
+    ],
+    "followersUsernames": [
+      "admin"
+    ],
+    "posts": [
+      {
+        "postId": 0,
+        "title": "Raging Loop",
+        "content": "Raging Loop is the best VN ever!!!!1!!!",
+        "timestamp": "2023-08-29T17:12:12.151Z",
+        "usernamesWhoLiked": [
+          "admin"
+        ]
+      }
+    ],
+    "currentPostId": 1,
+    "loginActivity": [
+      {
+        "type": 0,
+        "timestamp": "2023-08-29T17:10:47.566Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-08-29T17:12:12.151Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-29T17:12:31.413Z"
+      }
+    ]
+  },
+  {
+    "username": "hypno2",
+    "password": "$2b$10$yUglNJ9ez6ls6PoUE3Rj1OXZ7vfxw0YZPswxxyTA686GA98pB0mPe",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "followedUsernames": [],
+    "followersUsernames": [],
+    "posts": [],
+    "currentPostId": 0,
+    "loginActivity": [
+      {
+        "type": 0,
+        "timestamp": "2023-08-30T12:26:27.743Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-08-30T12:26:36.145Z"
       }
     ]
   }

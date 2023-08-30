@@ -5,6 +5,7 @@ import PostClass from "../../../server/Post";
 import FollowUnfollowButton from "../components/FollowUnfollowButton";
 
 export default function UserPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState<PostClass[]>([]);
   const [userFound, setUserFound] = useState(false);
   const [requestingUsername, setRequestingUsername] = useState("");
@@ -28,6 +29,7 @@ export default function UserPage() {
         setRequestingUsername(responseData.requestingUsername);
         setPosts(posts);
         setUserFound(true);
+        setIsLoading(false);
       } else if (response.status === 404) {
         console.log(responseData.message);
         setUserFound(false);
@@ -41,6 +43,10 @@ export default function UserPage() {
     setUserFound(false);
     getUserInfo();
   }, [params.username]);
+
+  if (isLoading) {
+    return <p></p>;
+  }
 
   if (userFound && posts.length > 0) {
     const sortedPosts = posts.sort((a: PostClass, b: PostClass) => {

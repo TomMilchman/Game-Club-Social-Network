@@ -66,7 +66,7 @@ export default function LoginActivityPage() {
 
     return (
       <>
-        <h2>Login Activity</h2>
+        <h1>Login Activity</h1>
         {sortedActivities.map((loginActivity, index) => (
           <div key={`activity-${index}`}>
             <p>Username: {loginActivity.username}</p>

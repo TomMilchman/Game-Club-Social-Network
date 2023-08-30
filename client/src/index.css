@@ -1,5 +1,10 @@
+@font-face {
+  font-family: ubuntu-regular;
+  src: url(fonts/Ubuntu/Ubuntu-Regular.ttf);
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: ubuntu-regular;
   line-height: 1.5;
   font-weight: 400;
 
@@ -14,26 +19,29 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   display: flex;
+  justify-content: center;
+  text-align: center;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
+#game-club-logo-layout {
+  width: 5em;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+h2 {
+  font-size: 1.5em;
+  line-height: 1.1;
+  font-weight: bold;
 }
 
 button {
@@ -55,15 +63,124 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.input-container {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.form-container img {
+  width: 5em;
+  margin-bottom: 2em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 3em;
+  padding-top: 0;
+  border-style: groove;
+  border-radius: 10px;
+  border-color: transparent;
+  background-color: #343434;
+}
+
+#navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5em 1em;
+  display: flex;
+  align-items: center;
+  background-color: #1a1a1a;
+  z-index: 1;
+}
+
+#navbar button {
+  margin-right: auto;
+}
+
+.create-post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.root-child {
+  margin-top: 5em;
+  margin-bottom: 2em;
+}
+
+.post-container {
+  border-style: groove;
+  border-radius: 10px;
+  border-color: #1a1a1a;
+  margin-top: 3em;
+  padding-bottom: 1em;
+  width: 800px;
+}
+
+.post-header {
+  border-style: dashed;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-bottom: 1px solid #808080;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.like-unlike-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.num-of-likes {
+  border-style: inherit;
+}
+
+.following-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.search-bar-container {
+  border-style: solid;
+  border-radius: 1em;
+  padding: 2em;
+  border-color: #343434;
+}
+
+.search-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.search-result {
+  cursor: pointer;
+  border-style: solid;
+}
+
+.search-inner button {
+  margin-top: 1em;
+}
+
+.dropdown li {
+  position: relative;
+  border: 1px solid #1a1a1a;
+  background-color: #343434;
+}
+
+.followed-user {
+  cursor: pointer;
 }

@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   username: string;
@@ -15,6 +16,8 @@ export default function Post(props: Props) {
   const [unlikeEnabled, setUnlikeEnabled] = useState<boolean | null>(null);
   const [numOfLikes, setNumOfLikes] = useState(props.numOfLikes);
   const [userLikesPost, setUserLikesPost] = useState(props.didUserLikePost);
+
+  const navigate = useNavigate();
 
   const handleLikeUnlikeClick = async (action: string) => {
     try {
@@ -79,14 +82,20 @@ export default function Post(props: Props) {
 
   return (
     <div className="post-container">
-      <div className="post-top">
+      <div className="post-header">
         <h2 className="post-title">{props.title}</h2>
-        <h3 className="post-username">{props.username}</h3>
-        <h4 className="post-timestamp">{formattedTimestamp}</h4>
-        <h5 className="post-post-id">Post ID: {props.postId}</h5>
+        <h3
+          className="post-username"
+          onClick={() => {
+            navigate("/users/" + props.username);
+          }}
+        >
+          User: {props.username}
+        </h3>
+        <h3 className="post-timestamp">{formattedTimestamp}</h3>
       </div>
       <div className="post-content-container">
-        <p className="post-content">{props.content}</p>
+        <h2 className="post-content">{props.content}</h2>
       </div>
       <div className="like-unlike-btn-container">
         {userLikesPost ? (

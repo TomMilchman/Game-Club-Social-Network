@@ -4,6 +4,7 @@ import SearchBar from "../components/SearchBar";
 import { useNavigate } from "react-router-dom";
 
 export default function FollowUsersPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [followedUsers, setFollowedUsers] = useState<string[]>([]);
   const [requestingUsername, setRequestingUsername] = useState("");
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function FollowUsersPage() {
       if (response.ok) {
         setFollowedUsers(responseData.followedUsers);
         setRequestingUsername(responseData.requestingUsername);
+        setIsLoading(false);
       } else {
         console.log(responseData.message);
       }
@@ -31,6 +33,10 @@ export default function FollowUsersPage() {
     getFollowedUsers();
   }, []);
 
+  if (isLoading) {
+    return <p></p>;
+  }
+
   if (followedUsers.length === 0) {
     return (
       <>
@@ -40,28 +46,27 @@ export default function FollowUsersPage() {
     );
   } else {
     return (
-      <>
+      <div className="following-container">
+        <h1>Following Users</h1>
         <SearchBar />
-        <h1>Users you follow:</h1>
-        <ul>
-          {followedUsers.map((followedUsername: string) => (
-            <div key={`${followedUsername}-followed-user-wrapper`}>
-              <li
-                className="followed-user-li"
-                onClick={() => navigate("/users/" + followedUsername)}
-                key={followedUsername}
-              >
-                {followedUsername}
-              </li>
-              <FollowUnfollowButton
-                key={`${followedUsername}-follow-button`}
-                requestedUsername={followedUsername}
-                requestingUsername={requestingUsername}
-              />
-            </div>
-          ))}
-        </ul>
-      </>
+        <h2>Users you follow:</h2>
+        {followedUsers.map((followedUsername: string) => (
+          <div key={`${followedUsername}-followed-user-wrapper`}>
+            <h3
+              className="followed-user"
+              onClick={() => navigate("/users/" + followedUsername)}
+              key={followedUsername}
+            >
+              {followedUsername}
+            </h3>
+            <FollowUnfollowButton
+              key={`${followedUsername}-follow-button`}
+              requestedUsername={followedUsername}
+              requestingUsername={requestingUsername}
+            />
+          </div>
+        ))}
+      </div>
     );
   }
 }

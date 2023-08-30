@@ -61,35 +61,39 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="create-post-container">
+    <>
       <h2>Create a post:</h2>
-      <div className="title-container">
-        <label htmlFor="post-title">Title (40 character limit):</label>
-        <input
-          type="text"
-          id="post-title"
-          value={title}
-          onChange={handleTitleChange}
-          required
-        />
+      <div className="create-post-container">
+        <div className="title-container">
+          <label htmlFor="post-title">Title (40 character limit):</label>
+          <br />
+          <input
+            type="text"
+            id="post-title"
+            value={title}
+            onChange={handleTitleChange}
+            required
+          />
+        </div>
+        <div className="post-content-container">
+          <label htmlFor="post-input-content">
+            Post content (300 character limit):
+          </label>
+          <br />
+          <textarea
+            id="post-input-content"
+            value={content}
+            onChange={handleContentChange}
+            placeholder="Share a gaming experience..."
+            rows={5}
+            cols={50}
+            style={{ resize: "none" }}
+          ></textarea>
+        </div>
+        <button className="submit-post-button" onClick={handlePostSubmit}>
+          SUBMIT
+        </button>
       </div>
-      <div className="post-content-container">
-        <label htmlFor="post-input-content">
-          Post content (300 character limit):
-        </label>
-        <textarea
-          id="post-input-content"
-          value={content}
-          onChange={handleContentChange}
-          placeholder="Share a gaming experience..."
-          rows={5}
-          cols={50}
-          style={{ resize: "none" }}
-        ></textarea>
-      </div>
-      <button className="submit-post-button" onClick={handlePostSubmit}>
-        SUBMIT
-      </button>
-    </div>
+    </>
   );
 }

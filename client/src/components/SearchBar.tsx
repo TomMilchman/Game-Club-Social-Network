@@ -46,18 +46,20 @@ export default function SearchBar() {
       </div>
       <div className="dropdown">
         {query && searchResults.length > 0 && (
-          <ul>
+          <>
+            <h2>Search Results:</h2>
             {searchResults
               .map((user: any) => (
-                <li
+                <h3
                   onClick={() => setQuery(user.username)}
+                  className="search-result"
                   key={`${user.username}-search-result`}
                 >
                   {user.username}
-                </li>
+                </h3>
               ))
               .slice(0, 10)}
-          </ul>
+          </>
         )}
       </div>
     </div>
