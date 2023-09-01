@@ -17,7 +17,7 @@ export default function FollowUnfollowButton(props: Props) {
       const response = await fetch(
         `http://localhost:3000/users/${props.requestedUsername}/${action}`,
         {
-          method: "PATCH",
+          method: "PUT",
           credentials: "include",
         }
       );

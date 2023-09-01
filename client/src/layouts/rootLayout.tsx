@@ -14,7 +14,7 @@ export default function RootLayout() {
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:3000/logout", {
-        method: "PATCH",
+        method: "PUT",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export default function RootLayout() {
           <button>USER FEED</button>
         </Link>
         <Link to="/following">
-          <button>FOLLOWING</button>
+          <button>SEARCH & FOLLOW</button>
         </Link>
         <Link to="/upcoming-releases">
           <button disabled={!upcomingReleasesPrivileges}>

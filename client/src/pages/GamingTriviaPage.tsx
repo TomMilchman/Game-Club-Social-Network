@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function GamingTriviaPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [gamingTriviaEnabled, setGamingTriviaEnabled] = useState<
     null | boolean
   >(null);
@@ -27,6 +28,7 @@ export default function GamingTriviaPage() {
         setGamingTriviaEnabled(false);
         console.log(responseData.message);
       }
+      setIsLoading(false);
     } catch (error) {
       setGamingTriviaEnabled(false);
       console.error("Error:", error);
@@ -37,9 +39,13 @@ export default function GamingTriviaPage() {
     checkGamingTriviaPrivileges();
   }, []);
 
+  if (isLoading) {
+    return <p></p>;
+  }
+
   if (gamingTriviaEnabled) {
     return (
-      <>
+      <div className="gaming-trivia-container">
         <h1>Gaming Trivia</h1>
         <h2>What is the most successful single video game in the world?</h2>
         <h3>
@@ -111,7 +117,7 @@ export default function GamingTriviaPage() {
           failure.
         </h3>
         <br />
-      </>
+      </div>
     );
   } else {
     return <p>Gaming Trivia is currently disabled.</p>;

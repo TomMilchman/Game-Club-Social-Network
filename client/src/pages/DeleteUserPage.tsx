@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function DeleteUserPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [usernames, setUsernames] = useState<string[]>([]);
 
   const getUsernames = async () => {
@@ -16,6 +17,7 @@ export default function DeleteUserPage() {
       } else {
         console.log(responseData.message);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -57,6 +59,10 @@ export default function DeleteUserPage() {
     }
   };
 
+  if (isLoading) {
+    return <p></p>;
+  }
+
   if (usernames.length === 0) {
     return <p>No users to show.</p>;
   } else {
@@ -65,14 +71,18 @@ export default function DeleteUserPage() {
     return (
       <>
         <h1>Delete Users</h1>
-        <ul>
-          {usernames.map((username) => (
-            <li key={username}>
-              <label>{username}</label>
-              <button onClick={() => deleteUser(username)}>DELETE</button>
-            </li>
-          ))}
-        </ul>
+        {usernames.map((username) => (
+          <h3 key={username}>
+            <label>{username}</label>
+            <br />
+            <button
+              className="delete-user-btn"
+              onClick={() => deleteUser(username)}
+            >
+              DELETE
+            </button>
+          </h3>
+        ))}
       </>
     );
   }

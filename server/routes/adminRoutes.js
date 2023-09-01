@@ -69,6 +69,7 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var server_1 = require("../server");
 var persist_1 = require("../persist");
+var cookieManager_1 = require("../cookieManager");
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
 var featureFlags = {
@@ -111,7 +112,6 @@ router.get("/checkprivileges", function (req, res) {
                     unlikeEnabled: unlikeEnabled,
                     numOfFollowersEnabled: numOfFollowersEnabled,
                 });
-                console.log("User ".concat(username, " is an admin: ").concat(isAdmin, ", gaming trivia enabled: ").concat(gamingTriviaEnabled, ", upcoming releases enabled: ").concat(upcomingReleasesEnabled));
             }
             else {
                 res.status(401).json({ message: "This user is not logged in" });
@@ -153,14 +153,16 @@ router.get("/loginactivity", function (req, res) {
     }
 });
 router.delete("/deleteuser/:username", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var tempPass, usernameToDelete, userToDelete, index, loggedInUsers_1, loggedInUsers_1_1, _a, tempPass_1, value, _b, _c, user, _d, _e, _f, index_1, follower, _g, _h, _j, index_2, following, error_1;
+    var tempPass, maxAge, usernameToDelete, userToDelete, index, loggedInUsers_1, loggedInUsers_1_1, _a, tempPass_1, value, _b, _c, user, _d, _e, _f, index_1, follower, _g, _h, _j, index_2, following, error_1;
     var e_1, _k, e_2, _l, e_3, _m, e_4, _o;
     return __generator(this, function (_p) {
         switch (_p.label) {
             case 0:
                 _p.trys.push([0, 8, , 9]);
                 tempPass = req.cookies.tempPass;
+                maxAge = req.cookies.timeToLive;
                 if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 6];
+                cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
                 if (!persist_1.default.findUserByUsername(server_1.default.get(tempPass).username).isAdmin) return [3 /*break*/, 4];
                 usernameToDelete = req.params.username;
                 userToDelete = persist_1.default.findUserByUsername(usernameToDelete);
@@ -265,7 +267,9 @@ router.delete("/deleteuser/:username", function (req, res) { return __awaiter(vo
 }); });
 var enableDisableFeature = function (req, res, isEnable, type) {
     var tempPass = req.cookies.tempPass;
+    var maxAge = req.cookies.timeToLive;
     if (server_1.default.get(tempPass) !== undefined) {
+        cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
         if (persist_1.default.findUserByUsername(server_1.default.get(tempPass).username).isAdmin) {
             switch (type) {
                 case "gamingtrivia":

@@ -6,6 +6,7 @@ import bodyParser = require("body-parser");
 import loggedInUsers from "../server";
 import persist from "../persist";
 import { LoginActivityType } from "../User";
+import cookieManager from "../cookieManager";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
@@ -53,9 +54,6 @@ router.get("/checkprivileges", (req, res) => {
           unlikeEnabled: unlikeEnabled,
           numOfFollowersEnabled: numOfFollowersEnabled,
         });
-        console.log(
-          `User ${username} is an admin: ${isAdmin}, gaming trivia enabled: ${gamingTriviaEnabled}, upcoming releases enabled: ${upcomingReleasesEnabled}`
-        );
       } else {
         res.status(401).json({ message: `This user is not logged in` });
         console.log(`This user is not logged in`);
@@ -105,8 +103,10 @@ router.get("/loginactivity", (req, res) => {
 router.delete("/deleteuser/:username", async (req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
+    const maxAge = req.cookies.timeToLive;
 
     if (loggedInUsers.get(tempPass) !== undefined) {
+      cookieManager.refreshCookies(res, tempPass, maxAge);
       if (
         persist.findUserByUsername(loggedInUsers.get(tempPass).username).isAdmin
       ) {
@@ -170,8 +170,10 @@ router.delete("/deleteuser/:username", async (req, res) => {
 
 const enableDisableFeature = (req, res, isEnable: boolean, type: string) => {
   const tempPass = req.cookies.tempPass;
+  const maxAge = req.cookies.timeToLive;
 
   if (loggedInUsers.get(tempPass) !== undefined) {
+    cookieManager.refreshCookies(res, tempPass, maxAge);
     if (
       persist.findUserByUsername(loggedInUsers.get(tempPass).username).isAdmin
     ) {

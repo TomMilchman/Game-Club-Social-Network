@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 export default function AdminLayout() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
   const checkIfAdmin = async () => {
@@ -27,6 +28,7 @@ export default function AdminLayout() {
         console.log("An error occurred server side:", responseData.message);
       }
       console.log(responseData.message);
+      setIsLoading(false);
     } catch (error) {
       setIsAdmin(false);
       console.error("Error:", error);
@@ -36,6 +38,10 @@ export default function AdminLayout() {
   useEffect(() => {
     checkIfAdmin();
   }, []);
+
+  if (isLoading) {
+    return <p></p>;
+  }
 
   if (isAdmin) {
     return (

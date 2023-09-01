@@ -37,6 +37,11 @@ export default function SearchBar() {
           id="search-bar-textbox"
           value={query}
           onChange={(e) => onTextChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onSearch();
+            }
+          }}
           placeholder="Search for users..."
           autoComplete="off"
         />

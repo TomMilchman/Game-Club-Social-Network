@@ -42,10 +42,11 @@ var router = express.Router();
 var server_1 = require("../server");
 var bodyParser = require("body-parser");
 var Post_1 = require("../Post");
+var cookieManager_1 = require("../cookieManager");
 router.use(bodyParser.json()); // Parse JSON request bodies
 //User creates their own post
 router.route("/createpost").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var title, content, tempPass, username, user, currentPostId, timestamp, post;
+    var title, content, tempPass, maxAge, username, user, currentPostId, timestamp, post;
     return __generator(this, function (_a) {
         title = req.body.title;
         content = req.body.content;
@@ -57,7 +58,9 @@ router.route("/createpost").post(function (req, res) { return __awaiter(void 0, 
         }
         try {
             tempPass = req.cookies.tempPass;
+            maxAge = req.cookies.timeToLive;
             if (server_1.default.get(tempPass) !== undefined) {
+                cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
                 username = server_1.default.get(tempPass).username;
                 user = persist_1.default.findUserByUsername(username);
                 currentPostId = user.currentPostId;
@@ -84,13 +87,15 @@ router.route("/createpost").post(function (req, res) { return __awaiter(void 0, 
 }); });
 function handleLikeUnlike(req, res, isLikeOperation) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, requestingUsername_1, requestedUser, posts, postId_1, post, error_1;
+        var tempPass, maxAge, requestingUsername_1, requestedUser, posts, postId_1, post, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 6, , 7]);
                     tempPass = req.cookies.tempPass;
+                    maxAge = req.cookies.timeToLive;
                     if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 4];
+                    cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
                     requestingUsername_1 = server_1.default.get(tempPass).username;
                     requestedUser = persist_1.default.findUserByUsername(req.params.username);
                     posts = requestedUser.posts;
@@ -133,7 +138,7 @@ function handleLikeUnlike(req, res, isLikeOperation) {
         });
     });
 }
-router.route("/:username/like/:postid").patch(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.route("/:username/like/:postid").put(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, handleLikeUnlike(req, res, true)];
@@ -143,7 +148,7 @@ router.route("/:username/like/:postid").patch(function (req, res) { return __awa
         }
     });
 }); });
-router.route("/:username/unlike/:postid").patch(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.route("/:username/unlike/:postid").put(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, handleLikeUnlike(req, res, false)];

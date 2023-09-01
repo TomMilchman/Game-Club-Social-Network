@@ -7,6 +7,10 @@ function calculateExpirationTime(maxAge) {
 }
 //Extend cookie's time to live
 function refreshCookies(res, tempPass, maxAge) {
+    if (server_1.default.get(tempPass) === undefined) {
+        console.log("User with temp pass ".concat(tempPass, " not found"));
+        return;
+    }
     attachCookiesToRes(res, tempPass, maxAge);
     console.log("Refreshed cookies for user ".concat(server_1.default.get(tempPass).username));
 }
@@ -18,6 +22,10 @@ function createNewCookies(res, maxAge, username) {
     console.log("Created cookies for user ".concat(server_1.default.get(tempPass).username, ", temp pass: ").concat(tempPass));
 }
 function deleteCookies(res, tempPass, maxAge) {
+    if (server_1.default.get(tempPass) === undefined) {
+        console.log("User with temp pass ".concat(tempPass, " not found"));
+        return;
+    }
     var username = server_1.default.get(tempPass).username;
     server_1.default.delete(tempPass);
     res.cookie("tempPass", tempPass, {

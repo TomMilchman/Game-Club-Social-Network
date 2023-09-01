@@ -40,6 +40,8 @@ export default function FollowUsersPage() {
   if (followedUsers.length === 0) {
     return (
       <>
+        <h1>Following Users</h1>
+        <h2>Search for users:</h2>
         <SearchBar />
         <h1>You are not following any users</h1>
       </>
@@ -48,6 +50,7 @@ export default function FollowUsersPage() {
     return (
       <div className="following-container">
         <h1>Following Users</h1>
+        <h2>Search for users:</h2>
         <SearchBar />
         <h2>Users you follow:</h2>
         {followedUsers.map((followedUsername: string) => (

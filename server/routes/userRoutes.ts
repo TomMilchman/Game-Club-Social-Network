@@ -3,17 +3,22 @@ import persist from "../persist";
 let router = express.Router();
 import loggedInUsers from "../server";
 import bodyParser = require("body-parser");
+import cookieManager from "../cookieManager";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 
 async function followOrUnfollowUser(req, res, action) {
   try {
     const tempPass = req.cookies.tempPass;
+    const maxAge = req.cookies.timeToLive;
 
     if (loggedInUsers.get(tempPass) !== undefined) {
       const requestingUser = persist.findUserByUsername(
         loggedInUsers.get(tempPass).username
       );
+
+      cookieManager.refreshCookies(res, tempPass, maxAge);
+
       const userToSearch = persist.findUserByUsername(req.params.username);
 
       if (userToSearch !== undefined) {
@@ -67,11 +72,11 @@ async function followOrUnfollowUser(req, res, action) {
   }
 }
 
-router.route("/:username/follow").patch(async (req, res) => {
+router.route("/:username/follow").put(async (req, res) => {
   await followOrUnfollowUser(req, res, "follow");
 });
 
-router.route("/:username/unfollow").patch(async (req, res) => {
+router.route("/:username/unfollow").put(async (req, res) => {
   await followOrUnfollowUser(req, res, "unfollow");
 });
 

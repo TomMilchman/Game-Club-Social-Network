@@ -4,6 +4,7 @@ let router = express.Router();
 import loggedInUsers from "../server";
 import bodyParser = require("body-parser");
 import Post from "../Post";
+import cookieManager from "../cookieManager";
 
 router.use(bodyParser.json()); // Parse JSON request bodies
 
@@ -12,17 +13,18 @@ router.route("/createpost").post(async (req, res) => {
   const title: string = req.body.title;
   const content: string = req.body.content;
 
-  if (content.length > 300) {
-    res
-      .status(400)
-      .json({ message: "Post content must be shorter than 300 characters" });
+  if (content.length > 300 || title.length > 50) {
+    res.status(400).json({ message: "Post content or title are too long" });
     return;
   }
 
   try {
     const tempPass = req.cookies.tempPass;
+    const maxAge = req.cookies.timeToLive;
 
     if (loggedInUsers.get(tempPass) !== undefined) {
+      cookieManager.refreshCookies(res, tempPass, maxAge);
+
       const username = loggedInUsers.get(tempPass).username;
       const user = persist.findUserByUsername(username);
       const currentPostId = user.currentPostId;
@@ -49,8 +51,10 @@ router.route("/createpost").post(async (req, res) => {
 async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
   try {
     const tempPass = req.cookies.tempPass;
+    const maxAge = req.cookies.timeToLive;
 
     if (loggedInUsers.get(tempPass) !== undefined) {
+      cookieManager.refreshCookies(res, tempPass, maxAge);
       const requestingUsername = loggedInUsers.get(tempPass).username;
       const requestedUser = persist.findUserByUsername(req.params.username);
       const posts = requestedUser.posts;
@@ -95,11 +99,11 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
   }
 }
 
-router.route("/:username/like/:postid").patch(async (req, res) => {
+router.route("/:username/like/:postid").put(async (req, res) => {
   await handleLikeUnlike(req, res, true);
 });
 
-router.route("/:username/unlike/:postid").patch(async (req, res) => {
+router.route("/:username/unlike/:postid").put(async (req, res) => {
   await handleLikeUnlike(req, res, false);
 });
 

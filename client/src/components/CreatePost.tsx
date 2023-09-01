@@ -4,7 +4,7 @@ export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const maxContentCharCount = 300;
-  const maxTitleCharCount = 40;
+  const maxTitleCharCount = 50;
 
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputContent = event.target.value;
@@ -65,13 +65,14 @@ export default function CreatePost() {
       <h2>Create a post:</h2>
       <div className="create-post-container">
         <div className="title-container">
-          <label htmlFor="post-title">Title (40 character limit):</label>
+          <label htmlFor="post-title">Title (50 character limit):</label>
           <br />
           <input
             type="text"
-            id="post-title"
+            className="post-title"
             value={title}
             onChange={handleTitleChange}
+            placeholder="Enter a title..."
             required
           />
         </div>
@@ -81,11 +82,11 @@ export default function CreatePost() {
           </label>
           <br />
           <textarea
-            id="post-input-content"
+            className="post-input-content"
             value={content}
             onChange={handleContentChange}
             placeholder="Share a gaming experience..."
-            rows={5}
+            rows={6}
             cols={50}
             style={{ resize: "none" }}
           ></textarea>

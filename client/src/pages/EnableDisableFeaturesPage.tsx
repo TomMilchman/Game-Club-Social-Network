@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function EnableDisableFeaturesPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [gamingTriviaEnabled, setGamingTriviaEnabled] = useState<
     boolean | null
   >(null);
@@ -32,6 +33,7 @@ export default function EnableDisableFeaturesPage() {
       } else {
         console.log(responseData.message);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -87,6 +89,10 @@ export default function EnableDisableFeaturesPage() {
       console.error("Error:", error);
     }
   };
+
+  if (isLoading) {
+    return <p></p>;
+  }
 
   return (
     <div>

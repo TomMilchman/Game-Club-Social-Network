@@ -3,6 +3,7 @@ import SuperMarioBrosWonderKeyArt from "../images/upcoming-releases/Mario_Wonder
 import { useEffect, useState } from "react";
 
 export default function UpcomingReleasesPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [upcomingReleasesEnabled, setUpcomingReleasesEnabled] = useState<
     null | boolean
   >(null);
@@ -29,6 +30,8 @@ export default function UpcomingReleasesPage() {
         setUpcomingReleasesEnabled(false);
         console.log(responseData.message);
       }
+
+      setIsLoading(false);
     } catch (error) {
       setUpcomingReleasesEnabled(false);
       console.error("Error:", error);
@@ -39,9 +42,13 @@ export default function UpcomingReleasesPage() {
     checkUpcomingReleasesPrivileges();
   }, []);
 
+  if (isLoading) {
+    return <p></p>;
+  }
+
   if (upcomingReleasesEnabled) {
     return (
-      <>
+      <div className="upcoming-releases-container">
         <h1>Upcoming Releases:</h1>
         <h2>Mortal Kombat 1</h2>
         <h3>
@@ -65,7 +72,7 @@ export default function UpcomingReleasesPage() {
           2023.
         </h3>
         <img src={SuperMarioBrosWonderKeyArt} />
-      </>
+      </div>
     );
   } else {
     return <p>Upcoming Releases is currently disabled.</p>;

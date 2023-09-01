@@ -34,6 +34,7 @@ export default function UserPage() {
         console.log(responseData.message);
         setUserFound(false);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -90,6 +91,10 @@ export default function UserPage() {
       </>
     );
   } else {
-    return <p>Error 404: user not found</p>;
+    return (
+      <>
+        <h2>Error 404: User not found.</h2>
+      </>
+    );
   }
 }

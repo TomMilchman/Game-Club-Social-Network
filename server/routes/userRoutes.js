@@ -41,17 +41,20 @@ var persist_1 = require("../persist");
 var router = express.Router();
 var server_1 = require("../server");
 var bodyParser = require("body-parser");
+var cookieManager_1 = require("../cookieManager");
 router.use(bodyParser.json()); // Parse JSON request bodies
 function followOrUnfollowUser(req, res, action) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, requestingUser_1, userToSearch, isFollowing, error_1;
+        var tempPass, maxAge, requestingUser_1, userToSearch, isFollowing, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 9, , 10]);
                     tempPass = req.cookies.tempPass;
+                    maxAge = req.cookies.timeToLive;
                     if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 7];
                     requestingUser_1 = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
+                    cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
                     userToSearch = persist_1.default.findUserByUsername(req.params.username);
                     if (!(userToSearch !== undefined)) return [3 /*break*/, 5];
                     if (!(requestingUser_1.username === userToSearch.username)) return [3 /*break*/, 1];
@@ -104,7 +107,7 @@ function followOrUnfollowUser(req, res, action) {
         });
     });
 }
-router.route("/:username/follow").patch(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.route("/:username/follow").put(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, followOrUnfollowUser(req, res, "follow")];
@@ -114,7 +117,7 @@ router.route("/:username/follow").patch(function (req, res) { return __awaiter(v
         }
     });
 }); });
-router.route("/:username/unfollow").patch(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.route("/:username/unfollow").put(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, followOrUnfollowUser(req, res, "unfollow")];

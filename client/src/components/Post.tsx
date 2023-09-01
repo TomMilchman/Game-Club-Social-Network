@@ -24,7 +24,7 @@ export default function Post(props: Props) {
       const response = await fetch(
         `http://localhost:3000/posts/${props.username}/${action}/${props.postId}`,
         {
-          method: "PATCH",
+          method: "PUT",
           credentials: "include",
         }
       );

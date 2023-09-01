@@ -3,6 +3,11 @@
   src: url(fonts/Ubuntu/Ubuntu-Regular.ttf);
 }
 
+@font-face {
+  font-family: ubuntu-bold;
+  src: url(fonts/Ubuntu/Ubuntu-Bold.ttf);
+}
+
 :root {
   font-family: ubuntu-regular;
   line-height: 1.5;
@@ -30,15 +35,17 @@ body {
 }
 
 #game-club-logo-layout {
-  width: 5em;
+  width: 4em;
 }
 
 h1 {
+  font-family: ubuntu-bold;
   font-size: 3.2em;
   line-height: 1.1;
 }
 
 h2 {
+  font-family: ubuntu-bold;
   font-size: 1.5em;
   line-height: 1.1;
   font-weight: bold;
@@ -94,10 +101,20 @@ form {
   align-items: center;
   background-color: #1a1a1a;
   z-index: 1;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
 }
 
 #navbar button {
-  margin-right: auto;
+  flex-shrink: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 10px;
+}
+
+/* Add padding to the top of the content container */
+.root-child {
+  padding-top: 5em; /* Adjust this padding to match the height of the navbar */
 }
 
 .create-post-container {
@@ -108,9 +125,8 @@ form {
   margin-bottom: 0.5em;
 }
 
-.root-child {
-  margin-top: 5em;
-  margin-bottom: 2em;
+.create-post-container .post-title {
+  width: 30em;
 }
 
 .post-container {
@@ -118,8 +134,25 @@ form {
   border-radius: 10px;
   border-color: #1a1a1a;
   margin-top: 3em;
+  margin-bottom: 2em;
   padding-bottom: 1em;
-  width: 800px;
+  width: 50vw;
+}
+
+.post-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-container .post-username {
+  cursor: pointer;
+  width: 25%;
+  align-items: center;
+  justify-content: center;
+}
+.post-container .post-username:hover {
+  text-decoration: underline;
 }
 
 .post-header {
@@ -130,6 +163,17 @@ form {
   border-bottom: 1px solid #808080;
   margin-left: 2em;
   margin-right: 2em;
+}
+
+.post-header * {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.post-content {
+  font-family: ubuntu-regular;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .like-unlike-btn-container {
@@ -156,6 +200,7 @@ form {
   border-radius: 1em;
   padding: 2em;
   border-color: #343434;
+  width: 700px;
 }
 
 .search-inner {
@@ -170,6 +215,9 @@ form {
   cursor: pointer;
   border-style: solid;
 }
+.search-result:hover {
+  background-color: #1a1a1a;
+}
 
 .search-inner button {
   margin-top: 1em;
@@ -183,4 +231,41 @@ form {
 
 .followed-user {
   cursor: pointer;
+}
+.followed-user:hover {
+  text-decoration: underline;
+}
+
+.upcoming-releases-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.upcoming-releases-container h3 {
+  width: 50%;
+}
+
+.upcoming-releases-container img {
+  width: 20em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.gaming-trivia-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.gaming-trivia-container h3 {
+  width: 50%;
+}
+
+.delete-user-btn {
+  background-color: rgb(155, 0, 0);
 }

@@ -10,7 +10,7 @@ import persist from "../persist";
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
 
-router.patch("/", async (req, res) => {
+router.put("/", async (req, res) => {
   try {
     const tempPass: string = req.cookies.tempPass;
     const maxAge: number = req.cookies.timeToLive;

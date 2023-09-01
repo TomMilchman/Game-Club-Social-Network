@@ -9,6 +9,7 @@ interface UserActivity {
 }
 
 export default function LoginActivityPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [loginActivity, setLoginActivity] = useState<UserActivity[]>([]);
 
   const getLoginActivity = async () => {
@@ -27,6 +28,7 @@ export default function LoginActivityPage() {
       } else {
         console.log(responseData.message);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -63,6 +65,10 @@ export default function LoginActivityPage() {
         return timeB - timeA;
       }
     );
+
+    if (isLoading) {
+      return <p></p>;
+    }
 
     return (
       <>

@@ -45,7 +45,7 @@ var cookieManager_1 = require("../cookieManager");
 var persist_1 = require("../persist");
 router.use(bodyParser.json()); // Parse JSON request bodies
 router.use(cookieParser());
-router.patch("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var tempPass, maxAge, username, user, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
