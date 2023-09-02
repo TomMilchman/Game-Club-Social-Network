@@ -7,27 +7,26 @@ function calculateExpirationTime(maxAge) {
 }
 //Extend cookie's time to live
 function refreshCookies(res, tempPass, maxAge) {
-    if (server_1.default.get(tempPass) === undefined) {
+    if (server_1.loggedInUsers.get(tempPass) === undefined) {
         console.log("User with temp pass ".concat(tempPass, " not found"));
         return;
     }
     attachCookiesToRes(res, tempPass, maxAge);
-    console.log("Refreshed cookies for user ".concat(server_1.default.get(tempPass).username));
 }
 function createNewCookies(res, maxAge, username) {
     var tempPass = (0, uuid_1.v4)();
     var expirationTime = calculateExpirationTime(maxAge);
     attachCookiesToRes(res, tempPass, maxAge);
-    server_1.default.set(tempPass, { username: username, expirationTime: expirationTime });
-    console.log("Created cookies for user ".concat(server_1.default.get(tempPass).username, ", temp pass: ").concat(tempPass));
+    server_1.loggedInUsers.set(tempPass, { username: username, expirationTime: expirationTime });
+    console.log("Created cookies for user ".concat(server_1.loggedInUsers.get(tempPass).username, ", temp pass: ").concat(tempPass));
 }
 function deleteCookies(res, tempPass, maxAge) {
-    if (server_1.default.get(tempPass) === undefined) {
+    if (server_1.loggedInUsers.get(tempPass) === undefined) {
         console.log("User with temp pass ".concat(tempPass, " not found"));
         return;
     }
-    var username = server_1.default.get(tempPass).username;
-    server_1.default.delete(tempPass);
+    var username = server_1.loggedInUsers.get(tempPass).username;
+    server_1.loggedInUsers.delete(tempPass);
     res.cookie("tempPass", tempPass, {
         maxAge: -1,
         httpOnly: true,

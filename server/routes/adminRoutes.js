@@ -65,71 +65,14 @@ var __read = (this && this.__read) || function (o, n) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
-var cookieParser = require("cookie-parser");
-var bodyParser = require("body-parser");
 var server_1 = require("../server");
 var persist_1 = require("../persist");
-var cookieManager_1 = require("../cookieManager");
-router.use(bodyParser.json()); // Parse JSON request bodies
-router.use(cookieParser());
 var featureFlags = {
     enableGamingTrivia: true,
     enableUpcomingReleases: true,
     enableUnlike: true,
     enableNumberOfFollowers: true,
 };
-router.get("/checkprivileges", function (req, res) {
-    try {
-        var isAdmin = false;
-        var gamingTriviaEnabled = false;
-        var upcomingReleasesEnabled = false;
-        var unlikeEnabled = false;
-        var numOfFollowersEnabled = false;
-        var tempPass = req.cookies.tempPass;
-        if (tempPass !== undefined) {
-            if (server_1.default.get(tempPass) !== undefined) {
-                var username = server_1.default.get(tempPass).username;
-                var user = persist_1.default.findUserByUsername(username);
-                if (user.isAdmin === true) {
-                    isAdmin = true;
-                }
-                if (featureFlags.enableUnlike === true) {
-                    unlikeEnabled = true;
-                }
-                if (featureFlags.enableNumberOfFollowers === true) {
-                    numOfFollowersEnabled = true;
-                }
-                if (featureFlags.enableGamingTrivia === true) {
-                    gamingTriviaEnabled = true;
-                }
-                if (featureFlags.enableUpcomingReleases === true) {
-                    upcomingReleasesEnabled = true;
-                }
-                res.status(200).json({
-                    isAdmin: isAdmin,
-                    gamingTriviaEnabled: gamingTriviaEnabled,
-                    upcomingReleasesEnabled: upcomingReleasesEnabled,
-                    unlikeEnabled: unlikeEnabled,
-                    numOfFollowersEnabled: numOfFollowersEnabled,
-                });
-            }
-            else {
-                res.status(401).json({ message: "This user is not logged in" });
-                console.log("This user is not logged in");
-            }
-        }
-        else {
-            res.status(401).json({ message: "This user is not logged in" });
-            console.log("This user is not logged in");
-        }
-    }
-    catch (error) {
-        res
-            .status(500)
-            .json({ message: "Error checking privileges ".concat(error.message) });
-        console.log("Error checking privileges: ".concat(error.message));
-    }
-});
 router.get("/loginactivity", function (req, res) {
     try {
         var allActivities_1 = [];
@@ -153,27 +96,24 @@ router.get("/loginactivity", function (req, res) {
     }
 });
 router.delete("/deleteuser/:username", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var tempPass, maxAge, usernameToDelete, userToDelete, index, loggedInUsers_1, loggedInUsers_1_1, _a, tempPass_1, value, _b, _c, user, _d, _e, _f, index_1, follower, _g, _h, _j, index_2, following, error_1;
+    var tempPass, usernameToDelete, userToDelete, index, loggedInUsers_1, loggedInUsers_1_1, _a, tempPass_1, value, _b, _c, user, _d, _e, _f, index_1, follower, _g, _h, _j, index_2, following, error_1;
     var e_1, _k, e_2, _l, e_3, _m, e_4, _o;
     return __generator(this, function (_p) {
         switch (_p.label) {
             case 0:
-                _p.trys.push([0, 8, , 9]);
+                _p.trys.push([0, 6, , 7]);
                 tempPass = req.cookies.tempPass;
-                maxAge = req.cookies.timeToLive;
-                if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 6];
-                cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
-                if (!persist_1.default.findUserByUsername(server_1.default.get(tempPass).username).isAdmin) return [3 /*break*/, 4];
+                if (!persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username).isAdmin) return [3 /*break*/, 4];
                 usernameToDelete = req.params.username;
                 userToDelete = persist_1.default.findUserByUsername(usernameToDelete);
                 if (!(userToDelete !== undefined)) return [3 /*break*/, 2];
                 index = persist_1.default.usersData.indexOf(userToDelete);
                 persist_1.default.usersData.splice(index, 1);
                 try {
-                    for (loggedInUsers_1 = __values(server_1.default), loggedInUsers_1_1 = loggedInUsers_1.next(); !loggedInUsers_1_1.done; loggedInUsers_1_1 = loggedInUsers_1.next()) {
+                    for (loggedInUsers_1 = __values(server_1.loggedInUsers), loggedInUsers_1_1 = loggedInUsers_1.next(); !loggedInUsers_1_1.done; loggedInUsers_1_1 = loggedInUsers_1.next()) {
                         _a = __read(loggedInUsers_1_1.value, 2), tempPass_1 = _a[0], value = _a[1];
                         if (value.username === usernameToDelete) {
-                            server_1.default.delete(tempPass_1);
+                            server_1.loggedInUsers.delete(tempPass_1);
                             break;
                         }
                     }
@@ -238,9 +178,7 @@ router.delete("/deleteuser/:username", function (req, res) { return __awaiter(vo
                 console.log("User ".concat(usernameToDelete, " deleted successfully"));
                 return [3 /*break*/, 3];
             case 2:
-                res
-                    .status(404)
-                    .json({ message: "User ".concat(usernameToDelete, " not found") });
+                res.status(404).json({ message: "User ".concat(usernameToDelete, " not found") });
                 console.log("User ".concat(usernameToDelete, " not found"));
                 _p.label = 3;
             case 3: return [3 /*break*/, 5];
@@ -250,58 +188,45 @@ router.delete("/deleteuser/:username", function (req, res) { return __awaiter(vo
                 _p.label = 5;
             case 5: return [3 /*break*/, 7];
             case 6:
-                res.status(404).json({ message: "This user is not logged in" });
-                console.log("This user is not logged in");
-                _p.label = 7;
-            case 7: return [3 /*break*/, 9];
-            case 8:
                 error_1 = _p.sent();
                 res
                     .status(500)
                     .json({ message: "Error fetching login activity: ".concat(error_1.message) });
                 console.log("Error fetching login activity: ".concat(error_1.message));
-                return [3 /*break*/, 9];
-            case 9: return [2 /*return*/];
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
         }
     });
 }); });
 var enableDisableFeature = function (req, res, isEnable, type) {
     var tempPass = req.cookies.tempPass;
-    var maxAge = req.cookies.timeToLive;
-    if (server_1.default.get(tempPass) !== undefined) {
-        cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
-        if (persist_1.default.findUserByUsername(server_1.default.get(tempPass).username).isAdmin) {
-            switch (type) {
-                case "gamingtrivia":
-                    featureFlags.enableGamingTrivia = isEnable;
-                    break;
-                case "upcomingreleases":
-                    featureFlags.enableUpcomingReleases = isEnable;
-                    break;
-                case "unlike":
-                    featureFlags.enableUnlike = isEnable;
-                    break;
-                case "numoffollowers":
-                    featureFlags.enableNumberOfFollowers = isEnable;
-                    break;
-                default:
-                    res.status(404).json({ message: "Feature not found" });
-                    console.log("Feature not found");
-                    return;
-            }
-            res
-                .status(200)
-                .json({ message: "Feature ".concat(type, ", updated status: ").concat(isEnable) });
-            console.log("Feature ".concat(type, ", updated status: ").concat(isEnable));
+    if (persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username).isAdmin) {
+        switch (type) {
+            case "gamingtrivia":
+                featureFlags.enableGamingTrivia = isEnable;
+                break;
+            case "upcomingreleases":
+                featureFlags.enableUpcomingReleases = isEnable;
+                break;
+            case "unlike":
+                featureFlags.enableUnlike = isEnable;
+                break;
+            case "numoffollowers":
+                featureFlags.enableNumberOfFollowers = isEnable;
+                break;
+            default:
+                res.status(404).json({ message: "Feature not found" });
+                console.log("Feature not found");
+                return;
         }
-        else {
-            res.status(401).json({ message: "This user is not an admin" });
-            console.log("This user is not an admin");
-        }
+        res
+            .status(200)
+            .json({ message: "Feature ".concat(type, ", updated status: ").concat(isEnable) });
+        console.log("Feature ".concat(type, ", updated status: ").concat(isEnable));
     }
     else {
-        res.status(404).json({ message: "This user is not logged in" });
-        console.log("This user is not logged in");
+        res.status(401).json({ message: "This user is not an admin" });
+        console.log("This user is not an admin");
     }
 };
 router.put("/gamingtrivia/enable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -416,5 +341,5 @@ router.put("/unlike/disable", function (req, res) { return __awaiter(void 0, voi
         return [2 /*return*/];
     });
 }); });
-exports.default = router;
+exports.default = { router: router, featureFlags: featureFlags };
 //# sourceMappingURL=adminRoutes.js.map

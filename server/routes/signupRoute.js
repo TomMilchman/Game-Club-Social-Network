@@ -38,13 +38,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
-var bodyParser = require("body-parser");
 var bcrypt = require("bcrypt");
 var cookieManager_1 = require("../cookieManager");
 var persist_1 = require("../persist");
 var User_1 = require("../User");
 var server_1 = require("../server");
-router.use(bodyParser.json()); // Parse JSON request bodies
 function registerUser(user) {
     return __awaiter(this, void 0, void 0, function () {
         var users, hashedPassword, error_1;
@@ -89,10 +87,22 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                         .json({ message: "username must be at least 5 characters long" });
                     return [2 /*return*/];
                 }
+                if (lowerCaseUsername_1.length > 15) {
+                    res
+                        .status(400)
+                        .json({ message: "username must be at most 15 characters long" });
+                    return [2 /*return*/];
+                }
                 if (password.length < 6) {
                     res
                         .status(400)
                         .json({ message: "password must be at least 6 characters long" });
+                    return [2 /*return*/];
+                }
+                if (password.length > 20) {
+                    res
+                        .status(400)
+                        .json({ message: "password must be at most 20 characters long" });
                     return [2 /*return*/];
                 }
                 if (email.indexOf("@") === -1) {
@@ -114,7 +124,7 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
             case 3:
                 signupSuccess = _a.sent();
                 if (req.cookies.tempPass !== undefined) {
-                    server_1.default.delete(req.cookies.tempPass);
+                    server_1.loggedInUsers.delete(req.cookies.tempPass);
                 }
                 cookieManager_1.default.createNewCookies(res, maxAge, user.username);
                 message = { message: signupSuccess.message };

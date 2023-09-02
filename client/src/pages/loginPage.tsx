@@ -40,6 +40,7 @@ export default function LoginPage() {
       }
     } catch (error) {
       console.error("Error:", error);
+      alert(`Error signing in: ${error}, please try again later.`);
     }
   };
 

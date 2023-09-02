@@ -15,13 +15,10 @@ export default function EnableDisableFeaturesPage() {
 
   const checkAllPrivileges = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/admin/checkprivileges`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`http://localhost:3000/privileges`, {
+        method: "GET",
+        credentials: "include",
+      });
 
       const responseData = await response.json();
       if (response.ok) {
@@ -29,7 +26,6 @@ export default function EnableDisableFeaturesPage() {
         setUpcomingReleasesEnabled(responseData.upcomingReleasesEnabled);
         setUnlikeEnabled(responseData.unlikeEnabled);
         setNumOfFollowersEnabled(responseData.numOfFollowersEnabled);
-        console.log(responseData.message);
       } else {
         console.log(responseData.message);
       }

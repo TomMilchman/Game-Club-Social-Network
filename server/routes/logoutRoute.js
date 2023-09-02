@@ -38,13 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
-var cookieParser = require("cookie-parser");
-var bodyParser = require("body-parser");
 var server_1 = require("../server");
 var cookieManager_1 = require("../cookieManager");
 var persist_1 = require("../persist");
-router.use(bodyParser.json()); // Parse JSON request bodies
-router.use(cookieParser());
 router.put("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var tempPass, maxAge, username, user, error_1;
     return __generator(this, function (_a) {
@@ -54,8 +50,8 @@ router.put("/", function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 tempPass = req.cookies.tempPass;
                 maxAge = req.cookies.timeToLive;
                 if (!(tempPass !== undefined)) return [3 /*break*/, 4];
-                if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 2];
-                username = server_1.default.get(tempPass).username;
+                if (!(server_1.loggedInUsers.get(tempPass) !== undefined)) return [3 /*break*/, 2];
+                username = server_1.loggedInUsers.get(tempPass).username;
                 user = persist_1.default.findUserByUsername(username);
                 return [4 /*yield*/, user.addLogoutActivity()];
             case 1:

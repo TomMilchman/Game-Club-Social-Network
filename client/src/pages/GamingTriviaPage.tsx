@@ -8,13 +8,10 @@ export default function GamingTriviaPage() {
 
   const checkGamingTriviaPrivileges = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/admin/checkprivileges",
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch("http://localhost:3000/privileges", {
+        method: "GET",
+        credentials: "include",
+      });
 
       const responseData = await response.json();
       if (response.ok) {
@@ -22,7 +19,6 @@ export default function GamingTriviaPage() {
           setGamingTriviaEnabled(true);
         } else {
           setGamingTriviaEnabled(responseData.gamingTriviaEnabled);
-          console.log(responseData.message);
         }
       } else {
         setGamingTriviaEnabled(false);

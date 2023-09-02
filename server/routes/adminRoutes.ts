@@ -1,15 +1,9 @@
 import express = require("express");
 let router = express.Router();
-import cookieParser = require("cookie-parser");
-import bodyParser = require("body-parser");
 
-import loggedInUsers from "../server";
+import { loggedInUsers } from "../server";
 import persist from "../persist";
 import { LoginActivityType } from "../User";
-import cookieManager from "../cookieManager";
-
-router.use(bodyParser.json()); // Parse JSON request bodies
-router.use(cookieParser());
 
 const featureFlags = {
   enableGamingTrivia: true,
@@ -17,58 +11,6 @@ const featureFlags = {
   enableUnlike: true,
   enableNumberOfFollowers: true,
 };
-
-router.get("/checkprivileges", (req, res) => {
-  try {
-    let isAdmin: boolean = false;
-    let gamingTriviaEnabled: boolean = false;
-    let upcomingReleasesEnabled: boolean = false;
-    let unlikeEnabled: boolean = false;
-    let numOfFollowersEnabled: boolean = false;
-
-    const tempPass: string = req.cookies.tempPass;
-    if (tempPass !== undefined) {
-      if (loggedInUsers.get(tempPass) !== undefined) {
-        const username = loggedInUsers.get(tempPass).username;
-        const user = persist.findUserByUsername(username);
-        if (user.isAdmin === true) {
-          isAdmin = true;
-        }
-        if (featureFlags.enableUnlike === true) {
-          unlikeEnabled = true;
-        }
-        if (featureFlags.enableNumberOfFollowers === true) {
-          numOfFollowersEnabled = true;
-        }
-        if (featureFlags.enableGamingTrivia === true) {
-          gamingTriviaEnabled = true;
-        }
-        if (featureFlags.enableUpcomingReleases === true) {
-          upcomingReleasesEnabled = true;
-        }
-
-        res.status(200).json({
-          isAdmin: isAdmin,
-          gamingTriviaEnabled: gamingTriviaEnabled,
-          upcomingReleasesEnabled: upcomingReleasesEnabled,
-          unlikeEnabled: unlikeEnabled,
-          numOfFollowersEnabled: numOfFollowersEnabled,
-        });
-      } else {
-        res.status(401).json({ message: `This user is not logged in` });
-        console.log(`This user is not logged in`);
-      }
-    } else {
-      res.status(401).json({ message: `This user is not logged in` });
-      console.log(`This user is not logged in`);
-    }
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: `Error checking privileges ${error.message}` });
-    console.log(`Error checking privileges: ${error.message}`);
-  }
-});
 
 interface UserActivity {
   username: string;
@@ -103,62 +45,53 @@ router.get("/loginactivity", (req, res) => {
 router.delete("/deleteuser/:username", async (req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
-    const maxAge = req.cookies.timeToLive;
 
-    if (loggedInUsers.get(tempPass) !== undefined) {
-      cookieManager.refreshCookies(res, tempPass, maxAge);
-      if (
-        persist.findUserByUsername(loggedInUsers.get(tempPass).username).isAdmin
-      ) {
-        const usernameToDelete: string = req.params.username;
+    if (
+      persist.findUserByUsername(loggedInUsers.get(tempPass).username).isAdmin
+    ) {
+      const usernameToDelete: string = req.params.username;
 
-        const userToDelete = persist.findUserByUsername(usernameToDelete);
+      const userToDelete = persist.findUserByUsername(usernameToDelete);
 
-        if (userToDelete !== undefined) {
-          const index = persist.usersData.indexOf(userToDelete);
-          persist.usersData.splice(index, 1);
+      if (userToDelete !== undefined) {
+        const index = persist.usersData.indexOf(userToDelete);
+        persist.usersData.splice(index, 1);
 
-          for (const [tempPass, value] of loggedInUsers) {
-            if (value.username === usernameToDelete) {
-              loggedInUsers.delete(tempPass);
+        for (const [tempPass, value] of loggedInUsers) {
+          if (value.username === usernameToDelete) {
+            loggedInUsers.delete(tempPass);
+            break;
+          }
+        }
+
+        for (const user of persist.usersData) {
+          for (const [index, follower] of user.followersUsernames.entries()) {
+            if (follower === usernameToDelete) {
+              user.followersUsernames.splice(index, 1);
               break;
             }
           }
-
-          for (const user of persist.usersData) {
-            for (const [index, follower] of user.followersUsernames.entries()) {
-              if (follower === usernameToDelete) {
-                user.followersUsernames.splice(index, 1);
-                break;
-              }
-            }
-            for (const [index, following] of user.followedUsernames.entries()) {
-              if (following === usernameToDelete) {
-                user.followedUsernames.splice(index, 1);
-                break;
-              }
+          for (const [index, following] of user.followedUsernames.entries()) {
+            if (following === usernameToDelete) {
+              user.followedUsernames.splice(index, 1);
+              break;
             }
           }
-
-          await persist.saveUsersData();
-
-          res
-            .status(200)
-            .json({ message: `User ${usernameToDelete} deleted successfully` });
-          console.log(`User ${usernameToDelete} deleted successfully`);
-        } else {
-          res
-            .status(404)
-            .json({ message: `User ${usernameToDelete} not found` });
-          console.log(`User ${usernameToDelete} not found`);
         }
+
+        await persist.saveUsersData();
+
+        res
+          .status(200)
+          .json({ message: `User ${usernameToDelete} deleted successfully` });
+        console.log(`User ${usernameToDelete} deleted successfully`);
       } else {
-        res.status(401).json({ message: `This user is not an admin` });
-        console.log(`This user is not an admin`);
+        res.status(404).json({ message: `User ${usernameToDelete} not found` });
+        console.log(`User ${usernameToDelete} not found`);
       }
     } else {
-      res.status(404).json({ message: `This user is not logged in` });
-      console.log(`This user is not logged in`);
+      res.status(401).json({ message: `This user is not an admin` });
+      console.log(`This user is not an admin`);
     }
   } catch (error) {
     res
@@ -170,43 +103,36 @@ router.delete("/deleteuser/:username", async (req, res) => {
 
 const enableDisableFeature = (req, res, isEnable: boolean, type: string) => {
   const tempPass = req.cookies.tempPass;
-  const maxAge = req.cookies.timeToLive;
 
-  if (loggedInUsers.get(tempPass) !== undefined) {
-    cookieManager.refreshCookies(res, tempPass, maxAge);
-    if (
-      persist.findUserByUsername(loggedInUsers.get(tempPass).username).isAdmin
-    ) {
-      switch (type) {
-        case "gamingtrivia":
-          featureFlags.enableGamingTrivia = isEnable;
-          break;
-        case "upcomingreleases":
-          featureFlags.enableUpcomingReleases = isEnable;
-          break;
-        case "unlike":
-          featureFlags.enableUnlike = isEnable;
-          break;
-        case "numoffollowers":
-          featureFlags.enableNumberOfFollowers = isEnable;
-          break;
-        default:
-          res.status(404).json({ message: `Feature not found` });
-          console.log(`Feature not found`);
-          return;
-      }
-
-      res
-        .status(200)
-        .json({ message: `Feature ${type}, updated status: ${isEnable}` });
-      console.log(`Feature ${type}, updated status: ${isEnable}`);
-    } else {
-      res.status(401).json({ message: `This user is not an admin` });
-      console.log(`This user is not an admin`);
+  if (
+    persist.findUserByUsername(loggedInUsers.get(tempPass).username).isAdmin
+  ) {
+    switch (type) {
+      case "gamingtrivia":
+        featureFlags.enableGamingTrivia = isEnable;
+        break;
+      case "upcomingreleases":
+        featureFlags.enableUpcomingReleases = isEnable;
+        break;
+      case "unlike":
+        featureFlags.enableUnlike = isEnable;
+        break;
+      case "numoffollowers":
+        featureFlags.enableNumberOfFollowers = isEnable;
+        break;
+      default:
+        res.status(404).json({ message: `Feature not found` });
+        console.log(`Feature not found`);
+        return;
     }
+
+    res
+      .status(200)
+      .json({ message: `Feature ${type}, updated status: ${isEnable}` });
+    console.log(`Feature ${type}, updated status: ${isEnable}`);
   } else {
-    res.status(404).json({ message: `This user is not logged in` });
-    console.log(`This user is not logged in`);
+    res.status(401).json({ message: `This user is not an admin` });
+    console.log(`This user is not an admin`);
   }
 };
 
@@ -298,4 +224,4 @@ router.put("/unlike/disable", async (req, res) => {
   }
 });
 
-export default router;
+export default { router, featureFlags };

@@ -74,35 +74,28 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
-var bodyParser = require("body-parser");
 var server_1 = require("../server");
 var persist_1 = require("../persist");
-router.use(bodyParser.json()); // Parse JSON request bodies
 //Return the posts of all the users that the requesting user follows
 router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var tempPass, requestingUser, followedUsers, posts, _loop_1, i;
     return __generator(this, function (_a) {
         try {
             tempPass = req.cookies.tempPass;
-            if (server_1.default.get(tempPass) !== undefined) {
-                requestingUser = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
-                followedUsers = requestingUser.followedUsernames;
-                posts = [];
-                _loop_1 = function (i) {
-                    var user = persist_1.default.findUserByUsername(followedUsers[i]);
-                    var userPostsWithUsername = user.posts.map(function (post) { return (__assign(__assign({}, post), { username: user.username })); });
-                    posts.push.apply(posts, __spreadArray([], __read(userPostsWithUsername), false));
-                };
-                for (i = 0; i < followedUsers.length; i++) {
-                    _loop_1(i);
-                }
-                res
-                    .status(200)
-                    .json({ posts: posts, requestingUsername: requestingUser.username });
+            requestingUser = persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username);
+            followedUsers = requestingUser.followedUsernames;
+            posts = [];
+            _loop_1 = function (i) {
+                var user = persist_1.default.findUserByUsername(followedUsers[i]);
+                var userPostsWithUsername = user.posts.map(function (post) { return (__assign(__assign({}, post), { username: user.username })); });
+                posts.push.apply(posts, __spreadArray([], __read(userPostsWithUsername), false));
+            };
+            for (i = 0; i < followedUsers.length; i++) {
+                _loop_1(i);
             }
-            else {
-                res.status(401).json({ message: "User is not logged in to view feed" });
-            }
+            res
+                .status(200)
+                .json({ posts: posts, requestingUsername: requestingUser.username });
         }
         catch (error) {
             res.status(500).json({ message: error });

@@ -38,12 +38,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
-var bodyParser = require("body-parser");
 var bcrypt = require("bcrypt");
 var persist_1 = require("../persist");
 var cookieManager_1 = require("../cookieManager");
 var server_1 = require("../server");
-router.use(bodyParser.json()); // Parse JSON request bodies
 function checkPasswordHash(username, password) {
     return __awaiter(this, void 0, void 0, function () {
         var users, user;
@@ -85,13 +83,13 @@ router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 maxAge = rememberMeChecked ? 864000000 : 1800000;
                 tempPass = req.cookies.tempPass;
                 if (!(tempPass !== undefined)) return [3 /*break*/, 4];
-                if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 4];
-                previousUser = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
+                if (!(server_1.loggedInUsers.get(tempPass) !== undefined)) return [3 /*break*/, 4];
+                previousUser = persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username);
                 return [4 /*yield*/, previousUser.addLogoutActivity()];
             case 3:
                 _b.sent();
                 console.log("Previous user ".concat(previousUser.username, " logged out"));
-                server_1.default.delete(tempPass);
+                server_1.loggedInUsers.delete(tempPass);
                 _b.label = 4;
             case 4:
                 cookieManager_1.default.createNewCookies(res, maxAge, lowerCaseUsername);

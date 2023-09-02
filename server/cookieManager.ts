@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import loggedInUsers from "./server";
+import { loggedInUsers } from "./server";
 
 function calculateExpirationTime(maxAge: number) {
   return Date.now() + maxAge;
@@ -13,9 +13,6 @@ function refreshCookies(res, tempPass: string, maxAge: number) {
   }
 
   attachCookiesToRes(res, tempPass, maxAge);
-  console.log(
-    `Refreshed cookies for user ${loggedInUsers.get(tempPass).username}`
-  );
 }
 
 function createNewCookies(res, maxAge: number, username: string) {

@@ -1,14 +1,11 @@
 import express = require("express");
 let router = express.Router();
-import bodyParser = require("body-parser");
 import bcrypt = require("bcrypt");
 
 import persist from "../persist";
 import cookieManager from "../cookieManager";
 import { User } from "../User";
-import loggedInUsers from "../server";
-
-router.use(bodyParser.json()); // Parse JSON request bodies
+import { loggedInUsers } from "../server";
 
 async function checkPasswordHash(username: string, password: string) {
   const users: User[] = persist.usersData;

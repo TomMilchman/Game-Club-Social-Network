@@ -1,12 +1,9 @@
 import express = require("express");
 import persist from "../persist";
 let router = express.Router();
-import loggedInUsers from "../server";
-import bodyParser = require("body-parser");
+import { loggedInUsers } from "../server";
 import Post from "../Post";
 import cookieManager from "../cookieManager";
-
-router.use(bodyParser.json()); // Parse JSON request bodies
 
 //User creates their own post
 router.route("/createpost").post(async (req, res) => {
@@ -22,25 +19,19 @@ router.route("/createpost").post(async (req, res) => {
     const tempPass = req.cookies.tempPass;
     const maxAge = req.cookies.timeToLive;
 
-    if (loggedInUsers.get(tempPass) !== undefined) {
-      cookieManager.refreshCookies(res, tempPass, maxAge);
+    const username = loggedInUsers.get(tempPass).username;
+    const user = persist.findUserByUsername(username);
+    const currentPostId = user.currentPostId;
+    const timestamp = new Date();
 
-      const username = loggedInUsers.get(tempPass).username;
-      const user = persist.findUserByUsername(username);
-      const currentPostId = user.currentPostId;
-      const timestamp = new Date();
+    const post = new Post(currentPostId, title, content, timestamp);
+    user.currentPostId++;
+    user.addPost(post);
+    user.addNewPostActivity();
 
-      const post = new Post(currentPostId, title, content, timestamp);
-      user.currentPostId++;
-      user.addPost(post);
-      user.addNewPostActivity();
-
-      res.status(200).json({
-        message: `Successfully created post for user ${username}, post ID: ${currentPostId}`,
-      });
-    } else {
-      res.status(401).json({ message: "User not logged in to post" });
-    }
+    res.status(200).json({
+      message: `Successfully created post for user ${username}, post ID: ${currentPostId}`,
+    });
   } catch (error) {
     res
       .status(500)
@@ -51,44 +42,37 @@ router.route("/createpost").post(async (req, res) => {
 async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
   try {
     const tempPass = req.cookies.tempPass;
-    const maxAge = req.cookies.timeToLive;
+    const requestingUsername = loggedInUsers.get(tempPass).username;
+    const requestedUser = persist.findUserByUsername(req.params.username);
+    const posts = requestedUser.posts;
+    const postId = parseInt(req.params.postid);
 
-    if (loggedInUsers.get(tempPass) !== undefined) {
-      cookieManager.refreshCookies(res, tempPass, maxAge);
-      const requestingUsername = loggedInUsers.get(tempPass).username;
-      const requestedUser = persist.findUserByUsername(req.params.username);
-      const posts = requestedUser.posts;
-      const postId = parseInt(req.params.postid);
+    if (isNaN(postId)) {
+      res.status(400).json({ message: "Invalid post ID" });
+      return;
+    }
 
-      if (isNaN(postId)) {
-        res.status(400).json({ message: "Invalid post ID" });
-        return;
-      }
+    const post = posts.find((post) => post.postId === postId);
 
-      const post = posts.find((post) => post.postId === postId);
+    if (post !== undefined) {
+      isLikeOperation
+        ? post.usernamesWhoLiked.push(requestingUsername)
+        : (post.usernamesWhoLiked = post.usernamesWhoLiked.filter(
+            (username) => username !== requestingUsername
+          ));
 
-      if (post !== undefined) {
-        isLikeOperation
-          ? post.usernamesWhoLiked.push(requestingUsername)
-          : (post.usernamesWhoLiked = post.usernamesWhoLiked.filter(
-              (username) => username !== requestingUsername
-            ));
+      await persist.saveUsersData();
 
-        await persist.saveUsersData();
-
-        res.status(200).json({
-          message: `User ${requestingUsername} ${
-            isLikeOperation ? "liked" : "unliked"
-          } user ${req.params.username}'s post number ${postId}`,
-          updatedLikeNum: post.usernamesWhoLiked.length,
-        });
-      } else {
-        res.status(404).json({
-          message: `Post with ID ${postId} not found for user ${req.params.username}`,
-        });
-      }
+      res.status(200).json({
+        message: `User ${requestingUsername} ${
+          isLikeOperation ? "liked" : "unliked"
+        } user ${req.params.username}'s post number ${postId}`,
+        updatedLikeNum: post.usernamesWhoLiked.length,
+      });
     } else {
-      res.status(401).json({ message: "User not logged in to like/unlike" });
+      res.status(404).json({
+        message: `Post with ID ${postId} not found for user ${req.params.username}`,
+      });
     }
   } catch (error) {
     res.status(500).json({

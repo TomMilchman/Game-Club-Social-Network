@@ -1,70 +1,56 @@
 import express = require("express");
 import persist from "../persist";
 let router = express.Router();
-import loggedInUsers from "../server";
-import bodyParser = require("body-parser");
-import cookieManager from "../cookieManager";
-
-router.use(bodyParser.json()); // Parse JSON request bodies
+import { loggedInUsers } from "../server";
 
 async function followOrUnfollowUser(req, res, action) {
   try {
     const tempPass = req.cookies.tempPass;
-    const maxAge = req.cookies.timeToLive;
+    const requestingUser = persist.findUserByUsername(
+      loggedInUsers.get(tempPass).username
+    );
 
-    if (loggedInUsers.get(tempPass) !== undefined) {
-      const requestingUser = persist.findUserByUsername(
-        loggedInUsers.get(tempPass).username
-      );
+    const userToSearch = persist.findUserByUsername(req.params.username);
 
-      cookieManager.refreshCookies(res, tempPass, maxAge);
+    if (userToSearch !== undefined) {
+      if (requestingUser.username === userToSearch.username) {
+        res.status(400).json({
+          message: "You cannot follow/unfollow yourself",
+        });
+      } else {
+        const isFollowing = userToSearch.followersUsernames.some(
+          (username) => username === requestingUser.username
+        );
 
-      const userToSearch = persist.findUserByUsername(req.params.username);
-
-      if (userToSearch !== undefined) {
-        if (requestingUser.username === userToSearch.username) {
+        if (
+          (isFollowing && action === "follow") ||
+          (!isFollowing && action === "unfollow")
+        ) {
           res.status(400).json({
-            message: "You cannot follow/unfollow yourself",
+            message: `You are already ${
+              action === "follow" ? "following" : "not following"
+            } this user`,
           });
         } else {
-          const isFollowing = userToSearch.followersUsernames.some(
-            (username) => username === requestingUser.username
-          );
-
-          if (
-            (isFollowing && action === "follow") ||
-            (!isFollowing && action === "unfollow")
-          ) {
-            res.status(400).json({
-              message: `You are already ${
-                action === "follow" ? "following" : "not following"
-              } this user`,
-            });
+          if (action === "follow") {
+            userToSearch.addFollower(requestingUser.username);
+            requestingUser.addFollowing(userToSearch.username);
           } else {
-            if (action === "follow") {
-              userToSearch.addFollower(requestingUser.username);
-              requestingUser.addFollowing(userToSearch.username);
-            } else {
-              userToSearch.removeFollower(requestingUser.username);
-              requestingUser.removeFollowing(userToSearch.username);
-            }
-
-            await persist.saveUsersData();
-
-            res.status(200).json({
-              message: `User ${requestingUser.username} is ${
-                action === "follow" ? "now following" : "no longer following"
-              } user ${userToSearch.username}`,
-            });
+            userToSearch.removeFollower(requestingUser.username);
+            requestingUser.removeFollowing(userToSearch.username);
           }
+
+          await persist.saveUsersData();
+
+          res.status(200).json({
+            message: `User ${requestingUser.username} is ${
+              action === "follow" ? "now following" : "no longer following"
+            } user ${userToSearch.username}`,
+          });
         }
-      } else {
-        res.status(404).json({ message: "User not found" });
       }
     } else {
-      res
-        .status(401)
-        .json({ message: "User not logged in to follow/unfollow" });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
     console.error(error.message);
@@ -84,27 +70,23 @@ router.route("/:username/followinfo").get((req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
 
-    if (loggedInUsers.get(tempPass) !== undefined) {
-      const requestingUser = persist.findUserByUsername(
-        loggedInUsers.get(tempPass).username
+    const requestingUser = persist.findUserByUsername(
+      loggedInUsers.get(tempPass).username
+    );
+    const userToSearch = persist.findUserByUsername(req.params.username);
+
+    if (userToSearch !== undefined && requestingUser !== undefined) {
+      const isFollowing = userToSearch.followersUsernames.some(
+        (username) => username === requestingUser.username
       );
-      const userToSearch = persist.findUserByUsername(req.params.username);
 
-      if (userToSearch !== undefined && requestingUser !== undefined) {
-        const isFollowing = userToSearch.followersUsernames.some(
-          (username) => username === requestingUser.username
-        );
-
-        res.status(200).json({
-          message: `User ${requestingUser.username} following user ${userToSearch.username}: ${isFollowing}`,
-          isFollowing: isFollowing,
-          numOfFollowers: userToSearch.followersUsernames.length,
-        });
-      } else {
-        res.status(404).json({ message: "User not found" });
-      }
+      res.status(200).json({
+        message: `User ${requestingUser.username} following user ${userToSearch.username}: ${isFollowing}`,
+        isFollowing: isFollowing,
+        numOfFollowers: userToSearch.followersUsernames.length,
+      });
     } else {
-      res.status(401).json({ message: "User not logged in" });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
     console.error(`Error while checking if following: ${error}`);
@@ -117,17 +99,13 @@ router.route("/:username/posts").get((req, res) => {
     const requestedUsername = req.params.username;
     const requestedUser = persist.findUserByUsername(requestedUsername);
 
-    if (loggedInUsers.get(req.cookies.tempPass) !== undefined) {
-      if (requestedUser !== undefined) {
-        res.status(200).json({
-          posts: requestedUser.posts,
-          requestingUsername: loggedInUsers.get(req.cookies.tempPass).username,
-        });
-      } else {
-        res.status(404).json({ message: "User not found" });
-      }
+    if (requestedUser !== undefined) {
+      res.status(200).json({
+        posts: requestedUser.posts,
+        requestingUsername: loggedInUsers.get(req.cookies.tempPass).username,
+      });
     } else {
-      res.status(401).json({ message: "User not logged in" });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
     console.error(error.message);
@@ -139,23 +117,19 @@ router.route("/following").get((req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
 
-    if (loggedInUsers.get(tempPass) !== undefined) {
-      const requestingUser = persist.findUserByUsername(
-        loggedInUsers.get(tempPass).username
-      );
+    const requestingUser = persist.findUserByUsername(
+      loggedInUsers.get(tempPass).username
+    );
 
-      const followedUsers: string[] = requestingUser.followedUsernames;
+    const followedUsers: string[] = requestingUser.followedUsernames;
 
-      console.log(
-        `User ${requestingUser.username} is following ${followedUsers.length} users}`
-      );
-      res.status(200).json({
-        followedUsers: followedUsers,
-        requestingUser: requestingUser.username,
-      });
-    } else {
-      res.status(401).json({ message: "User not logged in" });
-    }
+    console.log(
+      `User accessed following page: ${requestingUser.username} is following ${followedUsers.length} users`
+    );
+    res.status(200).json({
+      followedUsers: followedUsers,
+      requestingUser: requestingUser.username,
+    });
   } catch (error) {
     console.error(`Error while checking followed users: ${error.message}`);
     res.status(500).send(`Internal Server Error: ${error.message}`);

@@ -1,14 +1,11 @@
 import express = require("express");
 let router = express.Router();
-import bodyParser = require("body-parser");
 import bcrypt = require("bcrypt");
 
 import cookieManager from "../cookieManager";
 import persist from "../persist";
 import { User, LoginActivityType } from "../User";
-import loggedInUsers from "../server";
-
-router.use(bodyParser.json()); // Parse JSON request bodies
+import { loggedInUsers } from "../server";
 
 async function registerUser(user: User) {
   try {
@@ -38,10 +35,22 @@ router.post("/", async (req, res) => {
         .json({ message: "username must be at least 5 characters long" });
       return;
     }
+    if (lowerCaseUsername.length > 15) {
+      res
+        .status(400)
+        .json({ message: "username must be at most 15 characters long" });
+      return;
+    }
     if (password.length < 6) {
       res
         .status(400)
         .json({ message: "password must be at least 6 characters long" });
+      return;
+    }
+    if (password.length > 20) {
+      res
+        .status(400)
+        .json({ message: "password must be at most 20 characters long" });
       return;
     }
     if (email.indexOf("@") === -1) {

@@ -63,12 +63,15 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.loggedInUsers = exports.PORT = exports.app = void 0;
 var express = require("express");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var cors = require("cors");
 var app = express();
-var port = 3000;
+exports.app = app;
+var PORT = 3000;
+exports.PORT = PORT;
 var persist_1 = require("./persist");
 var feedRoute_1 = require("./routes/feedRoute");
 var userRoutes_1 = require("./routes/userRoutes");
@@ -77,9 +80,11 @@ var loginRoute_1 = require("./routes/loginRoute");
 var logoutRoute_1 = require("./routes/logoutRoute");
 var signupRoute_1 = require("./routes/signupRoute");
 var searchRoute_1 = require("./routes/searchRoute");
-var authenticationRoute_1 = require("./routes/authenticationRoute");
 var adminRoutes_1 = require("./routes/adminRoutes");
+var privilegesRoute_1 = require("./routes/privilegesRoute");
+var cookieManager_1 = require("./cookieManager");
 var loggedInUsers = new Map();
+exports.loggedInUsers = loggedInUsers;
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(cookieParser());
 app.use(cors({
@@ -89,24 +94,39 @@ app.use(cors({
 app.use("/login", loginRoute_1.default);
 app.use("/signup", signupRoute_1.default);
 app.use("/logout", logoutRoute_1.default);
-app.use("/authentication", authenticationRoute_1.default);
+app.use("/search", searchRoute_1.default);
+//Authentication middleware
+app.use(function (req, res, next) {
+    if (res.headersSent) {
+        return next();
+    }
+    var tempPass = req.cookies.tempPass;
+    var maxAge = req.cookies.timeToLive;
+    if (loggedInUsers.has(tempPass)) {
+        cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
+        next();
+    }
+    else {
+        res.status(401).json({ message: "User not logged in" });
+    }
+});
+app.use("/privileges", privilegesRoute_1.default);
 app.use("/feed", feedRoute_1.default);
 app.use("/users", userRoutes_1.default);
 app.use("/posts", postRoutes_1.default);
-app.use("/search", searchRoute_1.default);
-app.use("/admin", adminRoutes_1.default);
+app.use("/admin", adminRoutes_1.default.router);
 //Error 404 for non-existing pages
-app.get("*", function (req, res) {
+app.all("*", function (req, res) {
     res.status(404).send("Error 404: Not found.");
 });
 // Start the server and load data from disk
-app.listen(port, function () { return __awaiter(void 0, void 0, void 0, function () {
+app.listen(PORT, function () { return __awaiter(void 0, void 0, void 0, function () {
     var _a, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                console.log("Server is running on port ".concat(port));
+                console.log("Server is running on port ".concat(PORT));
                 _a = persist_1.default;
                 return [4 /*yield*/, persist_1.default.loadUsersData()];
             case 1:
@@ -144,5 +164,4 @@ app.listen(port, function () { return __awaiter(void 0, void 0, void 0, function
         }
     });
 }); });
-exports.default = loggedInUsers;
 //# sourceMappingURL=server.js.map

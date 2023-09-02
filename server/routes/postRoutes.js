@@ -40,42 +40,31 @@ var express = require("express");
 var persist_1 = require("../persist");
 var router = express.Router();
 var server_1 = require("../server");
-var bodyParser = require("body-parser");
 var Post_1 = require("../Post");
-var cookieManager_1 = require("../cookieManager");
-router.use(bodyParser.json()); // Parse JSON request bodies
 //User creates their own post
 router.route("/createpost").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var title, content, tempPass, maxAge, username, user, currentPostId, timestamp, post;
     return __generator(this, function (_a) {
         title = req.body.title;
         content = req.body.content;
-        if (content.length > 300) {
-            res
-                .status(400)
-                .json({ message: "Post content must be shorter than 300 characters" });
+        if (content.length > 300 || title.length > 50) {
+            res.status(400).json({ message: "Post content or title are too long" });
             return [2 /*return*/];
         }
         try {
             tempPass = req.cookies.tempPass;
             maxAge = req.cookies.timeToLive;
-            if (server_1.default.get(tempPass) !== undefined) {
-                cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
-                username = server_1.default.get(tempPass).username;
-                user = persist_1.default.findUserByUsername(username);
-                currentPostId = user.currentPostId;
-                timestamp = new Date();
-                post = new Post_1.default(currentPostId, title, content, timestamp);
-                user.currentPostId++;
-                user.addPost(post);
-                user.addNewPostActivity();
-                res.status(200).json({
-                    message: "Successfully created post for user ".concat(username, ", post ID: ").concat(currentPostId),
-                });
-            }
-            else {
-                res.status(401).json({ message: "User not logged in to post" });
-            }
+            username = server_1.loggedInUsers.get(tempPass).username;
+            user = persist_1.default.findUserByUsername(username);
+            currentPostId = user.currentPostId;
+            timestamp = new Date();
+            post = new Post_1.default(currentPostId, title, content, timestamp);
+            user.currentPostId++;
+            user.addPost(post);
+            user.addNewPostActivity();
+            res.status(200).json({
+                message: "Successfully created post for user ".concat(username, ", post ID: ").concat(currentPostId),
+            });
         }
         catch (error) {
             res
@@ -87,16 +76,13 @@ router.route("/createpost").post(function (req, res) { return __awaiter(void 0, 
 }); });
 function handleLikeUnlike(req, res, isLikeOperation) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, maxAge, requestingUsername_1, requestedUser, posts, postId_1, post, error_1;
+        var tempPass, requestingUsername_1, requestedUser, posts, postId_1, post, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
+                    _a.trys.push([0, 4, , 5]);
                     tempPass = req.cookies.tempPass;
-                    maxAge = req.cookies.timeToLive;
-                    if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 4];
-                    cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
-                    requestingUsername_1 = server_1.default.get(tempPass).username;
+                    requestingUsername_1 = server_1.loggedInUsers.get(tempPass).username;
                     requestedUser = persist_1.default.findUserByUsername(req.params.username);
                     posts = requestedUser.posts;
                     postId_1 = parseInt(req.params.postid);
@@ -124,16 +110,12 @@ function handleLikeUnlike(req, res, isLikeOperation) {
                     _a.label = 3;
                 case 3: return [3 /*break*/, 5];
                 case 4:
-                    res.status(401).json({ message: "User not logged in to like/unlike" });
-                    _a.label = 5;
-                case 5: return [3 /*break*/, 7];
-                case 6:
                     error_1 = _a.sent();
                     res.status(500).json({
                         message: "Error ".concat(isLikeOperation ? "liking" : "unliking", " post: ").concat(error_1.message),
                     });
-                    return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
             }
         });
     });

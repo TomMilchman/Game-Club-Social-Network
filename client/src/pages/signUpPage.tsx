@@ -41,6 +41,7 @@ export default function SignUpPage() {
       }
     } catch (error) {
       console.error("Error:", error);
+      alert(`Error signing up: ${error}, please try again later.`);
     }
   };
 

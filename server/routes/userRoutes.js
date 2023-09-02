@@ -40,21 +40,15 @@ var express = require("express");
 var persist_1 = require("../persist");
 var router = express.Router();
 var server_1 = require("../server");
-var bodyParser = require("body-parser");
-var cookieManager_1 = require("../cookieManager");
-router.use(bodyParser.json()); // Parse JSON request bodies
 function followOrUnfollowUser(req, res, action) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, maxAge, requestingUser_1, userToSearch, isFollowing, error_1;
+        var tempPass, requestingUser_1, userToSearch, isFollowing, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 9, , 10]);
+                    _a.trys.push([0, 7, , 8]);
                     tempPass = req.cookies.tempPass;
-                    maxAge = req.cookies.timeToLive;
-                    if (!(server_1.default.get(tempPass) !== undefined)) return [3 /*break*/, 7];
-                    requestingUser_1 = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
-                    cookieManager_1.default.refreshCookies(res, tempPass, maxAge);
+                    requestingUser_1 = persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username);
                     userToSearch = persist_1.default.findUserByUsername(req.params.username);
                     if (!(userToSearch !== undefined)) return [3 /*break*/, 5];
                     if (!(requestingUser_1.username === userToSearch.username)) return [3 /*break*/, 1];
@@ -92,17 +86,11 @@ function followOrUnfollowUser(req, res, action) {
                     _a.label = 6;
                 case 6: return [3 /*break*/, 8];
                 case 7:
-                    res
-                        .status(401)
-                        .json({ message: "User not logged in to follow/unfollow" });
-                    _a.label = 8;
-                case 8: return [3 /*break*/, 10];
-                case 9:
                     error_1 = _a.sent();
                     console.error(error_1.message);
                     res.status(500).send("Internal Server Error" + error_1.message);
-                    return [3 /*break*/, 10];
-                case 10: return [2 /*return*/];
+                    return [3 /*break*/, 8];
+                case 8: return [2 /*return*/];
             }
         });
     });
@@ -130,23 +118,18 @@ router.route("/:username/unfollow").put(function (req, res) { return __awaiter(v
 router.route("/:username/followinfo").get(function (req, res) {
     try {
         var tempPass = req.cookies.tempPass;
-        if (server_1.default.get(tempPass) !== undefined) {
-            var requestingUser_2 = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
-            var userToSearch = persist_1.default.findUserByUsername(req.params.username);
-            if (userToSearch !== undefined && requestingUser_2 !== undefined) {
-                var isFollowing = userToSearch.followersUsernames.some(function (username) { return username === requestingUser_2.username; });
-                res.status(200).json({
-                    message: "User ".concat(requestingUser_2.username, " following user ").concat(userToSearch.username, ": ").concat(isFollowing),
-                    isFollowing: isFollowing,
-                    numOfFollowers: userToSearch.followersUsernames.length,
-                });
-            }
-            else {
-                res.status(404).json({ message: "User not found" });
-            }
+        var requestingUser_2 = persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username);
+        var userToSearch = persist_1.default.findUserByUsername(req.params.username);
+        if (userToSearch !== undefined && requestingUser_2 !== undefined) {
+            var isFollowing = userToSearch.followersUsernames.some(function (username) { return username === requestingUser_2.username; });
+            res.status(200).json({
+                message: "User ".concat(requestingUser_2.username, " following user ").concat(userToSearch.username, ": ").concat(isFollowing),
+                isFollowing: isFollowing,
+                numOfFollowers: userToSearch.followersUsernames.length,
+            });
         }
         else {
-            res.status(401).json({ message: "User not logged in" });
+            res.status(404).json({ message: "User not found" });
         }
     }
     catch (error) {
@@ -158,19 +141,14 @@ router.route("/:username/posts").get(function (req, res) {
     try {
         var requestedUsername = req.params.username;
         var requestedUser = persist_1.default.findUserByUsername(requestedUsername);
-        if (server_1.default.get(req.cookies.tempPass) !== undefined) {
-            if (requestedUser !== undefined) {
-                res.status(200).json({
-                    posts: requestedUser.posts,
-                    requestingUsername: server_1.default.get(req.cookies.tempPass).username,
-                });
-            }
-            else {
-                res.status(404).json({ message: "User not found" });
-            }
+        if (requestedUser !== undefined) {
+            res.status(200).json({
+                posts: requestedUser.posts,
+                requestingUsername: server_1.loggedInUsers.get(req.cookies.tempPass).username,
+            });
         }
         else {
-            res.status(401).json({ message: "User not logged in" });
+            res.status(404).json({ message: "User not found" });
         }
     }
     catch (error) {
@@ -181,18 +159,13 @@ router.route("/:username/posts").get(function (req, res) {
 router.route("/following").get(function (req, res) {
     try {
         var tempPass = req.cookies.tempPass;
-        if (server_1.default.get(tempPass) !== undefined) {
-            var requestingUser = persist_1.default.findUserByUsername(server_1.default.get(tempPass).username);
-            var followedUsers = requestingUser.followedUsernames;
-            console.log("User ".concat(requestingUser.username, " is following ").concat(followedUsers.length, " users}"));
-            res.status(200).json({
-                followedUsers: followedUsers,
-                requestingUser: requestingUser.username,
-            });
-        }
-        else {
-            res.status(401).json({ message: "User not logged in" });
-        }
+        var requestingUser = persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username);
+        var followedUsers = requestingUser.followedUsernames;
+        console.log("User accessed following page: ".concat(requestingUser.username, " is following ").concat(followedUsers.length, " users"));
+        res.status(200).json({
+            followedUsers: followedUsers,
+            requestingUser: requestingUser.username,
+        });
     }
     catch (error) {
         console.error("Error while checking followed users: ".concat(error.message));

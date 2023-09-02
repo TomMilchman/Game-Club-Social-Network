@@ -30,9 +30,9 @@ export default function RootLayout() {
     }
   };
 
-  const authenticate = async () => {
+  const privileges = async () => {
     try {
-      const response = await fetch("http://localhost:3000/authentication", {
+      const response = await fetch("http://localhost:3000/privileges", {
         method: "GET",
         credentials: "include",
       });
@@ -40,30 +40,6 @@ export default function RootLayout() {
       const responseData = await response.json();
       if (response.ok) {
         setAuthenticated(true);
-      } else if (response.status === 401) {
-        setAuthenticated(false);
-        console.log(responseData.message);
-      } else {
-        console.log("An error occurred server side:", responseData.message);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const checkNavbarPrivileges = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:3000/admin/checkprivileges",
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-
-      const responseData = await response.json();
-      if (response.ok) {
         setIsAdmin(responseData.isAdmin);
 
         if (responseData.isAdmin) {
@@ -75,24 +51,24 @@ export default function RootLayout() {
         }
 
         console.log(
-          `isAdmin: ${isAdmin}, upcomingReleasesPrivileges: ${upcomingReleasesPrivileges}, gamingTriviaPrivileges: ${gamingTriviaPrivileges}`
+          `Authenticated, isAdmin: ${isAdmin}, upcomingReleasesPrivileges: ${upcomingReleasesPrivileges}, gamingTriviaPrivileges: ${gamingTriviaPrivileges}`
         );
       } else if (response.status === 401) {
-        setIsAdmin(false);
+        setAuthenticated(false);
         console.log(responseData.message);
       } else {
         console.log("An error occurred server side:", responseData.message);
       }
     } catch (error) {
-      setIsAdmin(false);
+      setAuthenticated(false);
       console.error("Error fetching data:", error);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    authenticate();
-    checkNavbarPrivileges();
-  }, [<Outlet />]);
+    privileges();
+  }, [authenticated, <Outlet />]);
 
   if (isLoading) {
     return <p></p>;

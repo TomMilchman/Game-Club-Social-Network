@@ -2,10 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
-var bodyParser = require("body-parser");
 var trie_search_1 = require("trie-search");
 var persist_1 = require("../persist");
-router.use(bodyParser.json()); // Parse JSON request bodies
 router.get("/:username", function (req, res) {
     try {
         var inputUsername = req.params.username;

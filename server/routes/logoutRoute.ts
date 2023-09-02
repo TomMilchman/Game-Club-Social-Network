@@ -1,14 +1,9 @@
 import express = require("express");
 let router = express.Router();
-import cookieParser = require("cookie-parser");
-import bodyParser = require("body-parser");
 
-import loggedInUsers from "../server";
+import { loggedInUsers } from "../server";
 import cookieManager from "../cookieManager";
 import persist from "../persist";
-
-router.use(bodyParser.json()); // Parse JSON request bodies
-router.use(cookieParser());
 
 router.put("/", async (req, res) => {
   try {

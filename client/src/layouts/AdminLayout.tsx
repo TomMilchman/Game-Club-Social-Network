@@ -7,16 +7,13 @@ export default function AdminLayout() {
 
   const checkIfAdmin = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/admin/checkprivileges",
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch("http://localhost:3000/privileges", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const responseData = await response.json();
       if (response.ok) {
@@ -27,7 +24,6 @@ export default function AdminLayout() {
         setIsAdmin(false);
         console.log("An error occurred server side:", responseData.message);
       }
-      console.log(responseData.message);
       setIsLoading(false);
     } catch (error) {
       setIsAdmin(false);
@@ -60,6 +56,6 @@ export default function AdminLayout() {
       </>
     );
   } else {
-    return <p>Not an admin, cannot access admin privleges.</p>;
+    return <p>Not an admin, cannot access admin privileges.</p>;
   }
 }
