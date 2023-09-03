@@ -24,7 +24,7 @@ async function checkPasswordHash(username: string, password: string) {
   return { ok: false, message: "wrong username" };
 }
 
-router.post("/", async (req, res) => {
+router.put("/", async (req, res) => {
   const { username, password, rememberMeChecked } = req.body;
 
   try {

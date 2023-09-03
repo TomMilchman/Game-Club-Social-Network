@@ -668,6 +668,74 @@
       {
         "type": 1,
         "timestamp": "2023-09-02T12:12:12.893Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-02T12:17:45.434Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-02T12:18:01.566Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-02T12:25:01.235Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-02T12:25:54.041Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-02T12:26:44.142Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-02T12:33:32.787Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-02T12:34:38.790Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:13:47.424Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:13:52.353Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:15:02.374Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:17:12.634Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:17:51.826Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:20:56.627Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:21:01.098Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:25:56.709Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:27:25.311Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:27:26.852Z"
       }
     ]
   },
@@ -1215,6 +1283,78 @@
       {
         "type": 1,
         "timestamp": "2023-09-02T12:14:15.152Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-02T12:25:59.992Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-02T12:26:04.717Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-02T12:32:02.906Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-02T12:33:15.850Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-02T12:33:27.116Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:11:59.616Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:12:04.677Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:12:12.792Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:13:07.647Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:13:34.647Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:13:36.969Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:27:11.530Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:27:21.109Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:27:31.969Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:28:44.133Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:28:52.895Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:29:33.113Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:29:44.059Z"
       }
     ]
   },
@@ -1350,6 +1490,26 @@
       {
         "type": 1,
         "timestamp": "2023-09-01T11:39:48.907Z"
+      }
+    ]
+  },
+  {
+    "username": "hypno7",
+    "password": "$2b$10$YrLBFa6cMGV6WRNPowQJaOotLQ1J0Lzu.jCo/j5R5S5ZGxa6.hENq",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "followedUsernames": [],
+    "followersUsernames": [],
+    "posts": [],
+    "currentPostId": 0,
+    "loginActivity": [
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T10:14:52.229Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T10:14:57.282Z"
       }
     ]
   }

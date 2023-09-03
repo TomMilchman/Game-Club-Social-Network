@@ -32,6 +32,7 @@ router.get("/", (req, res) => {
     }
 
     res.status(200).json({
+      username: username,
       isAdmin: isAdmin,
       gamingTriviaEnabled: gamingTriviaEnabled,
       upcomingReleasesEnabled: upcomingReleasesEnabled,

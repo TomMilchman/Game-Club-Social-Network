@@ -106,10 +106,10 @@ form {
 
 #navbar button {
   flex-shrink: 1;
+  width: 15vw;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-right: 10px;
 }
 
 /* Add padding to the top of the content container */

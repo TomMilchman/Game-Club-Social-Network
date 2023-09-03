@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 export default function RootLayout() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [username, setUsername] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [upcomingReleasesPrivileges, setUpcomingReleasesPrivileges] =
@@ -40,6 +41,7 @@ export default function RootLayout() {
       const responseData = await response.json();
       if (response.ok) {
         setAuthenticated(true);
+        setUsername(responseData.username);
         setIsAdmin(responseData.isAdmin);
 
         if (responseData.isAdmin) {
@@ -68,7 +70,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     privileges();
-  }, [authenticated, <Outlet />]);
+  }, [<Outlet />]);
 
   if (isLoading) {
     return <p></p>;
@@ -80,7 +82,7 @@ export default function RootLayout() {
         <img id="game-club-logo-layout" src={GameClubLogo} />
         <br />
         <Link to="/">
-          <button>USER FEED</button>
+          <button>{username.toUpperCase()}'S FEED</button>
         </Link>
         <Link to="/following">
           <button>SEARCH & FOLLOW</button>

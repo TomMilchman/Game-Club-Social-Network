@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Club - Readme</title>
+  </head>
+  <body>
+    <h1>Read Me</h1>
+    <h2>Social Network Name:</h2>
+    <h3>Game Club</h3>
+    <h2>Additional Pages Added:</h2>
+    <h3>
+      I added a page that would let the user know of upcoming big game releases
+      and a page that contains a bunch of gaming trivia.
+    </h3>
+    <h2>Additional Features Added:</h2>
+    <h3>
+      Users have the ability to unlike posts and view how many followers each
+      user has on their profile page.
+    </h3>
+    <h2>What Was Hard To Do?</h2>
+    <h3>
+      The authentication system was easily the most difficult and most time
+      consuming part of the project for me.
+    </h3>
+    <h2>Did I Have a Partner?</h2>
+    <h3>
+      No. All of the work was done by myself (both server and client side). My
+      ID is: 209371483.
+    </h3>
+    <h2>Server Routes Supported:</h2>
+    <ul>
+      <li>
+        <h3>/login (PUT)</h3>
+      </li>
+      <li>
+        <h3>/signup (POST)</h3>
+      </li>
+      <li><h3>/logout (PUT)</h3></li>
+      <li>
+        <h3>/search (GET)</h3>
+      </li>
+      <li>
+        <h3>/privileges (GET)</h3>
+      </li>
+      <li>
+        <h3>/feed (GET)</h3>
+      </li>
+      <li>
+        <h3>
+          /users:
+          <ul>
+            <li>
+              <h3>/users/:username/follow (PUT)</h3>
+            </li>
+            <li>
+              <h3>/users/:username/unfollow (PUT)</h3>
+            </li>
+            <li><h3>/users/:username/followinfo (GET)</h3></li>
+            <li><h3>/users/:username/posts (GET)</h3></li>
+            <li><h3>/users/following (GET)</h3></li>
+            <li><h3>/users/nonadmin (GET)</h3></li>
+          </ul>
+        </h3>
+        <h3>
+          /posts:
+          <ul>
+            <li><h3>/posts/createpost (POST)</h3></li>
+            <li><h3>/posts/:username/like/:postid (PUT)</h3></li>
+            <li><h3>/posts/:username/unlike/:postid (PUT)</h3></li>
+          </ul>
+        </h3>
+        <h3>
+            /admin:
+            <ul>
+                <li><h3>/admin/loginactivity (GET)</h3></li>
+                <li><h3>/admin/deleteuser/:username (DELETE)</h3></li>
+                <li><h3>/admin/users/:username (DELETE)</h3></li>
+                <li><h3>/admin/gamingtrivia/enable (PUT)</h3></li>
+                <li><h3>/admin/gamingtrivia/disable (PUT)</h3></li>
+                <li><h3>/admin/upcomingreleases/enable (PUT)</h3></li>
+                <li><h3>/admin/upcomingreleases/disable (PUT)</h3></li>
+                <li><h3>/admin/unlike/enable (PUT)</h3></li>
+                <li><h3>/admin/unlike/disable (PUT)</h3></li>
+                <li><h3>/admin/numoffollowers/enable (PUT)</h3></li>
+                <li><h3>/admin/numoffollowers/disable (PUT)</h3></li>
+            </ul>
+    </ul>
+  </body>
+</html>

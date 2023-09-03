@@ -65,7 +65,7 @@ function checkPasswordHash(username, password) {
         });
     });
 }
-router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, username, password, rememberMeChecked, lowerCaseUsername, loginSuccess, message, maxAge, tempPass, previousUser, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {

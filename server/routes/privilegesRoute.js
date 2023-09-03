@@ -31,6 +31,7 @@ router.get("/", function (req, res) {
             upcomingReleasesEnabled = true;
         }
         res.status(200).json({
+            username: username,
             isAdmin: isAdmin,
             gamingTriviaEnabled: gamingTriviaEnabled,
             upcomingReleasesEnabled: upcomingReleasesEnabled,
