@@ -9,10 +9,10 @@ import { loggedInUsers } from "../server";
 
 async function registerUser(user: User) {
   try {
-    const users: User[] = persist.usersData;
+    const users = persist.usersData;
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
-    users.push(user);
+    users[user.username] = user;
     await persist.saveUsersData();
     return { message: `User ${user.username} registration successful` };
   } catch (error) {
@@ -78,10 +78,10 @@ router.post("/", async (req, res) => {
     const users = persist.usersData;
 
     //Check if a user of the same name exists, if it does, reject request.
-    if (users.find((u) => u.username === lowerCaseUsername)) {
+    if (users.hasOwnProperty(lowerCaseUsername)) {
       res
         .status(400)
-        .json({ message: "user with this username already exists" });
+        .json({ message: "User with this username already exists" });
     } else {
       const signupSuccess = await registerUser(user);
       if (req.cookies.tempPass !== undefined) {

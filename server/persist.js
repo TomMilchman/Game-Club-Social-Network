@@ -37,11 +37,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = require("fs");
-var User_1 = require("./User");
-var usersData = []; //holds up to date users' data
+var usersData = {}; //holds up to date users' data
 function loadData(filePath) {
     return __awaiter(this, void 0, void 0, function () {
-        var jsonData, userObjects, users, error_1;
+        var jsonData, userObjects, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -50,10 +49,7 @@ function loadData(filePath) {
                 case 1:
                     jsonData = _a.sent();
                     userObjects = JSON.parse(jsonData);
-                    users = userObjects.map(function (u) {
-                        return new User_1.User(u.username, u.password, u.email, u.isAdmin, u.followedUsernames, u.followersUsernames, u.posts, u.currentPostId, u.loginActivity);
-                    });
-                    return [2 /*return*/, users];
+                    return [2 /*return*/, userObjects];
                 case 2:
                     error_1 = _a.sent();
                     console.error("Error loading data:", error_1.message);
@@ -108,8 +104,5 @@ function saveUsersData() {
         });
     });
 }
-function findUserByUsername(username) {
-    return usersData.find(function (u) { return u.username === username; });
-}
-exports.default = { loadUsersData: loadUsersData, saveUsersData: saveUsersData, usersData: usersData, findUserByUsername: findUserByUsername };
+exports.default = { loadUsersData: loadUsersData, saveUsersData: saveUsersData, usersData: usersData };
 //# sourceMappingURL=persist.js.map

@@ -4,6 +4,7 @@ let router = express.Router();
 import { loggedInUsers } from "../server";
 import Post from "../Post";
 import cookieManager from "../cookieManager";
+import { LoginActivityType } from "../User";
 
 //User creates their own post
 router.route("/createpost").post(async (req, res) => {
@@ -17,17 +18,23 @@ router.route("/createpost").post(async (req, res) => {
 
   try {
     const tempPass = req.cookies.tempPass;
-    const maxAge = req.cookies.timeToLive;
 
     const username = loggedInUsers.get(tempPass).username;
-    const user = persist.findUserByUsername(username);
+    const user = persist.usersData[username];
     const currentPostId = user.currentPostId;
     const timestamp = new Date();
 
     const post = new Post(currentPostId, title, content, timestamp);
     user.currentPostId++;
-    user.addPost(post);
-    user.addNewPostActivity();
+
+    user.posts.push(post);
+
+    user.loginActivity.push({
+      type: LoginActivityType.NEWPOST,
+      timestamp: new Date(),
+    });
+
+    await persist.saveUsersData();
 
     res.status(200).json({
       message: `Successfully created post for user ${username}, post ID: ${currentPostId}`,
@@ -43,7 +50,7 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
   try {
     const tempPass = req.cookies.tempPass;
     const requestingUsername = loggedInUsers.get(tempPass).username;
-    const requestedUser = persist.findUserByUsername(req.params.username);
+    const requestedUser = persist.usersData[req.params.username];
     const posts = requestedUser.posts;
     const postId = parseInt(req.params.postid);
 

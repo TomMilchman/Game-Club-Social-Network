@@ -22,16 +22,16 @@ router.get("/loginactivity", (req, res) => {
   try {
     const allActivities: UserActivity[] = [];
 
-    persist.usersData.forEach((user) => {
+    for (const [username, user] of Object.entries(persist.usersData)) {
       user.loginActivity.forEach((activity) => {
         const userActivity: UserActivity = {
-          username: user.username,
+          username,
           type: activity.type,
           timestamp: activity.timestamp,
         };
         allActivities.push(userActivity);
       });
-    });
+    }
 
     res.status(200).json({ loginActivity: allActivities });
   } catch (error) {
@@ -46,36 +46,39 @@ router.delete("/deleteuser/:username", async (req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
 
-    if (
-      persist.findUserByUsername(loggedInUsers.get(tempPass).username).isAdmin
-    ) {
+    if (persist.usersData[loggedInUsers.get(tempPass).username].isAdmin) {
       const usernameToDelete: string = req.params.username;
 
-      const userToDelete = persist.findUserByUsername(usernameToDelete);
+      const userToDelete = persist.usersData[usernameToDelete];
 
       if (userToDelete !== undefined) {
-        const index = persist.usersData.indexOf(userToDelete);
-        persist.usersData.splice(index, 1);
+        // Remove the user from userDataMap
+        delete persist.usersData[usernameToDelete];
 
-        for (const [tempPass, value] of loggedInUsers) {
+        // Remove the user from loggedInUsers if they are logged in
+        for (const [tempPass, value] of loggedInUsers.entries()) {
           if (value.username === usernameToDelete) {
             loggedInUsers.delete(tempPass);
             break;
           }
         }
 
-        for (const user of persist.usersData) {
-          for (const [index, follower] of user.followersUsernames.entries()) {
-            if (follower === usernameToDelete) {
-              user.followersUsernames.splice(index, 1);
-              break;
-            }
+        // Remove the user from other users' followers and followed lists
+        for (const username of Object.keys(persist.usersData)) {
+          const user = persist.usersData[username];
+
+          // Remove from followers
+          const followerIndex =
+            user.followersUsernames.indexOf(usernameToDelete);
+          if (followerIndex !== -1) {
+            user.followersUsernames.splice(followerIndex, 1);
           }
-          for (const [index, following] of user.followedUsernames.entries()) {
-            if (following === usernameToDelete) {
-              user.followedUsernames.splice(index, 1);
-              break;
-            }
+
+          // Remove from followed
+          const followingIndex =
+            user.followedUsernames.indexOf(usernameToDelete);
+          if (followingIndex !== -1) {
+            user.followedUsernames.splice(followingIndex, 1);
           }
         }
 
@@ -104,9 +107,7 @@ router.delete("/deleteuser/:username", async (req, res) => {
 const enableDisableFeature = (req, res, isEnable: boolean, type: string) => {
   const tempPass = req.cookies.tempPass;
 
-  if (
-    persist.findUserByUsername(loggedInUsers.get(tempPass).username).isAdmin
-  ) {
+  if (persist.usersData[loggedInUsers.get(tempPass).username].isAdmin) {
     switch (type) {
       case "gamingtrivia":
         featureFlags.enableGamingTrivia = isEnable;

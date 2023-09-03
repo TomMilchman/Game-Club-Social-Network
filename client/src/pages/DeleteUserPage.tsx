@@ -28,34 +28,28 @@ export default function DeleteUserPage() {
   }, []);
 
   const deleteUser = async (usernameToDelete: string) => {
-    const confirmation = window.confirm(
-      `Are you sure you want to delete the user ${usernameToDelete}?`
-    );
-
-    if (confirmation) {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/admin/deleteuser/${usernameToDelete}`,
-          {
-            method: "DELETE",
-            credentials: "include",
-          }
-        );
-
-        const responseData = await response.json();
-        if (response.ok) {
-          const updatedUsernames = usernames.filter(
-            (username) => username !== usernameToDelete
-          );
-          setUsernames(updatedUsernames);
-          console.log(responseData.message);
-          alert(responseData.message);
-        } else {
-          console.log(responseData.message);
+    try {
+      const response = await fetch(
+        `http://localhost:3000/admin/deleteuser/${usernameToDelete}`,
+        {
+          method: "DELETE",
+          credentials: "include",
         }
-      } catch (error) {
-        console.error("Error:", error);
+      );
+
+      const responseData = await response.json();
+      if (response.ok) {
+        const updatedUsernames = usernames.filter(
+          (username) => username !== usernameToDelete
+        );
+        setUsernames(updatedUsernames);
+        console.log(responseData.message);
+        alert(responseData.message);
+      } else {
+        console.log(responseData.message);
       }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 

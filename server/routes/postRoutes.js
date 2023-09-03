@@ -41,49 +41,61 @@ var persist_1 = require("../persist");
 var router = express.Router();
 var server_1 = require("../server");
 var Post_1 = require("../Post");
+var User_1 = require("../User");
 //User creates their own post
 router.route("/createpost").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var title, content, tempPass, maxAge, username, user, currentPostId, timestamp, post;
+    var title, content, tempPass, username, user, currentPostId, timestamp, post, error_1;
     return __generator(this, function (_a) {
-        title = req.body.title;
-        content = req.body.content;
-        if (content.length > 300 || title.length > 50) {
-            res.status(400).json({ message: "Post content or title are too long" });
-            return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                title = req.body.title;
+                content = req.body.content;
+                if (content.length > 300 || title.length > 50) {
+                    res.status(400).json({ message: "Post content or title are too long" });
+                    return [2 /*return*/];
+                }
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                tempPass = req.cookies.tempPass;
+                username = server_1.loggedInUsers.get(tempPass).username;
+                user = persist_1.default.usersData[username];
+                currentPostId = user.currentPostId;
+                timestamp = new Date();
+                post = new Post_1.default(currentPostId, title, content, timestamp);
+                user.currentPostId++;
+                user.posts.push(post);
+                user.loginActivity.push({
+                    type: User_1.LoginActivityType.NEWPOST,
+                    timestamp: new Date(),
+                });
+                return [4 /*yield*/, persist_1.default.saveUsersData()];
+            case 2:
+                _a.sent();
+                res.status(200).json({
+                    message: "Successfully created post for user ".concat(username, ", post ID: ").concat(currentPostId),
+                });
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _a.sent();
+                res
+                    .status(500)
+                    .json({ message: "Failed to create post: ".concat(error_1.message) });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
-        try {
-            tempPass = req.cookies.tempPass;
-            maxAge = req.cookies.timeToLive;
-            username = server_1.loggedInUsers.get(tempPass).username;
-            user = persist_1.default.findUserByUsername(username);
-            currentPostId = user.currentPostId;
-            timestamp = new Date();
-            post = new Post_1.default(currentPostId, title, content, timestamp);
-            user.currentPostId++;
-            user.addPost(post);
-            user.addNewPostActivity();
-            res.status(200).json({
-                message: "Successfully created post for user ".concat(username, ", post ID: ").concat(currentPostId),
-            });
-        }
-        catch (error) {
-            res
-                .status(500)
-                .json({ message: "Failed to create post: ".concat(error.message) });
-        }
-        return [2 /*return*/];
     });
 }); });
 function handleLikeUnlike(req, res, isLikeOperation) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, requestingUsername_1, requestedUser, posts, postId_1, post, error_1;
+        var tempPass, requestingUsername_1, requestedUser, posts, postId_1, post, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
                     tempPass = req.cookies.tempPass;
                     requestingUsername_1 = server_1.loggedInUsers.get(tempPass).username;
-                    requestedUser = persist_1.default.findUserByUsername(req.params.username);
+                    requestedUser = persist_1.default.usersData[req.params.username];
                     posts = requestedUser.posts;
                     postId_1 = parseInt(req.params.postid);
                     if (isNaN(postId_1)) {
@@ -110,9 +122,9 @@ function handleLikeUnlike(req, res, isLikeOperation) {
                     _a.label = 3;
                 case 3: return [3 /*break*/, 5];
                 case 4:
-                    error_1 = _a.sent();
+                    error_2 = _a.sent();
                     res.status(500).json({
-                        message: "Error ".concat(isLikeOperation ? "liking" : "unliking", " post: ").concat(error_1.message),
+                        message: "Error ".concat(isLikeOperation ? "liking" : "unliking", " post: ").concat(error_2.message),
                     });
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];

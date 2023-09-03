@@ -39,58 +39,6 @@ class User {
     this.currentPostId = currentPostId;
     this.loginActivity = loginActivity;
   }
-
-  addPost(post: Post) {
-    this.posts.push(post);
-  }
-
-  deletePostById(postId: number) {
-    this.posts.filter((post) => post.postId != postId);
-  }
-
-  addFollower(usernameToAdd: string) {
-    this.followersUsernames.push(usernameToAdd);
-  }
-
-  removeFollower(userToRemove: string) {
-    this.followersUsernames = this.followersUsernames.filter(
-      (follower) => follower !== userToRemove
-    );
-  }
-
-  addFollowing(usernameToAdd: string) {
-    this.followedUsernames.push(usernameToAdd);
-  }
-
-  removeFollowing(usernameToRemove: string) {
-    this.followedUsernames = this.followedUsernames.filter(
-      (following) => following !== usernameToRemove
-    );
-  }
-
-  async addLoginActivity() {
-    this.loginActivity.push({
-      type: LoginActivityType.LOGIN,
-      timestamp: new Date(),
-    });
-    await persist.saveUsersData();
-  }
-
-  async addLogoutActivity() {
-    this.loginActivity.push({
-      type: LoginActivityType.LOGOUT,
-      timestamp: new Date(),
-    });
-    await persist.saveUsersData();
-  }
-
-  async addNewPostActivity() {
-    this.loginActivity.push({
-      type: LoginActivityType.NEWPOST,
-      timestamp: new Date(),
-    });
-    await persist.saveUsersData();
-  }
 }
 
 export { User, LoginActivityType };

@@ -14,7 +14,7 @@ router.get("/", function (req, res) {
         var numOfFollowersEnabled = false;
         var tempPass = req.cookies.tempPass;
         var username = server_1.loggedInUsers.get(tempPass).username;
-        var user = persist_1.default.findUserByUsername(username);
+        var user = persist_1.default.usersData[username];
         if (user.isAdmin === true) {
             isAdmin = true;
         }

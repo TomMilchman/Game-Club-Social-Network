@@ -82,11 +82,11 @@ router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, f
     return __generator(this, function (_a) {
         try {
             tempPass = req.cookies.tempPass;
-            requestingUser = persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username);
+            requestingUser = persist_1.default.usersData[server_1.loggedInUsers.get(tempPass).username];
             followedUsers = requestingUser.followedUsernames;
             posts = [];
             _loop_1 = function (i) {
-                var user = persist_1.default.findUserByUsername(followedUsers[i]);
+                var user = persist_1.default.usersData[followedUsers[i]];
                 var userPostsWithUsername = user.posts.map(function (post) { return (__assign(__assign({}, post), { username: user.username })); });
                 posts.push.apply(posts, __spreadArray([], __read(userPostsWithUsername), false));
             };

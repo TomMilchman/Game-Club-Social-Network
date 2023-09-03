@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 
     const tempPass: string = req.cookies.tempPass;
     const username = loggedInUsers.get(tempPass).username;
-    const user = persist.findUserByUsername(username);
+    const user = persist.usersData[username];
     if (user.isAdmin === true) {
       isAdmin = true;
     }

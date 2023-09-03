@@ -41,6 +41,7 @@ var router = express.Router();
 var server_1 = require("../server");
 var cookieManager_1 = require("../cookieManager");
 var persist_1 = require("../persist");
+var User_1 = require("../User");
 router.put("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var tempPass, maxAge, username, user, error_1;
     return __generator(this, function (_a) {
@@ -52,8 +53,12 @@ router.put("/", function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 if (!(tempPass !== undefined)) return [3 /*break*/, 4];
                 if (!(server_1.loggedInUsers.get(tempPass) !== undefined)) return [3 /*break*/, 2];
                 username = server_1.loggedInUsers.get(tempPass).username;
-                user = persist_1.default.findUserByUsername(username);
-                return [4 /*yield*/, user.addLogoutActivity()];
+                user = persist_1.default.usersData[username];
+                user.loginActivity.push({
+                    type: User_1.LoginActivityType.LOGOUT,
+                    timestamp: new Date(),
+                });
+                return [4 /*yield*/, persist_1.default.saveUsersData()];
             case 1:
                 _a.sent();
                 cookieManager_1.default.deleteCookies(res, tempPass, maxAge);

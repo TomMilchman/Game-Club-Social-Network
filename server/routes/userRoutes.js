@@ -42,22 +42,22 @@ var router = express.Router();
 var server_1 = require("../server");
 function followOrUnfollowUser(req, res, action) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, requestingUser_1, userToSearch, isFollowing, error_1;
+        var tempPass, requestingUser_1, userToSearch_1, isFollowing, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 7, , 8]);
                     tempPass = req.cookies.tempPass;
-                    requestingUser_1 = persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username);
-                    userToSearch = persist_1.default.findUserByUsername(req.params.username);
-                    if (!(userToSearch !== undefined)) return [3 /*break*/, 5];
-                    if (!(requestingUser_1.username === userToSearch.username)) return [3 /*break*/, 1];
+                    requestingUser_1 = persist_1.default.usersData[server_1.loggedInUsers.get(tempPass).username];
+                    userToSearch_1 = persist_1.default.usersData[req.params.username];
+                    if (!(userToSearch_1 !== undefined)) return [3 /*break*/, 5];
+                    if (!(requestingUser_1.username === userToSearch_1.username)) return [3 /*break*/, 1];
                     res.status(400).json({
                         message: "You cannot follow/unfollow yourself",
                     });
                     return [3 /*break*/, 4];
                 case 1:
-                    isFollowing = userToSearch.followersUsernames.some(function (username) { return username === requestingUser_1.username; });
+                    isFollowing = userToSearch_1.followersUsernames.some(function (username) { return username === requestingUser_1.username; });
                     if (!((isFollowing && action === "follow") ||
                         (!isFollowing && action === "unfollow"))) return [3 /*break*/, 2];
                     res.status(400).json({
@@ -66,18 +66,20 @@ function followOrUnfollowUser(req, res, action) {
                     return [3 /*break*/, 4];
                 case 2:
                     if (action === "follow") {
-                        userToSearch.addFollower(requestingUser_1.username);
-                        requestingUser_1.addFollowing(userToSearch.username);
+                        userToSearch_1.followersUsernames.push(requestingUser_1.username);
+                        requestingUser_1.followedUsernames.push(userToSearch_1.username);
                     }
                     else {
-                        userToSearch.removeFollower(requestingUser_1.username);
-                        requestingUser_1.removeFollowing(userToSearch.username);
+                        userToSearch_1.followersUsernames =
+                            userToSearch_1.followersUsernames.filter(function (follower) { return follower !== requestingUser_1.username; });
+                        requestingUser_1.followedUsernames =
+                            requestingUser_1.followedUsernames.filter(function (following) { return following !== userToSearch_1.username; });
                     }
                     return [4 /*yield*/, persist_1.default.saveUsersData()];
                 case 3:
                     _a.sent();
                     res.status(200).json({
-                        message: "User ".concat(requestingUser_1.username, " is ").concat(action === "follow" ? "now following" : "no longer following", " user ").concat(userToSearch.username),
+                        message: "User ".concat(requestingUser_1.username, " is ").concat(action === "follow" ? "now following" : "no longer following", " user ").concat(userToSearch_1.username),
                     });
                     _a.label = 4;
                 case 4: return [3 /*break*/, 6];
@@ -118,8 +120,8 @@ router.route("/:username/unfollow").put(function (req, res) { return __awaiter(v
 router.route("/:username/followinfo").get(function (req, res) {
     try {
         var tempPass = req.cookies.tempPass;
-        var requestingUser_2 = persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username);
-        var userToSearch = persist_1.default.findUserByUsername(req.params.username);
+        var requestingUser_2 = persist_1.default.usersData[server_1.loggedInUsers.get(tempPass).username];
+        var userToSearch = persist_1.default.usersData[req.params.username];
         if (userToSearch !== undefined && requestingUser_2 !== undefined) {
             var isFollowing = userToSearch.followersUsernames.some(function (username) { return username === requestingUser_2.username; });
             res.status(200).json({
@@ -140,7 +142,7 @@ router.route("/:username/followinfo").get(function (req, res) {
 router.route("/:username/posts").get(function (req, res) {
     try {
         var requestedUsername = req.params.username;
-        var requestedUser = persist_1.default.findUserByUsername(requestedUsername);
+        var requestedUser = persist_1.default.usersData[requestedUsername];
         if (requestedUser !== undefined) {
             res.status(200).json({
                 posts: requestedUser.posts,
@@ -159,7 +161,7 @@ router.route("/:username/posts").get(function (req, res) {
 router.route("/following").get(function (req, res) {
     try {
         var tempPass = req.cookies.tempPass;
-        var requestingUser = persist_1.default.findUserByUsername(server_1.loggedInUsers.get(tempPass).username);
+        var requestingUser = persist_1.default.usersData[server_1.loggedInUsers.get(tempPass).username];
         var followedUsers = requestingUser.followedUsernames;
         console.log("User accessed following page: ".concat(requestingUser.username, " is following ").concat(followedUsers.length, " users"));
         res.status(200).json({
@@ -175,8 +177,9 @@ router.route("/following").get(function (req, res) {
 //Returns an array of all users' usernames registered in the system (aside from admins)
 router.route("/nonadmin").get(function (req, res) {
     try {
-        var nonAdminUsernames = persist_1.default.usersData
-            .filter(function (user) { return user.isAdmin === false; })
+        var userDataMap = persist_1.default.usersData;
+        var nonAdminUsernames = Object.values(userDataMap)
+            .filter(function (user) { return !user.isAdmin; }) // Filter out admin users
             .map(function (user) { return user.username; });
         res.status(200).json({
             usernames: nonAdminUsernames,

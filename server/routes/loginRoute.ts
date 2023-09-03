@@ -4,12 +4,12 @@ import bcrypt = require("bcrypt");
 
 import persist from "../persist";
 import cookieManager from "../cookieManager";
-import { User } from "../User";
+import { LoginActivityType, User } from "../User";
 import { loggedInUsers } from "../server";
 
 async function checkPasswordHash(username: string, password: string) {
-  const users: User[] = persist.usersData;
-  const user = users.find((u) => u.username === username);
+  const users = persist.usersData;
+  const user = users[username];
 
   if (user) {
     if (await bcrypt.compare(password, user.password)) {
@@ -37,16 +37,28 @@ router.put("/", async (req, res) => {
       const tempPass = req.cookies.tempPass;
       if (tempPass !== undefined) {
         if (loggedInUsers.get(tempPass) !== undefined) {
-          const previousUser = persist.findUserByUsername(
-            loggedInUsers.get(tempPass).username
-          );
-          await previousUser.addLogoutActivity();
+          const previousUser: User =
+            persist.usersData[loggedInUsers.get(tempPass).username];
+
+          previousUser.loginActivity.push({
+            type: LoginActivityType.LOGOUT,
+            timestamp: new Date(),
+          });
+
           console.log(`Previous user ${previousUser.username} logged out`);
           loggedInUsers.delete(tempPass);
         }
       }
       cookieManager.createNewCookies(res, maxAge, lowerCaseUsername);
-      await persist.findUserByUsername(lowerCaseUsername).addLoginActivity();
+      const user = persist.usersData[lowerCaseUsername];
+
+      user.loginActivity.push({
+        type: LoginActivityType.LOGIN,
+        timestamp: new Date(),
+      });
+
+      await persist.saveUsersData();
+
       console.log(`User ${lowerCaseUsername} login successful`);
       res.status(200).json(message);
     } else {

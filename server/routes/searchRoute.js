@@ -7,10 +7,13 @@ var persist_1 = require("../persist");
 router.get("/:username", function (req, res) {
     try {
         var inputUsername = req.params.username;
-        var usersData = persist_1.default.usersData;
+        var userDataMap = persist_1.default.usersData;
+        var usersDataArray = Object.values(userDataMap); // Convert the object to an array of users
         var trie = new trie_search_1.default("username");
-        trie.addAll(usersData);
-        var resultUsernames = trie.search(inputUsername);
+        // Populate the trie with user data
+        trie.addAll(usersDataArray);
+        // Perform a prefix search on the input username
+        var resultUsernames = trie.get(inputUsername);
         res.status(200).json(resultUsernames);
     }
     catch (error) {

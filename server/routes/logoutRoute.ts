@@ -4,6 +4,7 @@ let router = express.Router();
 import { loggedInUsers } from "../server";
 import cookieManager from "../cookieManager";
 import persist from "../persist";
+import { LoginActivityType } from "../User";
 
 router.put("/", async (req, res) => {
   try {
@@ -13,8 +14,14 @@ router.put("/", async (req, res) => {
     if (tempPass !== undefined) {
       if (loggedInUsers.get(tempPass) !== undefined) {
         const username = loggedInUsers.get(tempPass).username;
-        const user = persist.findUserByUsername(username);
-        await user.addLogoutActivity();
+        const user = persist.usersData[username];
+        user.loginActivity.push({
+          type: LoginActivityType.LOGOUT,
+          timestamp: new Date(),
+        });
+
+        await persist.saveUsersData();
+
         cookieManager.deleteCookies(res, tempPass, maxAge);
         res
           .status(200)

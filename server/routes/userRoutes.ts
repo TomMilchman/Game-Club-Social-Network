@@ -6,11 +6,10 @@ import { loggedInUsers } from "../server";
 async function followOrUnfollowUser(req, res, action) {
   try {
     const tempPass = req.cookies.tempPass;
-    const requestingUser = persist.findUserByUsername(
-      loggedInUsers.get(tempPass).username
-    );
+    const requestingUser =
+      persist.usersData[loggedInUsers.get(tempPass).username];
 
-    const userToSearch = persist.findUserByUsername(req.params.username);
+    const userToSearch = persist.usersData[req.params.username];
 
     if (userToSearch !== undefined) {
       if (requestingUser.username === userToSearch.username) {
@@ -33,11 +32,18 @@ async function followOrUnfollowUser(req, res, action) {
           });
         } else {
           if (action === "follow") {
-            userToSearch.addFollower(requestingUser.username);
-            requestingUser.addFollowing(userToSearch.username);
+            userToSearch.followersUsernames.push(requestingUser.username);
+            requestingUser.followedUsernames.push(userToSearch.username);
           } else {
-            userToSearch.removeFollower(requestingUser.username);
-            requestingUser.removeFollowing(userToSearch.username);
+            userToSearch.followersUsernames =
+              userToSearch.followersUsernames.filter(
+                (follower) => follower !== requestingUser.username
+              );
+
+            requestingUser.followedUsernames =
+              requestingUser.followedUsernames.filter(
+                (following) => following !== userToSearch.username
+              );
           }
 
           await persist.saveUsersData();
@@ -70,10 +76,9 @@ router.route("/:username/followinfo").get((req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
 
-    const requestingUser = persist.findUserByUsername(
-      loggedInUsers.get(tempPass).username
-    );
-    const userToSearch = persist.findUserByUsername(req.params.username);
+    const requestingUser =
+      persist.usersData[loggedInUsers.get(tempPass).username];
+    const userToSearch = persist.usersData[req.params.username];
 
     if (userToSearch !== undefined && requestingUser !== undefined) {
       const isFollowing = userToSearch.followersUsernames.some(
@@ -97,7 +102,7 @@ router.route("/:username/followinfo").get((req, res) => {
 router.route("/:username/posts").get((req, res) => {
   try {
     const requestedUsername = req.params.username;
-    const requestedUser = persist.findUserByUsername(requestedUsername);
+    const requestedUser = persist.usersData[requestedUsername];
 
     if (requestedUser !== undefined) {
       res.status(200).json({
@@ -117,9 +122,8 @@ router.route("/following").get((req, res) => {
   try {
     const tempPass = req.cookies.tempPass;
 
-    const requestingUser = persist.findUserByUsername(
-      loggedInUsers.get(tempPass).username
-    );
+    const requestingUser =
+      persist.usersData[loggedInUsers.get(tempPass).username];
 
     const followedUsers: string[] = requestingUser.followedUsernames;
 
@@ -139,8 +143,9 @@ router.route("/following").get((req, res) => {
 //Returns an array of all users' usernames registered in the system (aside from admins)
 router.route("/nonadmin").get((req, res) => {
   try {
-    const nonAdminUsernames = persist.usersData
-      .filter((user) => user.isAdmin === false)
+    const userDataMap = persist.usersData;
+    const nonAdminUsernames = Object.values(userDataMap)
+      .filter((user) => !user.isAdmin) // Filter out admin users
       .map((user) => user.username);
 
     res.status(200).json({
