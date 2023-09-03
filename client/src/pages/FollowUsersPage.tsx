@@ -53,22 +53,27 @@ export default function FollowUsersPage() {
         <h2>Search for users:</h2>
         <SearchBar />
         <h2>Users you follow:</h2>
-        {followedUsers.map((followedUsername: string) => (
-          <div key={`${followedUsername}-followed-user-wrapper`}>
-            <h3
-              className="followed-user"
-              onClick={() => navigate("/users/" + followedUsername)}
-              key={followedUsername}
+        <div className="followed-users-container">
+          {followedUsers.map((followedUsername: string) => (
+            <div
+              className="followed-user-wrapper"
+              key={`${followedUsername}-followed-user-wrapper`}
             >
-              {followedUsername}
-            </h3>
-            <FollowUnfollowButton
-              key={`${followedUsername}-follow-button`}
-              requestedUsername={followedUsername}
-              requestingUsername={requestingUsername}
-            />
-          </div>
-        ))}
+              <h3
+                className="followed-user"
+                onClick={() => navigate("/users/" + followedUsername)}
+                key={followedUsername}
+              >
+                {followedUsername}
+              </h3>
+              <FollowUnfollowButton
+                key={`${followedUsername}-follow-button`}
+                requestedUsername={followedUsername}
+                requestingUsername={requestingUsername}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

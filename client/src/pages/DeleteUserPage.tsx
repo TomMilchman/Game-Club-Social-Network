@@ -71,18 +71,20 @@ export default function DeleteUserPage() {
     return (
       <>
         <h1>Delete Users</h1>
-        {usernames.map((username) => (
-          <h3 key={username}>
-            <label>{username}</label>
-            <br />
-            <button
-              className="delete-user-btn"
-              onClick={() => deleteUser(username)}
-            >
-              DELETE
-            </button>
-          </h3>
-        ))}
+        <div className="delete-user-container">
+          {usernames.map((username) => (
+            <h3 key={username}>
+              <label>{username}</label>
+              <br />
+              <button
+                className="delete-user-btn"
+                onClick={() => deleteUser(username)}
+              >
+                DELETE
+              </button>
+            </h3>
+          ))}
+        </div>
       </>
     );
   }

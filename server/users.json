@@ -5,9 +5,9 @@
     "email": "fakemail@lol.com",
     "isAdmin": true,
     "followedUsernames": [
-      "mufugai",
       "hypno",
-      "dushabell"
+      "dushabell",
+      "mufugai"
     ],
     "followersUsernames": [
       "dushabell",
@@ -736,6 +736,42 @@
       {
         "type": 1,
         "timestamp": "2023-09-03T10:27:26.852Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:13:59.549Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:22:45.492Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:24:26.739Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:29:55.209Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:30:29.420Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:41:05.462Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:43:09.086Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:47:24.867Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:48:13.169Z"
       }
     ]
   },
@@ -746,7 +782,15 @@
     "isAdmin": false,
     "followedUsernames": [
       "mufugai",
-      "admin"
+      "admin",
+      "hypno2",
+      "hypno3",
+      "hypno4",
+      "hypno5",
+      "hypno6",
+      "hypno8",
+      "dushabell",
+      "hypno9"
     ],
     "followersUsernames": [
       "mufugai",
@@ -1355,6 +1399,38 @@
       {
         "type": 1,
         "timestamp": "2023-09-03T10:29:44.059Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:01:56.662Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:04:57.131Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:35:28.617Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:39:37.350Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:39:57.285Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:41:01.137Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:43:15.517Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:47:20.161Z"
       }
     ]
   },
@@ -1367,9 +1443,9 @@
       "hypno"
     ],
     "followersUsernames": [
-      "admin",
       "dushabell",
-      "hypno"
+      "hypno",
+      "admin"
     ],
     "posts": [
       {
@@ -1405,7 +1481,9 @@
     "email": "afafa@afafa",
     "isAdmin": false,
     "followedUsernames": [],
-    "followersUsernames": [],
+    "followersUsernames": [
+      "hypno"
+    ],
     "posts": [],
     "currentPostId": 0,
     "loginActivity": [
@@ -1425,7 +1503,9 @@
     "email": "afafa@afafa",
     "isAdmin": false,
     "followedUsernames": [],
-    "followersUsernames": [],
+    "followersUsernames": [
+      "hypno"
+    ],
     "posts": [],
     "currentPostId": 0,
     "loginActivity": [
@@ -1445,7 +1525,9 @@
     "email": "afafa@afafa",
     "isAdmin": false,
     "followedUsernames": [],
-    "followersUsernames": [],
+    "followersUsernames": [
+      "hypno"
+    ],
     "posts": [],
     "currentPostId": 0,
     "loginActivity": [
@@ -1470,7 +1552,8 @@
       "admin"
     ],
     "followersUsernames": [
-      "admin"
+      "admin",
+      "hypno"
     ],
     "posts": [],
     "currentPostId": 0,
@@ -1494,8 +1577,52 @@
     ]
   },
   {
+    "username": "hypno5",
+    "password": "$2b$10$BloRDOcYRM0YTBUJ1m1mieCWb1lHYoxk7HtmA6h.uCe/KrLCk0azK",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "followedUsernames": [],
+    "followersUsernames": [
+      "hypno"
+    ],
+    "posts": [],
+    "currentPostId": 0,
+    "loginActivity": [
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:22:57.124Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:22:57.950Z"
+      }
+    ]
+  },
+  {
+    "username": "hypno6",
+    "password": "$2b$10$pWZHyt8zQsYy/xw1J9jBxOm1nRF3rWaGXaOyvEgeFkxvzuNVrhW1O",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "followedUsernames": [],
+    "followersUsernames": [
+      "hypno"
+    ],
+    "posts": [],
+    "currentPostId": 0,
+    "loginActivity": [
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:23:06.437Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:23:07.466Z"
+      }
+    ]
+  },
+  {
     "username": "hypno7",
-    "password": "$2b$10$YrLBFa6cMGV6WRNPowQJaOotLQ1J0Lzu.jCo/j5R5S5ZGxa6.hENq",
+    "password": "$2b$10$wE2rmvik9UiUOShT4v8icez5eTcGdIuOcK.vfDhamG8dtfH./fkcC",
     "email": "afafa@afafa",
     "isAdmin": false,
     "followedUsernames": [],
@@ -1505,11 +1632,55 @@
     "loginActivity": [
       {
         "type": 0,
-        "timestamp": "2023-09-03T10:14:52.229Z"
+        "timestamp": "2023-09-03T11:23:26.232Z"
       },
       {
         "type": 1,
-        "timestamp": "2023-09-03T10:14:57.282Z"
+        "timestamp": "2023-09-03T11:23:27.250Z"
+      }
+    ]
+  },
+  {
+    "username": "hypno8",
+    "password": "$2b$10$FzeuoQ5R5k6oor3uhd1S/uAIOa9PS/hWMezo726UQSPAGccUY3JWO",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "followedUsernames": [],
+    "followersUsernames": [
+      "hypno"
+    ],
+    "posts": [],
+    "currentPostId": 0,
+    "loginActivity": [
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:23:41.810Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:23:42.803Z"
+      }
+    ]
+  },
+  {
+    "username": "hypno9",
+    "password": "$2b$10$LOCcJK.6hSzVJurw/uqqoO4GWLaYYH4Ix6Jj1fXgrfiGKxDo/2bA6",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "followedUsernames": [],
+    "followersUsernames": [
+      "hypno"
+    ],
+    "posts": [],
+    "currentPostId": 0,
+    "loginActivity": [
+      {
+        "type": 0,
+        "timestamp": "2023-09-03T11:39:46.766Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-03T11:39:47.974Z"
       }
     ]
   }

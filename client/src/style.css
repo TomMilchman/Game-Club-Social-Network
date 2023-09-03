@@ -36,6 +36,7 @@ body {
 
 #game-club-logo-layout {
   width: 4em;
+  margin-right: 1em;
 }
 
 h1 {
@@ -67,6 +68,10 @@ button:hover {
 }
 button:focus,
 button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+#nav-bar button,
+.active {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
@@ -107,6 +112,8 @@ form {
 #navbar button {
   flex-shrink: 1;
   width: 15vw;
+  margin-right: 0.1em;
+  margin-left: 0.1em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -229,6 +236,24 @@ form {
   background-color: #343434;
 }
 
+.followed-users-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1em;
+  margin-left: 1em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  max-width: 100%;
+}
+
+.followed-user-wrapper {
+  margin-right: 1em;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+}
+
 .followed-user {
   cursor: pointer;
 }
@@ -266,6 +291,20 @@ form {
   width: 50%;
 }
 
+.delete-user-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  margin-right: 1em;
+  margin-left: 1em;
+  max-width: 100%;
+}
+
 .delete-user-btn {
   background-color: rgb(155, 0, 0);
+  margin-right: 1em;
+  margin-left: 1em;
 }
