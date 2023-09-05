@@ -42,7 +42,7 @@ var router = express.Router();
 var server_1 = require("../server");
 function followOrUnfollowUser(req, res, action) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, requestingUser_1, userToSearch_1, isFollowing, error_1;
+        var tempPass, requestingUser_1, userToSearch_1, isFollowing, message, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -78,8 +78,10 @@ function followOrUnfollowUser(req, res, action) {
                     return [4 /*yield*/, persist_1.default.saveUsersData()];
                 case 3:
                     _a.sent();
+                    message = "User ".concat(requestingUser_1.username, " is ").concat(action === "follow" ? "now following" : "no longer following", " user ").concat(userToSearch_1.username);
+                    console.log(message);
                     res.status(200).json({
-                        message: "User ".concat(requestingUser_1.username, " is ").concat(action === "follow" ? "now following" : "no longer following", " user ").concat(userToSearch_1.username),
+                        message: message,
                     });
                     _a.label = 4;
                 case 4: return [3 /*break*/, 6];

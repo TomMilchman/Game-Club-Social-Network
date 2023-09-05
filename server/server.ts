@@ -69,10 +69,7 @@ app.listen(PORT, async () => {
   try {
     console.log(`Server is running on port ${PORT}`);
     persist.usersData = await persist.loadUsersData();
-    console.log(
-      "User data loaded from disk:",
-      JSON.stringify(persist.usersData, null, 2)
-    );
+    console.log("User data loaded from disk");
 
     // Set up a setInterval function to periodically check for expired tokens
     setInterval(() => {
@@ -89,8 +86,10 @@ app.listen(PORT, async () => {
       }
     }, 60000);
   } catch (error) {
-    console.error("Error loading user data:", error.message);
+    // Close the server on error
+    console.error("Closing server due to data loading error:", error.message);
+    process.exit(1);
   }
 });
 
-export { app, PORT, loggedInUsers };
+export { PORT, loggedInUsers };

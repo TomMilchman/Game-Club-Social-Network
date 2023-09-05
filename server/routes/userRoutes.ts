@@ -48,10 +48,13 @@ async function followOrUnfollowUser(req, res, action) {
 
           await persist.saveUsersData();
 
+          const message = `User ${requestingUser.username} is ${
+            action === "follow" ? "now following" : "no longer following"
+          } user ${userToSearch.username}`;
+
+          console.log(message);
           res.status(200).json({
-            message: `User ${requestingUser.username} is ${
-              action === "follow" ? "now following" : "no longer following"
-            } user ${userToSearch.username}`,
+            message: message,
           });
         }
       }

@@ -121,7 +121,7 @@ router.delete("/deleteuser/:username", function (req, res) { return __awaiter(vo
                 usernameToDelete = req.params.username;
                 userToDelete = persist_1.default.usersData[usernameToDelete];
                 if (!(userToDelete !== undefined)) return [3 /*break*/, 2];
-                // Remove the user from userDataMap
+                // Remove the user from usersData
                 delete persist_1.default.usersData[usernameToDelete];
                 try {
                     // Remove the user from loggedInUsers if they are logged in

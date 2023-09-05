@@ -13,7 +13,8 @@ router.get("/:username", function (req, res) {
         // Populate the trie with user data
         trie.addAll(usersDataArray);
         // Perform a prefix search on the input username
-        var resultUsernames = trie.get(inputUsername);
+        var resultUsers = trie.get(inputUsername);
+        var resultUsernames = resultUsers.map(function (user) { return user.username; });
         res.status(200).json(resultUsernames);
     }
     catch (error) {

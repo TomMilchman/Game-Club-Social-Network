@@ -44,7 +44,7 @@ var Post_1 = require("../Post");
 var User_1 = require("../User");
 //User creates their own post
 router.route("/createpost").post(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var title, content, tempPass, username, user, currentPostId, timestamp, post, error_1;
+    var title, content, tempPass, username, user, currentPostId, timestamp, post, message, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -72,8 +72,10 @@ router.route("/createpost").post(function (req, res) { return __awaiter(void 0, 
                 return [4 /*yield*/, persist_1.default.saveUsersData()];
             case 2:
                 _a.sent();
+                message = "Successfully created post for user ".concat(username, ", post ID: ").concat(currentPostId);
+                console.log(message);
                 res.status(200).json({
-                    message: "Successfully created post for user ".concat(username, ", post ID: ").concat(currentPostId),
+                    message: message,
                 });
                 return [3 /*break*/, 4];
             case 3:
@@ -88,7 +90,7 @@ router.route("/createpost").post(function (req, res) { return __awaiter(void 0, 
 }); });
 function handleLikeUnlike(req, res, isLikeOperation) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, requestingUsername_1, requestedUser, posts, postId_1, post, error_2;
+        var tempPass, requestingUsername_1, requestedUser, posts, postId, post, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -97,12 +99,12 @@ function handleLikeUnlike(req, res, isLikeOperation) {
                     requestingUsername_1 = server_1.loggedInUsers.get(tempPass).username;
                     requestedUser = persist_1.default.usersData[req.params.username];
                     posts = requestedUser.posts;
-                    postId_1 = parseInt(req.params.postid);
-                    if (isNaN(postId_1)) {
+                    postId = parseInt(req.params.postid);
+                    if (isNaN(postId)) {
                         res.status(400).json({ message: "Invalid post ID" });
                         return [2 /*return*/];
                     }
-                    post = posts.find(function (post) { return post.postId === postId_1; });
+                    post = posts[postId];
                     if (!(post !== undefined)) return [3 /*break*/, 2];
                     isLikeOperation
                         ? post.usernamesWhoLiked.push(requestingUsername_1)
@@ -111,13 +113,13 @@ function handleLikeUnlike(req, res, isLikeOperation) {
                 case 1:
                     _a.sent();
                     res.status(200).json({
-                        message: "User ".concat(requestingUsername_1, " ").concat(isLikeOperation ? "liked" : "unliked", " user ").concat(req.params.username, "'s post number ").concat(postId_1),
+                        message: "User ".concat(requestingUsername_1, " ").concat(isLikeOperation ? "liked" : "unliked", " user ").concat(req.params.username, "'s post number ").concat(postId),
                         updatedLikeNum: post.usernamesWhoLiked.length,
                     });
                     return [3 /*break*/, 3];
                 case 2:
                     res.status(404).json({
-                        message: "Post with ID ".concat(postId_1, " not found for user ").concat(req.params.username),
+                        message: "Post with ID ".concat(postId, " not found for user ").concat(req.params.username),
                     });
                     _a.label = 3;
                 case 3: return [3 /*break*/, 5];

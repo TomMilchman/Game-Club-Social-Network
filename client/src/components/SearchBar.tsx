@@ -54,13 +54,13 @@ export default function SearchBar() {
           <>
             <h2>Search Results:</h2>
             {searchResults
-              .map((user: any) => (
+              .map((username: string) => (
                 <h3
-                  onClick={() => setQuery(user.username)}
+                  onClick={() => setQuery(username)}
                   className="search-result"
-                  key={`${user.username}-search-result`}
+                  key={`${username}-search-result`}
                 >
-                  {user.username}
+                  {username}
                 </h3>
               ))
               .slice(0, 10)}

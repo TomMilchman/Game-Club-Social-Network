@@ -8,7 +8,8 @@
       "hypno"
     ],
     "followersUsernames": [
-      "hypno"
+      "hypno",
+      "oogia123"
     ],
     "posts": [
       {
@@ -17,20 +18,43 @@
         "content": "So excited",
         "timestamp": "2023-09-03T22:26:09.489Z",
         "usernamesWhoLiked": [
-          "hypno2"
+          "hypno2",
+          "hypno",
+          "oogia123"
         ]
       },
       {
         "postId": 1,
         "title": "Oh also excited for Persona 3 Reload",
-        "content": "The graphics are look so sharp!",
+        "content": "The graphics are looking so sharp!",
         "timestamp": "2023-09-03T22:28:47.017Z",
         "usernamesWhoLiked": [
-          "hypno2"
+          "hypno2",
+          "hypno",
+          "oogia123"
+        ]
+      },
+      {
+        "postId": 2,
+        "title": "test 2",
+        "content": "test 2",
+        "timestamp": "2023-09-04T09:00:14.787Z",
+        "usernamesWhoLiked": [
+          "hypno",
+          "oogia123"
+        ]
+      },
+      {
+        "postId": 3,
+        "title": "Armored Core 6 is the sleeper best game this year",
+        "content": "Like seriously, you guys have no idea how good this game is...",
+        "timestamp": "2023-09-05T12:11:18.599Z",
+        "usernamesWhoLiked": [
+          "admin"
         ]
       }
     ],
-    "currentPostId": 2,
+    "currentPostId": 4,
     "loginActivity": [
       {
         "type": 0,
@@ -95,6 +119,214 @@
       {
         "type": 1,
         "timestamp": "2023-09-03T22:35:19.839Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T08:56:59.369Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T08:57:13.552Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T08:59:05.660Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T08:59:14.014Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T08:59:41.394Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-09-04T09:00:14.787Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T09:19:24.198Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T10:57:55.012Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T11:01:15.924Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T11:02:42.945Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T11:02:51.836Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T11:17:08.746Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T11:17:30.088Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T11:27:03.468Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T11:27:06.515Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T19:25:23.678Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T19:28:05.657Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:26:08.704Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:30:58.905Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-05T10:31:01.802Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:31:06.953Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-05T10:31:28.806Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:39:56.941Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:40:46.519Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:41:10.822Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:54:03.168Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:56:18.913Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-05T10:56:27.499Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:57:46.931Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:58:37.216Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T10:59:11.622Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:04:48.782Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-05T11:05:13.119Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:05:44.329Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:20:26.398Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:22:27.695Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:32:21.712Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:39:53.067Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:41:22.195Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:52:51.732Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:56:50.744Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T11:58:12.012Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T12:03:53.016Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T12:09:29.818Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-09-05T12:11:18.599Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-05T12:11:49.998Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T12:19:03.377Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T12:23:34.998Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T12:24:07.868Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T12:24:48.288Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T12:29:26.692Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T12:31:46.844Z"
       }
     ]
   },
@@ -104,10 +336,12 @@
     "email": "afafa@afafa",
     "isAdmin": false,
     "followedUsernames": [
-      "admin"
+      "admin",
+      "oogia123"
     ],
     "followersUsernames": [
-      "admin"
+      "admin",
+      "oogia123"
     ],
     "posts": [
       {
@@ -119,9 +353,27 @@
           "hypno",
           "admin"
         ]
+      },
+      {
+        "postId": 1,
+        "title": "I just beat a noob in Street Fighter 6!",
+        "content": "He had it coming for sure!",
+        "timestamp": "2023-09-04T08:58:23.986Z",
+        "usernamesWhoLiked": [
+          "hypno"
+        ]
+      },
+      {
+        "postId": 2,
+        "title": "test",
+        "content": "test",
+        "timestamp": "2023-09-04T08:58:36.467Z",
+        "usernamesWhoLiked": [
+          "admin"
+        ]
       }
     ],
-    "currentPostId": 1,
+    "currentPostId": 3,
     "loginActivity": [
       {
         "type": 0,
@@ -150,6 +402,126 @@
       {
         "type": 1,
         "timestamp": "2023-09-03T22:32:41.096Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T08:52:10.032Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T08:53:23.345Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T08:54:28.314Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T08:54:49.683Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T08:55:53.630Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T08:56:19.351Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T08:57:13.553Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-09-04T08:58:23.986Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-09-04T08:58:36.467Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T08:58:58.323Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T10:31:09.751Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T10:32:41.477Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T11:36:08.174Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T11:37:16.705Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T11:38:24.441Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T11:38:28.597Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T19:28:11.293Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T19:28:52.349Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-05T08:23:18.935Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-05T08:23:40.251Z"
+      }
+    ]
+  },
+  "oogia123": {
+    "username": "oogia123",
+    "password": "$2b$10$fW2.AE2MIyz53FDNaVq.vei75JXoKNN6yEgLckjYKp/vSyF1A.1.a",
+    "email": "afafa@afafa",
+    "isAdmin": false,
+    "followedUsernames": [
+      "admin",
+      "hypno"
+    ],
+    "followersUsernames": [
+      "hypno"
+    ],
+    "posts": [
+      {
+        "postId": 0,
+        "title": "Yaniv is the best tech support",
+        "content": "fr fr",
+        "timestamp": "2023-09-04T19:14:43.925Z",
+        "usernamesWhoLiked": [
+          "oogia123",
+          "hypno"
+        ]
+      }
+    ],
+    "currentPostId": 1,
+    "loginActivity": [
+      {
+        "type": 0,
+        "timestamp": "2023-09-04T19:14:15.985Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-09-04T19:14:43.925Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-04T19:25:18.313Z"
       }
     ]
   }

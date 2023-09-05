@@ -63,13 +63,12 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loggedInUsers = exports.PORT = exports.app = void 0;
+exports.loggedInUsers = exports.PORT = void 0;
 var express = require("express");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var cors = require("cors");
 var app = express();
-exports.app = app;
 var PORT = 3000;
 exports.PORT = PORT;
 var persist_1 = require("./persist");
@@ -131,7 +130,7 @@ app.listen(PORT, function () { return __awaiter(void 0, void 0, void 0, function
                 return [4 /*yield*/, persist_1.default.loadUsersData()];
             case 1:
                 _a.usersData = _b.sent();
-                console.log("User data loaded from disk:", JSON.stringify(persist_1.default.usersData, null, 2));
+                console.log("User data loaded from disk");
                 // Set up a setInterval function to periodically check for expired tokens
                 setInterval(function () {
                     var e_1, _a;
@@ -158,7 +157,9 @@ app.listen(PORT, function () { return __awaiter(void 0, void 0, void 0, function
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _b.sent();
-                console.error("Error loading user data:", error_1.message);
+                // Close the server on error
+                console.error("Closing server due to data loading error:", error_1.message);
+                process.exit(1);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

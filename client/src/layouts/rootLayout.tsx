@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 export default function RootLayout() {
   const navigate = useNavigate();
-  const [activeButton, setActiveButton] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
@@ -83,47 +82,22 @@ export default function RootLayout() {
         <img id="game-club-logo-layout" src={GameClubLogo} />
         <br />
         <Link to="/">
-          <button
-            onClick={() => setActiveButton("feed")}
-            className={activeButton === "feed" ? "active" : ""}
-          >
-            {username.toUpperCase()}'S FEED
-          </button>
+          <button>{username.toUpperCase()}'S FEED</button>
         </Link>
         <Link to="/following">
-          <button
-            onClick={() => setActiveButton("following")}
-            className={activeButton === "following" ? "active" : ""}
-          >
-            SEARCH & FOLLOW
-          </button>
+          <button>SEARCH & FOLLOW</button>
         </Link>
         <Link to="/upcoming-releases">
-          <button
-            onClick={() => setActiveButton("upcoming-releases")}
-            className={activeButton === "upcoming-releases" ? "active" : ""}
-            disabled={!upcomingReleasesPrivileges}
-          >
+          <button disabled={!upcomingReleasesPrivileges}>
             UPCOMING RELEASES
           </button>
         </Link>
         <Link to="/gaming-trivia">
-          <button
-            onClick={() => setActiveButton("gaming-trivia")}
-            className={activeButton === "gaming-trivia" ? "active" : ""}
-            disabled={!gamingTriviaPrivileges}
-          >
-            GAMING TRIVIA
-          </button>
+          <button disabled={!gamingTriviaPrivileges}>GAMING TRIVIA</button>
         </Link>
         {isAdmin && (
           <Link to="/admin">
-            <button
-              onClick={() => setActiveButton("admin-page")}
-              className={activeButton === "admin-page" ? "active" : ""}
-            >
-              ADMIN PAGE
-            </button>
+            <button>ADMIN PAGE</button>
           </Link>
         )}
         <button onClick={handleLogout}>LOGOUT</button>

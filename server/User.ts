@@ -1,5 +1,4 @@
 import Post from "./Post";
-import persist from "./persist";
 
 enum LoginActivityType {
   LOGIN,

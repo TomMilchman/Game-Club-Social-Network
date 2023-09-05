@@ -52,7 +52,7 @@ function loadData(filePath) {
                     return [2 /*return*/, userObjects];
                 case 2:
                     error_1 = _a.sent();
-                    console.error("Error loading data:", error_1.message);
+                    console.error("Error loading data:", error_1);
                     throw error_1;
                 case 3: return [2 /*return*/];
             }
@@ -73,7 +73,7 @@ function saveData(filePath) {
                     return [3 /*break*/, 3];
                 case 2:
                     error_2 = _a.sent();
-                    console.error("Error saving data:", error_2.message);
+                    console.error("Error saving data:", error_2);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }

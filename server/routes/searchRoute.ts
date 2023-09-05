@@ -16,7 +16,9 @@ router.get("/:username", (req, res) => {
     trie.addAll(usersDataArray);
 
     // Perform a prefix search on the input username
-    const resultUsernames = trie.get(inputUsername);
+    const resultUsers = trie.get(inputUsername);
+    const resultUsernames = resultUsers.map((user: User) => user.username);
+
     res.status(200).json(resultUsernames);
   } catch (error) {
     res.status(500).json("An error occured while searching: " + error.message);

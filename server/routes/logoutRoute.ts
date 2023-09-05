@@ -15,6 +15,7 @@ router.put("/", async (req, res) => {
       if (loggedInUsers.get(tempPass) !== undefined) {
         const username = loggedInUsers.get(tempPass).username;
         const user = persist.usersData[username];
+
         user.loginActivity.push({
           type: LoginActivityType.LOGOUT,
           timestamp: new Date(),

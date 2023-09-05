@@ -10,7 +10,7 @@ async function loadData(filePath: string) {
 
     return userObjects;
   } catch (error) {
-    console.error("Error loading data:", error.message);
+    console.error("Error loading data:", error);
     throw error;
   }
 }
@@ -20,7 +20,7 @@ async function saveData(filePath: string) {
     await fs.writeFile(filePath, JSON.stringify(usersData, null, 2), "utf-8");
     console.log("Data saved successfully");
   } catch (error) {
-    console.error("Error saving data:", error.message);
+    console.error("Error saving data:", error);
   }
 }
 

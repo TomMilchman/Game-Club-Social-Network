@@ -36,8 +36,10 @@ router.route("/createpost").post(async (req, res) => {
 
     await persist.saveUsersData();
 
+    const message = `Successfully created post for user ${username}, post ID: ${currentPostId}`;
+    console.log(message);
     res.status(200).json({
-      message: `Successfully created post for user ${username}, post ID: ${currentPostId}`,
+      message: message,
     });
   } catch (error) {
     res
@@ -59,7 +61,7 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
       return;
     }
 
-    const post = posts.find((post) => post.postId === postId);
+    const post = posts[postId];
 
     if (post !== undefined) {
       isLikeOperation
