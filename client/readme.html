@@ -76,21 +76,21 @@
             <ul>
                 <li><h3>/admin/loginactivity (GET)</h3></li>
                 <li><h3>/admin/deleteuser/:username (DELETE)</h3></li>
-                <li><h3>/admin/users/:username (DELETE)</h3></li>
-                <li><h3>/admin/gamingtrivia/enable (PUT)</h3></li>
-                <li><h3>/admin/gamingtrivia/disable (PUT)</h3></li>
-                <li><h3>/admin/upcomingreleases/enable (PUT)</h3></li>
-                <li><h3>/admin/upcomingreleases/disable (PUT)</h3></li>
-                <li><h3>/admin/unlike/enable (PUT)</h3></li>
-                <li><h3>/admin/unlike/disable (PUT)</h3></li>
-                <li><h3>/admin/numoffollowers/enable (PUT)</h3></li>
-                <li><h3>/admin/numoffollowers/disable (PUT)</h3></li>
+                <li><h3>/admin/enable/gamingtrivia (PUT)</h3></li>
+                <li><h3>/admin/disable/gamingtrivia (PUT)</h3></li>
+                <li><h3>/admin/enable/upcomingreleases (PUT)</h3></li>
+                <li><h3>/admin/disable/upcomingreleases (PUT)</h3></li>
+                <li><h3>/admin/enable/unlike (PUT)</h3></li>
+                <li><h3>/admin/disable/unlike (PUT)</h3></li>
+                <li><h3>/admin/enable/numoffollowers (PUT)</h3></li>
+                <li><h3>/admin/disable/numoffollowers (PUT)</h3></li>
             </ul>
     </ul>
     <h2>Additional important info:</h2>
     <h3>
       How to run the website: Run the server with "node server.js" and run the client with 
-      "npm start dev". Then go to localhost:5173 in your browser.
-      The admin account is: username: admin, password: genericpass123.
+      "npm start dev". Then go to http://localhost:5173 in your browser. To run the tests, run
+      "node test.js".
+    </h3>
   </body>
 </html>

@@ -18,16 +18,16 @@ router.get("/", (req, res) => {
     if (user.isAdmin === true) {
       isAdmin = true;
     }
-    if (adminRoutes.featureFlags.enableUnlike === true) {
+    if (adminRoutes.featureFlags.unlikeEnabled === true) {
       unlikeEnabled = true;
     }
-    if (adminRoutes.featureFlags.enableNumberOfFollowers === true) {
+    if (adminRoutes.featureFlags.numoffollowersEnabled === true) {
       numOfFollowersEnabled = true;
     }
-    if (adminRoutes.featureFlags.enableGamingTrivia === true) {
+    if (adminRoutes.featureFlags.gamingtriviaEnabled === true) {
       gamingTriviaEnabled = true;
     }
-    if (adminRoutes.featureFlags.enableUpcomingReleases === true) {
+    if (adminRoutes.featureFlags.upcomingreleasesEnabled === true) {
       upcomingReleasesEnabled = true;
     }
 

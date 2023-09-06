@@ -18,16 +18,16 @@ router.get("/", function (req, res) {
         if (user.isAdmin === true) {
             isAdmin = true;
         }
-        if (adminRoutes_1.default.featureFlags.enableUnlike === true) {
+        if (adminRoutes_1.default.featureFlags.unlikeEnabled === true) {
             unlikeEnabled = true;
         }
-        if (adminRoutes_1.default.featureFlags.enableNumberOfFollowers === true) {
+        if (adminRoutes_1.default.featureFlags.numoffollowersEnabled === true) {
             numOfFollowersEnabled = true;
         }
-        if (adminRoutes_1.default.featureFlags.enableGamingTrivia === true) {
+        if (adminRoutes_1.default.featureFlags.gamingtriviaEnabled === true) {
             gamingTriviaEnabled = true;
         }
-        if (adminRoutes_1.default.featureFlags.enableUpcomingReleases === true) {
+        if (adminRoutes_1.default.featureFlags.upcomingreleasesEnabled === true) {
             upcomingReleasesEnabled = true;
         }
         res.status(200).json({

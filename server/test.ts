@@ -1,5 +1,6 @@
 import { PORT, loggedInUsers } from "./server";
-import Post from "./Post";
+import adminRoutes from "./routes/adminRoutes";
+import persist from "./persist";
 
 const BASE_URL = `http://localhost:${PORT}`;
 
@@ -20,7 +21,7 @@ const getCookies = (response: Response) => {
   }
 };
 
-const signup = async (userData: {
+const signupTest = async (userData: {
   username: string;
   password: string;
   email: string;
@@ -45,6 +46,9 @@ const signup = async (userData: {
         numberOfTestsPassed++;
       } else {
         console.log(`Signup test FAILED: ${responseData.message}`);
+        console.log(
+          "If the test failed because there is already a user called test123, delete the user from usersData.json and try again"
+        );
       }
     }
   } catch (error) {
@@ -54,7 +58,7 @@ const signup = async (userData: {
   }
 };
 
-const createPost = async (postData: { title: string; content: string }) => {
+const createPostTest = async (postData: { title: string; content: string }) => {
   try {
     const response = await fetch(`${BASE_URL}/posts/createpost`, {
       method: "POST",
@@ -81,7 +85,7 @@ const createPost = async (postData: { title: string; content: string }) => {
   }
 };
 
-const userPosts = async (username: string) => {
+const userPostsTest = async (username: string) => {
   try {
     const response = await fetch(`${BASE_URL}/users/${username}/posts`, {
       method: "GET",
@@ -95,18 +99,11 @@ const userPosts = async (username: string) => {
     const responseData = await response.json();
 
     if (response.ok) {
-      let posts: Post[] = responseData.posts;
+      let posts = responseData.posts;
 
       if (posts.length === 0) {
         console.log(`${username} has no posts`);
       } else {
-        posts.map((post: Post) => {
-          return {
-            title: post.title,
-            content: post.content,
-          };
-        });
-
         console.log(`${username}'s posts:`);
         for (let i = 0; i < posts.length; i++) {
           console.log(
@@ -127,7 +124,7 @@ const userPosts = async (username: string) => {
   }
 };
 
-const followUnfollowUser = async (username: string, action: string) => {
+const followUnfollowUserTest = async (username: string, action: string) => {
   try {
     const response = await fetch(`${BASE_URL}/users/${username}/${action}`, {
       method: "PUT",
@@ -156,7 +153,7 @@ const followUnfollowUser = async (username: string, action: string) => {
   }
 };
 
-const followInfo = async (username: string) => {
+const followInfoTest = async (username: string) => {
   try {
     const response = await fetch(`${BASE_URL}/users/${username}/followinfo`, {
       method: "GET",
@@ -183,7 +180,58 @@ const followInfo = async (username: string) => {
   }
 };
 
-const logout = async () => {
+const privilegesTest = async (expectedPriveleges: {
+  isAdmin: boolean;
+  gamingTriviaEnabled: boolean;
+  upcomingReleasesEnabled: boolean;
+  unlikeEnabled: boolean;
+  numOfFollowersEnabled: boolean;
+}) => {
+  try {
+    const response = await fetch(`${BASE_URL}/privileges`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        cookie: `tempPass=${tempPass}; timeToLive=${maxAge}`,
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      console.log(
+        `Privileges: isAdmin: ${responseData.isAdmin}, 
+        gamingTriviaEnabled: ${responseData.gamingTriviaEnabled}, 
+        upcomingReleasesEnabled: ${responseData.upcomingReleasesEnabled}, 
+        unlikeEnabled: ${responseData.unlikeEnabled}, 
+        numOfFollowersEnabled: ${responseData.numOfFollowersEnabled}`
+      );
+
+      if (
+        responseData.isAdmin === expectedPriveleges.isAdmin &&
+        responseData.gamingTriviaEnabled ===
+          expectedPriveleges.gamingTriviaEnabled &&
+        responseData.upcomingReleasesEnabled ===
+          expectedPriveleges.upcomingReleasesEnabled &&
+        responseData.unlikeEnabled === expectedPriveleges.unlikeEnabled
+      ) {
+        console.log(`Privileges test PASSED`);
+        numberOfTestsPassed++;
+      } else {
+        console.log(`Privileges test FAILED: ${responseData.message}`);
+      }
+    } else {
+      console.log(`Privileges test FAILED: ${responseData.message}`);
+    }
+  } catch (error) {
+    console.error("Privileges FAILED: Error during privileges:", error);
+  } finally {
+    numberOfTests++;
+  }
+};
+
+const logoutTest = async () => {
   try {
     const response = await fetch(`${BASE_URL}/logout`, {
       method: "PUT",
@@ -209,7 +257,7 @@ const logout = async () => {
   }
 };
 
-const login = async (userData: { username: string; password: string }) => {
+const loginTest = async (userData: { username: string; password: string }) => {
   try {
     const response = await fetch(`${BASE_URL}/login`, {
       method: "PUT",
@@ -240,7 +288,7 @@ const login = async (userData: { username: string; password: string }) => {
   }
 };
 
-const search = async (searchTerm: string, expectedUsername: string) => {
+const searchTest = async (searchTerm: string, expectedUsername: string) => {
   try {
     const response = await fetch(`${BASE_URL}/search/${searchTerm}`, {
       method: "GET",
@@ -271,7 +319,241 @@ const search = async (searchTerm: string, expectedUsername: string) => {
   }
 };
 
-const deleteUser = async (username: string) => {
+const feedTest = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/feed`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        cookie: `tempPass=${tempPass}; timeToLive=${maxAge}`,
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      let posts = responseData.posts;
+      let requestingUsername = responseData.requestingUsername;
+
+      if (posts.length === 0) {
+        console.log(`No posts in admin's feed`);
+      } else {
+        console.log(`${requestingUsername}'s feed:`);
+        for (let i = 0; i < posts.length; i++) {
+          console.log(
+            `User ${posts[i].username} post ${i}: Title: ${posts[i].title}, Content: ${posts[i].content}`
+          );
+        }
+      }
+
+      console.log(`Feed test PASSED`);
+      numberOfTestsPassed++;
+    } else {
+      console.log(`Feed test FAILED: ${responseData.message}`);
+    }
+  } catch (error) {
+    console.error("Feed FAILED: Error during feed:", error);
+  } finally {
+    numberOfTests++;
+  }
+};
+
+const likeUnlikePostTest = async (
+  username: string,
+  postId: string,
+  action: string
+) => {
+  try {
+    const previousLikes =
+      persist.usersData[username].posts[postId].usernamesWhoLiked.length;
+
+    const response = await fetch(
+      `${BASE_URL}/posts/${username}/${action}/${postId}`,
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          cookie: `tempPass=${tempPass}; timeToLive=${maxAge}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      const currentLikes = responseData.updatedLikeNum;
+
+      if (action === "like") {
+        if (currentLikes === previousLikes + 1) {
+          console.log(`Like post test PASSED`);
+          numberOfTestsPassed++;
+        } else {
+          console.log(`Like post test FAILED: likes not updated correctly`);
+        }
+      } else {
+        if (currentLikes === previousLikes - 1) {
+          console.log(`Unlike post test PASSED`);
+          numberOfTestsPassed++;
+        } else {
+          console.log(`Unlike post test FAILED: likes not updated correctly`);
+        }
+      }
+    } else {
+      action === "like"
+        ? console.log(`Like post test FAILED: ${responseData.message}`)
+        : console.log(`Unlike post test FAILED: ${responseData.message}`);
+    }
+  } catch (error) {
+    action === "like"
+      ? console.error("Like post FAILED: ", error.message)
+      : console.error("Unlike post FAILED: ", error.message);
+  } finally {
+    numberOfTests++;
+  }
+};
+
+const followingTest = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/following`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        cookie: `tempPass=${tempPass}; timeToLive=${maxAge}`,
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      let followedUsers = responseData.followedUsers;
+      let requestingUser = responseData.requestingUser;
+
+      if (followedUsers.length === 0) {
+        console.log(`${requestingUser} is not following anyone`);
+      } else {
+        console.log(`${requestingUser} is following:`);
+        for (let i = 0; i < followedUsers.length; i++) {
+          console.log(`${followedUsers[i]}`);
+        }
+      }
+
+      console.log(`Following test PASSED`);
+      numberOfTestsPassed++;
+    } else {
+      console.log(`Following test FAILED: ${responseData.message}`);
+    }
+  } catch (error) {
+    console.error("Following FAILED: Error during following:", error);
+  } finally {
+    numberOfTests++;
+  }
+};
+
+const nonAdminTest = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/nonadmin`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        cookie: `tempPass=${tempPass}; timeToLive=${maxAge}`,
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      console.log(`Non admin usernames:`);
+      responseData.usernames.forEach((username: string) => {
+        console.log(username);
+      });
+
+      console.log(`Non admin test PASSED`);
+      numberOfTestsPassed++;
+    } else {
+      console.log(`Non admin test FAILED: ${responseData.message}`);
+    }
+  } catch (error) {
+    console.error("Non admin FAILED: Error during non admin:", error);
+  } finally {
+    numberOfTests++;
+  }
+};
+
+const loginActivityTest = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/loginactivity`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        cookie: `tempPass=${tempPass}; timeToLive=${maxAge}`,
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      console.log(`Login activity:`);
+      responseData.loginActivity.forEach((login: string) => {
+        console.log(login);
+      });
+
+      console.log(`Login activity test PASSED`);
+      numberOfTestsPassed++;
+    } else {
+      console.log(`Login activity test FAILED: ${responseData.message}`);
+    }
+  } catch (error) {
+    console.error("Login activity FAILED: Error during login activity:", error);
+  } finally {
+    numberOfTests++;
+  }
+};
+
+const enableDisableFeatureTest = async (
+  feature: string,
+  action: string,
+  expectedEnabled: boolean
+) => {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/${action}/${feature}`, {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        cookie: `tempPass=${tempPass}; timeToLive=${maxAge}`,
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      if (adminRoutes.featureFlags[`${feature}Enabled`] === expectedEnabled) {
+        console.log(`${feature} ${action} test PASSED`);
+        numberOfTestsPassed++;
+      } else {
+        console.log(
+          `${feature} ${action} test FAILED: ${feature} not updated correctly`
+        );
+      }
+    } else {
+      console.log(`${feature} ${action} test FAILED: ${responseData.message}`);
+    }
+  } catch (error) {
+    console.error(
+      `${feature} ${action} FAILED: Error during ${feature} ${action}:`,
+      error
+    );
+  } finally {
+    numberOfTests++;
+  }
+};
+
+const deleteUserTest = async (username: string) => {
   try {
     const response = await fetch(`${BASE_URL}/admin/deleteuser/${username}`, {
       method: "DELETE",
@@ -285,8 +567,20 @@ const deleteUser = async (username: string) => {
     const responseData = await response.json();
 
     if (response.ok) {
-      console.log(`Delete user test PASSED`);
-      numberOfTestsPassed++;
+      if (!persist.usersData[username]) {
+        for (let [key, value] of loggedInUsers) {
+          if (value.username === username) {
+            console.log(`Delete user test FAILED: ${username} still logged in`);
+            return;
+          }
+        }
+        console.log(`Delete user test PASSED`);
+        numberOfTestsPassed++;
+      } else {
+        console.log(
+          `Delete user test FAILED: ${username} wasn't deleted from usersData`
+        );
+      }
     } else {
       console.log(`Delete user test FAILED: ${responseData.message}`);
     }
@@ -302,38 +596,76 @@ console.log("------------------------------");
 console.log("Commencing tests...");
 (async () => {
   console.log("------------------------------");
-  await signup({
+  await signupTest({
     username: "test123",
     password: "test123",
     email: "test@email.com",
     rememberMeChecked: false,
   });
   console.log("------------------------------");
-  await createPost({
+  await createPostTest({
     title: "testing create post",
     content: "this is a test post",
   });
   console.log("------------------------------");
-  await userPosts("admin");
+  await userPostsTest("admin");
   console.log("------------------------------");
-  await followUnfollowUser("admin", "follow");
+  await followUnfollowUserTest("admin", "follow");
   console.log("------------------------------");
-  await followInfo("admin");
+  await followInfoTest("admin");
   console.log("------------------------------");
-  await followUnfollowUser("admin", "unfollow");
+  await followUnfollowUserTest("admin", "unfollow");
   console.log("------------------------------");
-  await followInfo("admin");
+  await followInfoTest("admin");
   console.log("------------------------------");
-  await logout();
-  console.log("------------------------------");
-  await login({
-    username: "admin",
-    password: "genericpass123",
+  await privilegesTest({
+    isAdmin: false,
+    gamingTriviaEnabled: true,
+    upcomingReleasesEnabled: true,
+    unlikeEnabled: true,
+    numOfFollowersEnabled: true,
   });
   console.log("------------------------------");
-  await search("t", "test123");
+  await logoutTest();
   console.log("------------------------------");
-  await deleteUser("test123");
+  await loginTest({
+    username: "admin",
+    password: "admin",
+  });
+  console.log("------------------------------");
+  await searchTest("t", "test123");
+  console.log("------------------------------");
+  await followUnfollowUserTest("test123", "follow");
+  console.log("------------------------------");
+  await feedTest();
+  console.log("------------------------------");
+  await likeUnlikePostTest("test123", "0", "like");
+  await likeUnlikePostTest("test123", "0", "unlike");
+  console.log("------------------------------");
+  await followingTest();
+  console.log("------------------------------");
+  await followUnfollowUserTest("test123", "unfollow");
+  await followingTest();
+  console.log("------------------------------");
+  await nonAdminTest();
+  console.log("------------------------------");
+  await loginActivityTest();
+  console.log("------------------------------");
+  await enableDisableFeatureTest("gamingtrivia", "enable", true);
+  await enableDisableFeatureTest("gamingtrivia", "disable", false);
+  console.log("------------------------------");
+  await enableDisableFeatureTest("upcomingreleases", "enable", true);
+  await enableDisableFeatureTest("upcomingreleases", "disable", false);
+  console.log("------------------------------");
+  await enableDisableFeatureTest("numoffollowers", "enable", true);
+  await enableDisableFeatureTest("numoffollowers", "disable", false);
+  console.log("------------------------------");
+  await enableDisableFeatureTest("unlike", "enable", true);
+  await enableDisableFeatureTest("unlike", "disable", false);
+  console.log("------------------------------");
+  await deleteUserTest("test123");
+  console.log("------------------------------");
+  await logoutTest();
   console.log("------------------------------");
   console.log(`Tests complete: ${numberOfTestsPassed}/${numberOfTests} passed`);
   console.log("------------------------------");

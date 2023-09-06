@@ -51,10 +51,6 @@ export default function RootLayout() {
           setUpcomingReleasesPrivileges(responseData.upcomingReleasesEnabled);
           setGamingTriviaPrivileges(responseData.gamingTriviaEnabled);
         }
-
-        console.log(
-          `Authenticated, isAdmin: ${isAdmin}, upcomingReleasesPrivileges: ${upcomingReleasesPrivileges}, gamingTriviaPrivileges: ${gamingTriviaPrivileges}`
-        );
       } else if (response.status === 401) {
         setAuthenticated(false);
         console.log(responseData.message);

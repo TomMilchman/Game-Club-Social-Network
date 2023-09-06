@@ -71,11 +71,14 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
           ));
 
       await persist.saveUsersData();
+      const message = `User ${requestingUsername} ${
+        isLikeOperation ? "liked" : "unliked"
+      } user ${req.params.username}'s post number ${postId}`;
+
+      console.log(message);
 
       res.status(200).json({
-        message: `User ${requestingUsername} ${
-          isLikeOperation ? "liked" : "unliked"
-        } user ${req.params.username}'s post number ${postId}`,
+        message: message,
         updatedLikeNum: post.usernamesWhoLiked.length,
       });
     } else {

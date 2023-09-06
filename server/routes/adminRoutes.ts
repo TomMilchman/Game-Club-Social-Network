@@ -6,10 +6,10 @@ import persist from "../persist";
 import { LoginActivityType } from "../User";
 
 const featureFlags = {
-  enableGamingTrivia: true,
-  enableUpcomingReleases: true,
-  enableUnlike: true,
-  enableNumberOfFollowers: true,
+  gamingtriviaEnabled: true,
+  upcomingreleasesEnabled: true,
+  unlikeEnabled: true,
+  numoffollowersEnabled: true,
 };
 
 interface UserActivity {
@@ -110,16 +110,16 @@ const enableDisableFeature = (req, res, isEnable: boolean, type: string) => {
   if (persist.usersData[loggedInUsers.get(tempPass).username].isAdmin) {
     switch (type) {
       case "gamingtrivia":
-        featureFlags.enableGamingTrivia = isEnable;
+        featureFlags.gamingtriviaEnabled = isEnable;
         break;
       case "upcomingreleases":
-        featureFlags.enableUpcomingReleases = isEnable;
+        featureFlags.upcomingreleasesEnabled = isEnable;
         break;
       case "unlike":
-        featureFlags.enableUnlike = isEnable;
+        featureFlags.unlikeEnabled = isEnable;
         break;
       case "numoffollowers":
-        featureFlags.enableNumberOfFollowers = isEnable;
+        featureFlags.numoffollowersEnabled = isEnable;
         break;
       default:
         res.status(404).json({ message: `Feature not found` });
@@ -137,7 +137,7 @@ const enableDisableFeature = (req, res, isEnable: boolean, type: string) => {
   }
 };
 
-router.put("/gamingtrivia/enable", async (req, res) => {
+router.put("/enable/gamingtrivia", async (req, res) => {
   try {
     enableDisableFeature(req, res, true, "gamingtrivia");
   } catch (error) {
@@ -148,7 +148,7 @@ router.put("/gamingtrivia/enable", async (req, res) => {
   }
 });
 
-router.put("/gamingtrivia/disable", async (req, res) => {
+router.put("/disable/gamingtrivia", async (req, res) => {
   try {
     enableDisableFeature(req, res, false, "gamingtrivia");
   } catch (error) {
@@ -159,7 +159,7 @@ router.put("/gamingtrivia/disable", async (req, res) => {
   }
 });
 
-router.put("/upcomingreleases/enable", async (req, res) => {
+router.put("/enable/upcomingreleases", async (req, res) => {
   try {
     enableDisableFeature(req, res, true, "upcomingreleases");
   } catch (error) {
@@ -170,7 +170,7 @@ router.put("/upcomingreleases/enable", async (req, res) => {
   }
 });
 
-router.put("/upcomingreleases/disable", async (req, res) => {
+router.put("/disable/upcomingreleases", async (req, res) => {
   try {
     enableDisableFeature(req, res, false, "upcomingreleases");
   } catch (error) {
@@ -181,7 +181,7 @@ router.put("/upcomingreleases/disable", async (req, res) => {
   }
 });
 
-router.put("/numoffollowers/enable", async (req, res) => {
+router.put("/enable/numoffollowers", async (req, res) => {
   try {
     enableDisableFeature(req, res, true, "numoffollowers");
   } catch (error) {
@@ -192,7 +192,7 @@ router.put("/numoffollowers/enable", async (req, res) => {
   }
 });
 
-router.put("/numoffollowers/disable", async (req, res) => {
+router.put("/disable/numoffollowers", async (req, res) => {
   try {
     enableDisableFeature(req, res, false, "numoffollowers");
   } catch (error) {
@@ -203,7 +203,7 @@ router.put("/numoffollowers/disable", async (req, res) => {
   }
 });
 
-router.put("/unlike/enable", async (req, res) => {
+router.put("/enable/unlike", async (req, res) => {
   try {
     enableDisableFeature(req, res, true, "unlike");
   } catch (error) {
@@ -214,7 +214,7 @@ router.put("/unlike/enable", async (req, res) => {
   }
 });
 
-router.put("/unlike/disable", async (req, res) => {
+router.put("/disable/unlike", async (req, res) => {
   try {
     enableDisableFeature(req, res, false, "unlike");
   } catch (error) {

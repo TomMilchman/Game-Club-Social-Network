@@ -1,15 +1,16 @@
 {
   "admin": {
     "username": "admin",
-    "password": "$2b$10$rd0/oAHE68zUW7SGCHcxzeVNYHoKWsrSiwBT2Pc6Ie6RRPjW6G7mS",
+    "password": "$2b$10$/lH7J5BQHYFb7OKitumD8.MbkB.mv/a026gaRu1vwUi/1dNm3Owoa",
     "email": "afafa@afafa",
     "isAdmin": true,
     "followedUsernames": [
+      "oogia123",
       "hypno"
     ],
     "followersUsernames": [
-      "hypno",
-      "oogia123"
+      "oogia123",
+      "hypno"
     ],
     "posts": [
       {
@@ -36,8 +37,8 @@
       },
       {
         "postId": 2,
-        "title": "test 2",
-        "content": "test 2",
+        "title": "test post please ignore",
+        "content": "I said to ignore :(",
         "timestamp": "2023-09-04T09:00:14.787Z",
         "usernamesWhoLiked": [
           "hypno",
@@ -50,7 +51,8 @@
         "content": "Like seriously, you guys have no idea how good this game is...",
         "timestamp": "2023-09-05T12:11:18.599Z",
         "usernamesWhoLiked": [
-          "admin"
+          "admin",
+          "hypno"
         ]
       }
     ],
@@ -327,6 +329,214 @@
       {
         "type": 0,
         "timestamp": "2023-09-05T12:31:46.844Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T09:22:04.306Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T09:28:58.734Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T09:29:42.343Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T09:36:30.602Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T09:37:13.345Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T09:38:02.695Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T09:38:03.697Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T09:58:28.294Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T09:58:57.507Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T09:59:53.684Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:01:09.627Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:04:45.241Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:11:32.738Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:12:00.284Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:12:31.140Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:13:15.815Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:13:26.395Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T10:14:33.296Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T10:14:38.361Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:17:11.130Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:18:06.195Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T10:18:33.270Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:18:57.031Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T10:19:16.895Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T10:19:18.718Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:37:21.806Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:39:04.141Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:39:34.362Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:41:24.956Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T10:42:01.890Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:42:12.892Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:43:30.050Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:49:57.802Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T10:50:15.520Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:56:21.499Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:59:30.613Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:04:12.067Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:04:57.117Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:05:27.542Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:06:13.347Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:08:14.538Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:10:53.819Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:11:21.188Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:15:47.980Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:19:27.644Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:24:23.549Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:26:39.494Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T11:26:39.584Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:31:16.637Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T11:31:16.728Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:33:33.717Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T11:34:55.080Z"
       }
     ]
   },
@@ -336,12 +546,12 @@
     "email": "afafa@afafa",
     "isAdmin": false,
     "followedUsernames": [
-      "admin",
-      "oogia123"
+      "oogia123",
+      "admin"
     ],
     "followersUsernames": [
-      "admin",
-      "oogia123"
+      "oogia123",
+      "admin"
     ],
     "posts": [
       {
@@ -360,7 +570,8 @@
         "content": "He had it coming for sure!",
         "timestamp": "2023-09-04T08:58:23.986Z",
         "usernamesWhoLiked": [
-          "hypno"
+          "hypno",
+          "abcdef"
         ]
       },
       {
@@ -369,11 +580,19 @@
         "content": "test",
         "timestamp": "2023-09-04T08:58:36.467Z",
         "usernamesWhoLiked": [
+          "abcdef",
           "admin"
         ]
+      },
+      {
+        "postId": 3,
+        "title": "I am so hypeeeed",
+        "content": "So many good games are coming out :D",
+        "timestamp": "2023-09-06T11:32:33.775Z",
+        "usernamesWhoLiked": []
       }
     ],
-    "currentPostId": 3,
+    "currentPostId": 4,
     "loginActivity": [
       {
         "type": 0,
@@ -482,6 +701,34 @@
       {
         "type": 1,
         "timestamp": "2023-09-05T08:23:40.251Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:18:38.735Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T10:18:53.333Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T10:50:20.545Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T10:50:29.175Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-09-06T11:31:57.100Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-09-06T11:32:33.775Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-09-06T11:33:20.489Z"
       }
     ]
   },
@@ -495,16 +742,18 @@
       "hypno"
     ],
     "followersUsernames": [
-      "hypno"
+      "hypno",
+      "admin"
     ],
     "posts": [
       {
         "postId": 0,
-        "title": "Yaniv is the best tech support",
-        "content": "fr fr",
+        "title": "Baldur's Gate 3 is consuming my life",
+        "content": "Send help.",
         "timestamp": "2023-09-04T19:14:43.925Z",
         "usernamesWhoLiked": [
           "oogia123",
+          "admin",
           "hypno"
         ]
       }

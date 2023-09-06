@@ -68,10 +68,10 @@ var router = express.Router();
 var server_1 = require("../server");
 var persist_1 = require("../persist");
 var featureFlags = {
-    enableGamingTrivia: true,
-    enableUpcomingReleases: true,
-    enableUnlike: true,
-    enableNumberOfFollowers: true,
+    gamingtriviaEnabled: true,
+    upcomingreleasesEnabled: true,
+    unlikeEnabled: true,
+    numoffollowersEnabled: true,
 };
 router.get("/loginactivity", function (req, res) {
     var e_1, _a;
@@ -196,16 +196,16 @@ var enableDisableFeature = function (req, res, isEnable, type) {
     if (persist_1.default.usersData[server_1.loggedInUsers.get(tempPass).username].isAdmin) {
         switch (type) {
             case "gamingtrivia":
-                featureFlags.enableGamingTrivia = isEnable;
+                featureFlags.gamingtriviaEnabled = isEnable;
                 break;
             case "upcomingreleases":
-                featureFlags.enableUpcomingReleases = isEnable;
+                featureFlags.upcomingreleasesEnabled = isEnable;
                 break;
             case "unlike":
-                featureFlags.enableUnlike = isEnable;
+                featureFlags.unlikeEnabled = isEnable;
                 break;
             case "numoffollowers":
-                featureFlags.enableNumberOfFollowers = isEnable;
+                featureFlags.numoffollowersEnabled = isEnable;
                 break;
             default:
                 res.status(404).json({ message: "Feature not found" });
@@ -222,7 +222,7 @@ var enableDisableFeature = function (req, res, isEnable, type) {
         console.log("This user is not an admin");
     }
 };
-router.put("/gamingtrivia/enable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/enable/gamingtrivia", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, true, "gamingtrivia");
@@ -236,7 +236,7 @@ router.put("/gamingtrivia/enable", function (req, res) { return __awaiter(void 0
         return [2 /*return*/];
     });
 }); });
-router.put("/gamingtrivia/disable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/disable/gamingtrivia", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, false, "gamingtrivia");
@@ -250,7 +250,7 @@ router.put("/gamingtrivia/disable", function (req, res) { return __awaiter(void 
         return [2 /*return*/];
     });
 }); });
-router.put("/upcomingreleases/enable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/enable/upcomingreleases", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, true, "upcomingreleases");
@@ -264,7 +264,7 @@ router.put("/upcomingreleases/enable", function (req, res) { return __awaiter(vo
         return [2 /*return*/];
     });
 }); });
-router.put("/upcomingreleases/disable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/disable/upcomingreleases", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, false, "upcomingreleases");
@@ -278,7 +278,7 @@ router.put("/upcomingreleases/disable", function (req, res) { return __awaiter(v
         return [2 /*return*/];
     });
 }); });
-router.put("/numoffollowers/enable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/enable/numoffollowers", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, true, "numoffollowers");
@@ -292,7 +292,7 @@ router.put("/numoffollowers/enable", function (req, res) { return __awaiter(void
         return [2 /*return*/];
     });
 }); });
-router.put("/numoffollowers/disable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/disable/numoffollowers", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, false, "numoffollowers");
@@ -306,7 +306,7 @@ router.put("/numoffollowers/disable", function (req, res) { return __awaiter(voi
         return [2 /*return*/];
     });
 }); });
-router.put("/unlike/enable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/enable/unlike", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, true, "unlike");
@@ -320,7 +320,7 @@ router.put("/unlike/enable", function (req, res) { return __awaiter(void 0, void
         return [2 /*return*/];
     });
 }); });
-router.put("/unlike/disable", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/disable/unlike", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
             enableDisableFeature(req, res, false, "unlike");

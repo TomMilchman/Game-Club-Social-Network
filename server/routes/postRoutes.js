@@ -90,7 +90,7 @@ router.route("/createpost").post(function (req, res) { return __awaiter(void 0, 
 }); });
 function handleLikeUnlike(req, res, isLikeOperation) {
     return __awaiter(this, void 0, void 0, function () {
-        var tempPass, requestingUsername_1, requestedUser, posts, postId, post, error_2;
+        var tempPass, requestingUsername_1, requestedUser, posts, postId, post, message, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -112,8 +112,10 @@ function handleLikeUnlike(req, res, isLikeOperation) {
                     return [4 /*yield*/, persist_1.default.saveUsersData()];
                 case 1:
                     _a.sent();
+                    message = "User ".concat(requestingUsername_1, " ").concat(isLikeOperation ? "liked" : "unliked", " user ").concat(req.params.username, "'s post number ").concat(postId);
+                    console.log(message);
                     res.status(200).json({
-                        message: "User ".concat(requestingUsername_1, " ").concat(isLikeOperation ? "liked" : "unliked", " user ").concat(req.params.username, "'s post number ").concat(postId),
+                        message: message,
                         updatedLikeNum: post.usernamesWhoLiked.length,
                     });
                     return [3 /*break*/, 3];

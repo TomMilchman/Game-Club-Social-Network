@@ -41,10 +41,10 @@ router.post("/", async (req, res) => {
         .json({ message: "username must be at most 15 characters long" });
       return;
     }
-    if (password.length < 6) {
+    if (password.length < 5) {
       res
         .status(400)
-        .json({ message: "password must be at least 6 characters long" });
+        .json({ message: "password must be at least 5 characters long" });
       return;
     }
     if (password.length > 20) {

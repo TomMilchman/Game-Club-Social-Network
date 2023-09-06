@@ -35,8 +35,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var server_1 = require("./server");
+var adminRoutes_1 = require("./routes/adminRoutes");
+var persist_1 = require("./persist");
 var BASE_URL = "http://localhost:".concat(server_1.PORT);
 var tempPass;
 var maxAge;
@@ -53,7 +82,7 @@ var getCookies = function (response) {
         console.log("No cookies retrieved");
     }
 };
-var signup = function (userData) { return __awaiter(void 0, void 0, void 0, function () {
+var signupTest = function (userData) { return __awaiter(void 0, void 0, void 0, function () {
     var response, responseData, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -80,6 +109,7 @@ var signup = function (userData) { return __awaiter(void 0, void 0, void 0, func
                     }
                     else {
                         console.log("Signup test FAILED: ".concat(responseData.message));
+                        console.log("If the test failed because there is already a user called test123, delete the user from usersData.json and try again");
                     }
                 }
                 return [3 /*break*/, 5];
@@ -94,7 +124,7 @@ var signup = function (userData) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); };
-var createPost = function (postData) { return __awaiter(void 0, void 0, void 0, function () {
+var createPostTest = function (postData) { return __awaiter(void 0, void 0, void 0, function () {
     var response, responseData, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -133,7 +163,7 @@ var createPost = function (postData) { return __awaiter(void 0, void 0, void 0, 
         }
     });
 }); };
-var userPosts = function (username) { return __awaiter(void 0, void 0, void 0, function () {
+var userPostsTest = function (username) { return __awaiter(void 0, void 0, void 0, function () {
     var response, responseData, posts, i, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -158,12 +188,6 @@ var userPosts = function (username) { return __awaiter(void 0, void 0, void 0, f
                         console.log("".concat(username, " has no posts"));
                     }
                     else {
-                        posts.map(function (post) {
-                            return {
-                                title: post.title,
-                                content: post.content,
-                            };
-                        });
                         console.log("".concat(username, "'s posts:"));
                         for (i = 0; i < posts.length; i++) {
                             console.log("Post ".concat(i, ": Title: ").concat(posts[i].title, ", Content: ").concat(posts[i].content));
@@ -187,7 +211,7 @@ var userPosts = function (username) { return __awaiter(void 0, void 0, void 0, f
         }
     });
 }); };
-var followUnfollowUser = function (username, action) { return __awaiter(void 0, void 0, void 0, function () {
+var followUnfollowUserTest = function (username, action) { return __awaiter(void 0, void 0, void 0, function () {
     var response, responseData, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -227,7 +251,7 @@ var followUnfollowUser = function (username, action) { return __awaiter(void 0, 
         }
     });
 }); };
-var followInfo = function (username) { return __awaiter(void 0, void 0, void 0, function () {
+var followInfoTest = function (username) { return __awaiter(void 0, void 0, void 0, function () {
     var response, responseData, error_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -266,8 +290,57 @@ var followInfo = function (username) { return __awaiter(void 0, void 0, void 0, 
         }
     });
 }); };
-var logout = function () { return __awaiter(void 0, void 0, void 0, function () {
+var privilegesTest = function (expectedPriveleges) { return __awaiter(void 0, void 0, void 0, function () {
     var response, responseData, error_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, 4, 5]);
+                return [4 /*yield*/, fetch("".concat(BASE_URL, "/privileges"), {
+                        method: "GET",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                            cookie: "tempPass=".concat(tempPass, "; timeToLive=").concat(maxAge),
+                        },
+                    })];
+            case 1:
+                response = _a.sent();
+                return [4 /*yield*/, response.json()];
+            case 2:
+                responseData = _a.sent();
+                if (response.ok) {
+                    console.log("Privileges: isAdmin: ".concat(responseData.isAdmin, ", \n        gamingTriviaEnabled: ").concat(responseData.gamingTriviaEnabled, ", \n        upcomingReleasesEnabled: ").concat(responseData.upcomingReleasesEnabled, ", \n        unlikeEnabled: ").concat(responseData.unlikeEnabled, ", \n        numOfFollowersEnabled: ").concat(responseData.numOfFollowersEnabled));
+                    if (responseData.isAdmin === expectedPriveleges.isAdmin &&
+                        responseData.gamingTriviaEnabled ===
+                            expectedPriveleges.gamingTriviaEnabled &&
+                        responseData.upcomingReleasesEnabled ===
+                            expectedPriveleges.upcomingReleasesEnabled &&
+                        responseData.unlikeEnabled === expectedPriveleges.unlikeEnabled) {
+                        console.log("Privileges test PASSED");
+                        numberOfTestsPassed++;
+                    }
+                    else {
+                        console.log("Privileges test FAILED: ".concat(responseData.message));
+                    }
+                }
+                else {
+                    console.log("Privileges test FAILED: ".concat(responseData.message));
+                }
+                return [3 /*break*/, 5];
+            case 3:
+                error_6 = _a.sent();
+                console.error("Privileges FAILED: Error during privileges:", error_6);
+                return [3 /*break*/, 5];
+            case 4:
+                numberOfTests++;
+                return [7 /*endfinally*/];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+var logoutTest = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var response, responseData, error_7;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -294,8 +367,8 @@ var logout = function () { return __awaiter(void 0, void 0, void 0, function () 
                 }
                 return [3 /*break*/, 5];
             case 3:
-                error_6 = _a.sent();
-                console.error("Logout FAILED: Error during logout:", error_6);
+                error_7 = _a.sent();
+                console.error("Logout FAILED: Error during logout:", error_7);
                 return [3 /*break*/, 5];
             case 4:
                 numberOfTests++;
@@ -304,8 +377,8 @@ var logout = function () { return __awaiter(void 0, void 0, void 0, function () 
         }
     });
 }); };
-var login = function (userData) { return __awaiter(void 0, void 0, void 0, function () {
-    var response, responseData, error_7;
+var loginTest = function (userData) { return __awaiter(void 0, void 0, void 0, function () {
+    var response, responseData, error_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -338,8 +411,8 @@ var login = function (userData) { return __awaiter(void 0, void 0, void 0, funct
                 }
                 return [3 /*break*/, 5];
             case 3:
-                error_7 = _a.sent();
-                console.error("Login FAILED: Error during login:", error_7);
+                error_8 = _a.sent();
+                console.error("Login FAILED: Error during login:", error_8);
                 return [3 /*break*/, 5];
             case 4:
                 numberOfTests++;
@@ -348,8 +421,8 @@ var login = function (userData) { return __awaiter(void 0, void 0, void 0, funct
         }
     });
 }); };
-var search = function (searchTerm, expectedUsername) { return __awaiter(void 0, void 0, void 0, function () {
-    var response, responseData, error_8;
+var searchTest = function (searchTerm, expectedUsername) { return __awaiter(void 0, void 0, void 0, function () {
+    var response, responseData, error_9;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -381,8 +454,8 @@ var search = function (searchTerm, expectedUsername) { return __awaiter(void 0, 
                 }
                 return [3 /*break*/, 5];
             case 3:
-                error_8 = _a.sent();
-                console.error("Search FAILED: Error during search:", error_8);
+                error_9 = _a.sent();
+                console.error("Search FAILED: Error during search:", error_9);
                 return [3 /*break*/, 5];
             case 4:
                 numberOfTests++;
@@ -391,14 +464,14 @@ var search = function (searchTerm, expectedUsername) { return __awaiter(void 0, 
         }
     });
 }); };
-var deleteUser = function (username) { return __awaiter(void 0, void 0, void 0, function () {
-    var response, responseData, error_9;
+var feedTest = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var response, responseData, posts, requestingUsername, i, error_10;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 3, 4, 5]);
-                return [4 /*yield*/, fetch("".concat(BASE_URL, "/admin/deleteuser/").concat(username), {
-                        method: "DELETE",
+                return [4 /*yield*/, fetch("".concat(BASE_URL, "/feed"), {
+                        method: "GET",
                         credentials: "include",
                         headers: {
                             "Content-Type": "application/json",
@@ -411,16 +484,323 @@ var deleteUser = function (username) { return __awaiter(void 0, void 0, void 0, 
             case 2:
                 responseData = _a.sent();
                 if (response.ok) {
-                    console.log("Delete user test PASSED");
+                    posts = responseData.posts;
+                    requestingUsername = responseData.requestingUsername;
+                    if (posts.length === 0) {
+                        console.log("No posts in admin's feed");
+                    }
+                    else {
+                        console.log("".concat(requestingUsername, "'s feed:"));
+                        for (i = 0; i < posts.length; i++) {
+                            console.log("User ".concat(posts[i].username, " post ").concat(i, ": Title: ").concat(posts[i].title, ", Content: ").concat(posts[i].content));
+                        }
+                    }
+                    console.log("Feed test PASSED");
                     numberOfTestsPassed++;
+                }
+                else {
+                    console.log("Feed test FAILED: ".concat(responseData.message));
+                }
+                return [3 /*break*/, 5];
+            case 3:
+                error_10 = _a.sent();
+                console.error("Feed FAILED: Error during feed:", error_10);
+                return [3 /*break*/, 5];
+            case 4:
+                numberOfTests++;
+                return [7 /*endfinally*/];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+var likeUnlikePostTest = function (username, postId, action) { return __awaiter(void 0, void 0, void 0, function () {
+    var previousLikes, response, responseData, currentLikes, error_11;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, 4, 5]);
+                previousLikes = persist_1.default.usersData[username].posts[postId].usernamesWhoLiked.length;
+                return [4 /*yield*/, fetch("".concat(BASE_URL, "/posts/").concat(username, "/").concat(action, "/").concat(postId), {
+                        method: "PUT",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                            cookie: "tempPass=".concat(tempPass, "; timeToLive=").concat(maxAge),
+                        },
+                    })];
+            case 1:
+                response = _a.sent();
+                return [4 /*yield*/, response.json()];
+            case 2:
+                responseData = _a.sent();
+                if (response.ok) {
+                    currentLikes = responseData.updatedLikeNum;
+                    if (action === "like") {
+                        if (currentLikes === previousLikes + 1) {
+                            console.log("Like post test PASSED");
+                            numberOfTestsPassed++;
+                        }
+                        else {
+                            console.log("Like post test FAILED: likes not updated correctly");
+                        }
+                    }
+                    else {
+                        if (currentLikes === previousLikes - 1) {
+                            console.log("Unlike post test PASSED");
+                            numberOfTestsPassed++;
+                        }
+                        else {
+                            console.log("Unlike post test FAILED: likes not updated correctly");
+                        }
+                    }
+                }
+                else {
+                    action === "like"
+                        ? console.log("Like post test FAILED: ".concat(responseData.message))
+                        : console.log("Unlike post test FAILED: ".concat(responseData.message));
+                }
+                return [3 /*break*/, 5];
+            case 3:
+                error_11 = _a.sent();
+                action === "like"
+                    ? console.error("Like post FAILED: ", error_11.message)
+                    : console.error("Unlike post FAILED: ", error_11.message);
+                return [3 /*break*/, 5];
+            case 4:
+                numberOfTests++;
+                return [7 /*endfinally*/];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+var followingTest = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var response, responseData, followedUsers, requestingUser, i, error_12;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, 4, 5]);
+                return [4 /*yield*/, fetch("".concat(BASE_URL, "/users/following"), {
+                        method: "GET",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                            cookie: "tempPass=".concat(tempPass, "; timeToLive=").concat(maxAge),
+                        },
+                    })];
+            case 1:
+                response = _a.sent();
+                return [4 /*yield*/, response.json()];
+            case 2:
+                responseData = _a.sent();
+                if (response.ok) {
+                    followedUsers = responseData.followedUsers;
+                    requestingUser = responseData.requestingUser;
+                    if (followedUsers.length === 0) {
+                        console.log("".concat(requestingUser, " is not following anyone"));
+                    }
+                    else {
+                        console.log("".concat(requestingUser, " is following:"));
+                        for (i = 0; i < followedUsers.length; i++) {
+                            console.log("".concat(followedUsers[i]));
+                        }
+                    }
+                    console.log("Following test PASSED");
+                    numberOfTestsPassed++;
+                }
+                else {
+                    console.log("Following test FAILED: ".concat(responseData.message));
+                }
+                return [3 /*break*/, 5];
+            case 3:
+                error_12 = _a.sent();
+                console.error("Following FAILED: Error during following:", error_12);
+                return [3 /*break*/, 5];
+            case 4:
+                numberOfTests++;
+                return [7 /*endfinally*/];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+var nonAdminTest = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var response, responseData, error_13;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, 4, 5]);
+                return [4 /*yield*/, fetch("".concat(BASE_URL, "/users/nonadmin"), {
+                        method: "GET",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                            cookie: "tempPass=".concat(tempPass, "; timeToLive=").concat(maxAge),
+                        },
+                    })];
+            case 1:
+                response = _a.sent();
+                return [4 /*yield*/, response.json()];
+            case 2:
+                responseData = _a.sent();
+                if (response.ok) {
+                    console.log("Non admin usernames:");
+                    responseData.usernames.forEach(function (username) {
+                        console.log(username);
+                    });
+                    console.log("Non admin test PASSED");
+                    numberOfTestsPassed++;
+                }
+                else {
+                    console.log("Non admin test FAILED: ".concat(responseData.message));
+                }
+                return [3 /*break*/, 5];
+            case 3:
+                error_13 = _a.sent();
+                console.error("Non admin FAILED: Error during non admin:", error_13);
+                return [3 /*break*/, 5];
+            case 4:
+                numberOfTests++;
+                return [7 /*endfinally*/];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+var loginActivityTest = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var response, responseData, error_14;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, 4, 5]);
+                return [4 /*yield*/, fetch("".concat(BASE_URL, "/admin/loginactivity"), {
+                        method: "GET",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                            cookie: "tempPass=".concat(tempPass, "; timeToLive=").concat(maxAge),
+                        },
+                    })];
+            case 1:
+                response = _a.sent();
+                return [4 /*yield*/, response.json()];
+            case 2:
+                responseData = _a.sent();
+                if (response.ok) {
+                    console.log("Login activity:");
+                    responseData.loginActivity.forEach(function (login) {
+                        console.log(login);
+                    });
+                    console.log("Login activity test PASSED");
+                    numberOfTestsPassed++;
+                }
+                else {
+                    console.log("Login activity test FAILED: ".concat(responseData.message));
+                }
+                return [3 /*break*/, 5];
+            case 3:
+                error_14 = _a.sent();
+                console.error("Login activity FAILED: Error during login activity:", error_14);
+                return [3 /*break*/, 5];
+            case 4:
+                numberOfTests++;
+                return [7 /*endfinally*/];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+var enableDisableFeatureTest = function (feature, action, expectedEnabled) { return __awaiter(void 0, void 0, void 0, function () {
+    var response, responseData, error_15;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, 4, 5]);
+                return [4 /*yield*/, fetch("".concat(BASE_URL, "/admin/").concat(action, "/").concat(feature), {
+                        method: "PUT",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                            cookie: "tempPass=".concat(tempPass, "; timeToLive=").concat(maxAge),
+                        },
+                    })];
+            case 1:
+                response = _a.sent();
+                return [4 /*yield*/, response.json()];
+            case 2:
+                responseData = _a.sent();
+                if (response.ok) {
+                    if (adminRoutes_1.default.featureFlags["".concat(feature, "Enabled")] === expectedEnabled) {
+                        console.log("".concat(feature, " ").concat(action, " test PASSED"));
+                        numberOfTestsPassed++;
+                    }
+                    else {
+                        console.log("".concat(feature, " ").concat(action, " test FAILED: ").concat(feature, " not updated correctly"));
+                    }
+                }
+                else {
+                    console.log("".concat(feature, " ").concat(action, " test FAILED: ").concat(responseData.message));
+                }
+                return [3 /*break*/, 5];
+            case 3:
+                error_15 = _a.sent();
+                console.error("".concat(feature, " ").concat(action, " FAILED: Error during ").concat(feature, " ").concat(action, ":"), error_15);
+                return [3 /*break*/, 5];
+            case 4:
+                numberOfTests++;
+                return [7 /*endfinally*/];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+var deleteUserTest = function (username) { return __awaiter(void 0, void 0, void 0, function () {
+    var response, responseData, loggedInUsers_1, loggedInUsers_1_1, _a, key, value, error_16;
+    var e_1, _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                _c.trys.push([0, 3, 4, 5]);
+                return [4 /*yield*/, fetch("".concat(BASE_URL, "/admin/deleteuser/").concat(username), {
+                        method: "DELETE",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                            cookie: "tempPass=".concat(tempPass, "; timeToLive=").concat(maxAge),
+                        },
+                    })];
+            case 1:
+                response = _c.sent();
+                return [4 /*yield*/, response.json()];
+            case 2:
+                responseData = _c.sent();
+                if (response.ok) {
+                    if (!persist_1.default.usersData[username]) {
+                        try {
+                            for (loggedInUsers_1 = __values(server_1.loggedInUsers), loggedInUsers_1_1 = loggedInUsers_1.next(); !loggedInUsers_1_1.done; loggedInUsers_1_1 = loggedInUsers_1.next()) {
+                                _a = __read(loggedInUsers_1_1.value, 2), key = _a[0], value = _a[1];
+                                if (value.username === username) {
+                                    console.log("Delete user test FAILED: ".concat(username, " still logged in"));
+                                    return [2 /*return*/];
+                                }
+                            }
+                        }
+                        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                        finally {
+                            try {
+                                if (loggedInUsers_1_1 && !loggedInUsers_1_1.done && (_b = loggedInUsers_1.return)) _b.call(loggedInUsers_1);
+                            }
+                            finally { if (e_1) throw e_1.error; }
+                        }
+                        console.log("Delete user test PASSED");
+                        numberOfTestsPassed++;
+                    }
+                    else {
+                        console.log("Delete user test FAILED: ".concat(username, " wasn't deleted from usersData"));
+                    }
                 }
                 else {
                     console.log("Delete user test FAILED: ".concat(responseData.message));
                 }
                 return [3 /*break*/, 5];
             case 3:
-                error_9 = _a.sent();
-                console.error("Delete user FAILED: Error during delete user:", error_9);
+                error_16 = _c.sent();
+                console.error("Delete user FAILED: Error during delete user:", error_16);
                 return [3 /*break*/, 5];
             case 4:
                 numberOfTests++;
@@ -437,7 +817,7 @@ console.log("Commencing tests...");
         switch (_a.label) {
             case 0:
                 console.log("------------------------------");
-                return [4 /*yield*/, signup({
+                return [4 /*yield*/, signupTest({
                         username: "test123",
                         password: "test123",
                         email: "test@email.com",
@@ -446,50 +826,126 @@ console.log("Commencing tests...");
             case 1:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, createPost({
+                return [4 /*yield*/, createPostTest({
                         title: "testing create post",
                         content: "this is a test post",
                     })];
             case 2:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, userPosts("admin")];
+                return [4 /*yield*/, userPostsTest("admin")];
             case 3:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, followUnfollowUser("admin", "follow")];
+                return [4 /*yield*/, followUnfollowUserTest("admin", "follow")];
             case 4:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, followInfo("admin")];
+                return [4 /*yield*/, followInfoTest("admin")];
             case 5:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, followUnfollowUser("admin", "unfollow")];
+                return [4 /*yield*/, followUnfollowUserTest("admin", "unfollow")];
             case 6:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, followInfo("admin")];
+                return [4 /*yield*/, followInfoTest("admin")];
             case 7:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, logout()];
+                return [4 /*yield*/, privilegesTest({
+                        isAdmin: false,
+                        gamingTriviaEnabled: true,
+                        upcomingReleasesEnabled: true,
+                        unlikeEnabled: true,
+                        numOfFollowersEnabled: true,
+                    })];
             case 8:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, login({
-                        username: "admin",
-                        password: "genericpass123",
-                    })];
+                return [4 /*yield*/, logoutTest()];
             case 9:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, search("t", "test123")];
+                return [4 /*yield*/, loginTest({
+                        username: "admin",
+                        password: "admin",
+                    })];
             case 10:
                 _a.sent();
                 console.log("------------------------------");
-                return [4 /*yield*/, deleteUser("test123")];
+                return [4 /*yield*/, searchTest("t", "test123")];
             case 11:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, followUnfollowUserTest("test123", "follow")];
+            case 12:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, feedTest()];
+            case 13:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, likeUnlikePostTest("test123", "0", "like")];
+            case 14:
+                _a.sent();
+                return [4 /*yield*/, likeUnlikePostTest("test123", "0", "unlike")];
+            case 15:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, followingTest()];
+            case 16:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, followUnfollowUserTest("test123", "unfollow")];
+            case 17:
+                _a.sent();
+                return [4 /*yield*/, followingTest()];
+            case 18:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, nonAdminTest()];
+            case 19:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, loginActivityTest()];
+            case 20:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, enableDisableFeatureTest("gamingtrivia", "enable", true)];
+            case 21:
+                _a.sent();
+                return [4 /*yield*/, enableDisableFeatureTest("gamingtrivia", "disable", false)];
+            case 22:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, enableDisableFeatureTest("upcomingreleases", "enable", true)];
+            case 23:
+                _a.sent();
+                return [4 /*yield*/, enableDisableFeatureTest("upcomingreleases", "disable", false)];
+            case 24:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, enableDisableFeatureTest("numoffollowers", "enable", true)];
+            case 25:
+                _a.sent();
+                return [4 /*yield*/, enableDisableFeatureTest("numoffollowers", "disable", false)];
+            case 26:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, enableDisableFeatureTest("unlike", "enable", true)];
+            case 27:
+                _a.sent();
+                return [4 /*yield*/, enableDisableFeatureTest("unlike", "disable", false)];
+            case 28:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, deleteUserTest("test123")];
+            case 29:
+                _a.sent();
+                console.log("------------------------------");
+                return [4 /*yield*/, logoutTest()];
+            case 30:
                 _a.sent();
                 console.log("------------------------------");
                 console.log("Tests complete: ".concat(numberOfTestsPassed, "/").concat(numberOfTests, " passed"));
