@@ -25,12 +25,12 @@ async function saveData(filePath: string) {
 }
 
 async function loadUsersData() {
-  usersData = await loadData("./users.json");
+  usersData = await loadData("../../users.json");
   return usersData;
 }
 
 async function saveUsersData() {
-  await saveData("./users.json");
+  await saveData("../../users.json");
 }
 
 export default { loadUsersData, saveUsersData, usersData };
