@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { LoginActivityType } from "../../../server/User";
+import { LoginActivityType } from "../../../server/src/User";
 
 interface UserActivity {
   username: string;

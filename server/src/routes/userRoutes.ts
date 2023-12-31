@@ -11,7 +11,7 @@ async function followOrUnfollowUser(req, res, action) {
 
     const userToSearch = persist.usersData[req.params.username];
 
-    if (userToSearch !== undefined) {
+    if (userToSearch) {
       if (requestingUser.username === userToSearch.username) {
         res.status(400).json({
           message: "You cannot follow/unfollow yourself",
@@ -83,7 +83,7 @@ router.route("/:username/followinfo").get((req, res) => {
       persist.usersData[loggedInUsers.get(tempPass).username];
     const userToSearch = persist.usersData[req.params.username];
 
-    if (userToSearch !== undefined && requestingUser !== undefined) {
+    if (userToSearch && requestingUser) {
       const isFollowing = userToSearch.followersUsernames.some(
         (username) => username === requestingUser.username
       );
@@ -107,7 +107,7 @@ router.route("/:username/posts").get((req, res) => {
     const requestedUsername = req.params.username;
     const requestedUser = persist.usersData[requestedUsername];
 
-    if (requestedUser !== undefined) {
+    if (requestedUser) {
       res.status(200).json({
         posts: requestedUser.posts,
         requestingUsername: loggedInUsers.get(req.cookies.tempPass).username,

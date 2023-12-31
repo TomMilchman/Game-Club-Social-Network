@@ -63,7 +63,7 @@ async function handleLikeUnlike(req, res, isLikeOperation: boolean) {
 
     const post = posts[postId];
 
-    if (post !== undefined) {
+    if (post) {
       isLikeOperation
         ? post.usernamesWhoLiked.push(requestingUsername)
         : (post.usernamesWhoLiked = post.usernamesWhoLiked.filter(

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PostComponent from "../components/Post";
-import PostClass from "../../../server/Post";
+import PostClass from "../../../server/src/Post";
 import FollowUnfollowButton from "../components/FollowUnfollowButton";
 
 export default function UserPage() {

@@ -15,21 +15,12 @@ router.get("/", (req, res) => {
     const tempPass: string = req.cookies.tempPass;
     const username = loggedInUsers.get(tempPass).username;
     const user = persist.usersData[username];
-    if (user.isAdmin === true) {
-      isAdmin = true;
-    }
-    if (adminRoutes.featureFlags.unlikeEnabled === true) {
-      unlikeEnabled = true;
-    }
-    if (adminRoutes.featureFlags.numoffollowersEnabled === true) {
-      numOfFollowersEnabled = true;
-    }
-    if (adminRoutes.featureFlags.gamingtriviaEnabled === true) {
-      gamingTriviaEnabled = true;
-    }
-    if (adminRoutes.featureFlags.upcomingreleasesEnabled === true) {
-      upcomingReleasesEnabled = true;
-    }
+    isAdmin = user.isAdmin;
+
+    unlikeEnabled = adminRoutes.featureFlags.unlikeEnabled;
+    numOfFollowersEnabled = adminRoutes.featureFlags.numoffollowersEnabled;
+    gamingTriviaEnabled = adminRoutes.featureFlags.numoffollowersEnabled;
+    upcomingReleasesEnabled = adminRoutes.featureFlags.upcomingreleasesEnabled;
 
     res.status(200).json({
       username: username,

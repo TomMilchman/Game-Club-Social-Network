@@ -32,11 +32,12 @@ router.put("/", async (req, res) => {
     const loginSuccess = await checkPasswordHash(lowerCaseUsername, password);
     const message = { message: loginSuccess.message };
 
-    if (loginSuccess.ok === true) {
+    if (loginSuccess.ok) {
       const maxAge = rememberMeChecked ? 864000000 : 1800000; // 10 days or 30 minutes
       const tempPass = req.cookies.tempPass;
-      if (tempPass !== undefined) {
-        if (loggedInUsers.get(tempPass) !== undefined) {
+
+      if (tempPass) {
+        if (loggedInUsers.get(tempPass)) {
           const previousUser: User =
             persist.usersData[loggedInUsers.get(tempPass).username];
 

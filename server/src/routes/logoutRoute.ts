@@ -11,8 +11,8 @@ router.put("/", async (req, res) => {
     const tempPass: string = req.cookies.tempPass;
     const maxAge: number = req.cookies.timeToLive;
 
-    if (tempPass !== undefined) {
-      if (loggedInUsers.get(tempPass) !== undefined) {
+    if (tempPass) {
+      if (loggedInUsers.get(tempPass)) {
         const username = loggedInUsers.get(tempPass).username;
         const user = persist.usersData[username];
 

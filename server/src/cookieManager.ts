@@ -7,7 +7,7 @@ function calculateExpirationTime(maxAge: number) {
 
 //Extend cookie's time to live
 function refreshCookies(res, tempPass: string, maxAge: number) {
-  if (loggedInUsers.get(tempPass) === undefined) {
+  if (!loggedInUsers.get(tempPass)) {
     console.log(`User with temp pass ${tempPass} not found`);
     return;
   }
@@ -28,7 +28,7 @@ function createNewCookies(res, maxAge: number, username: string) {
 }
 
 function deleteCookies(res, tempPass: string, maxAge: number) {
-  if (loggedInUsers.get(tempPass) === undefined) {
+  if (!loggedInUsers.get(tempPass)) {
     console.log(`User with temp pass ${tempPass} not found`);
     return;
   }
