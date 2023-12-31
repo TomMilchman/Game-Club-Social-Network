@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GameClubLogo from "../images/GameClubLogo.png";
+import { makeRequest } from "../API";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -18,25 +19,16 @@ export default function LoginPage() {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/login", {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const { ok, data } = await makeRequest("/login", "PUT", userData);
 
-      const responseData = await response.json();
-      if (response.ok) {
+      if (ok) {
         // Successfully logged in
-        console.log("Logged in:", responseData.message);
+        console.log("Logged in:", data.message);
         navigate("/", { replace: true });
-        return null;
       } else {
         // Error handling if login failed
-        console.error("Login failed:", responseData.message);
-        alert(`Error signing in: ${responseData.message}, please try again.`);
+        console.error("Login failed:", data.message);
+        alert(`Error signing in: ${data.message}, please try again.`);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -46,7 +38,7 @@ export default function LoginPage() {
 
   return (
     <div className="form-container">
-      <img src={GameClubLogo} />
+      <img src={GameClubLogo} alt="Game Club Logo" />
       <form id="login-form" onSubmit={handleSubmit}>
         <h2>Login</h2>
         <div className="input-container">

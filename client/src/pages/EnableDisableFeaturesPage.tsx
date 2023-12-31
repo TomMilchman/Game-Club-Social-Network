@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { makeRequest } from "../API";
 
 export default function EnableDisableFeaturesPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,19 +16,15 @@ export default function EnableDisableFeaturesPage() {
 
   const checkAllPrivileges = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/privileges`, {
-        method: "GET",
-        credentials: "include",
-      });
+      const { ok, data } = await makeRequest("/privileges", "GET");
 
-      const responseData = await response.json();
-      if (response.ok) {
-        setGamingTriviaEnabled(responseData.gamingTriviaEnabled);
-        setUpcomingReleasesEnabled(responseData.upcomingReleasesEnabled);
-        setUnlikeEnabled(responseData.unlikeEnabled);
-        setNumOfFollowersEnabled(responseData.numOfFollowersEnabled);
+      if (ok) {
+        setGamingTriviaEnabled(data.gamingTriviaEnabled);
+        setUpcomingReleasesEnabled(data.upcomingReleasesEnabled);
+        setUnlikeEnabled(data.unlikeEnabled);
+        setNumOfFollowersEnabled(data.numOfFollowersEnabled);
       } else {
-        console.log(responseData.message);
+        console.log(data.message);
       }
       setIsLoading(false);
     } catch (error) {
@@ -41,45 +38,29 @@ export default function EnableDisableFeaturesPage() {
 
   const enableDisableFeature = async (action: string, type: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/admin/${action}/${type}`,
-        {
-          method: "PUT",
-          credentials: "include",
-        }
-      );
+      const { ok, data } = await makeRequest(`/admin/${action}/${type}`, "PUT");
 
-      const responseData = await response.json();
-      if (response.ok) {
-        if (type === "gamingtrivia") {
-          if (action === "enable") {
-            setGamingTriviaEnabled(true);
-          } else {
-            setGamingTriviaEnabled(false);
-          }
-        } else if (type === "upcomingreleases") {
-          if (action === "enable") {
-            setUpcomingReleasesEnabled(true);
-          } else {
-            setUpcomingReleasesEnabled(false);
-          }
-        } else if (type === "unlike") {
-          if (action === "enable") {
-            setUnlikeEnabled(true);
-          } else {
-            setUnlikeEnabled(false);
-          }
-        } else if (type === "numoffollowers") {
-          if (action === "enable") {
-            setNumOfFollowersEnabled(true);
-          } else {
-            setNumOfFollowersEnabled(false);
-          }
+      if (ok) {
+        switch (type) {
+          case "gamingtrivia":
+            setGamingTriviaEnabled(action === "enable");
+            break;
+          case "upcomingreleases":
+            setUpcomingReleasesEnabled(action === "enable");
+            break;
+          case "unlike":
+            setUnlikeEnabled(action === "enable");
+            break;
+          case "numoffollowers":
+            setNumOfFollowersEnabled(action === "enable");
+            break;
+          default:
+            break;
         }
 
-        console.log(responseData.message);
+        console.log(data.message);
       } else {
-        console.log(responseData.message);
+        console.log(data.message);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -87,7 +68,7 @@ export default function EnableDisableFeaturesPage() {
   };
 
   if (isLoading) {
-    return <p></p>;
+    return <p>Loading...</p>;
   }
 
   return (
@@ -95,72 +76,48 @@ export default function EnableDisableFeaturesPage() {
       <h1>Enable/Disable Features</h1>
       <h2>Gaming Trivia: </h2>
       {gamingTriviaEnabled ? (
-        <button
-          onClick={() => {
-            enableDisableFeature("disable", "gamingtrivia");
-          }}
-        >
+        <button onClick={() => enableDisableFeature("disable", "gamingtrivia")}>
           DISABLE
         </button>
       ) : (
-        <button
-          onClick={() => {
-            enableDisableFeature("enable", "gamingtrivia");
-          }}
-        >
+        <button onClick={() => enableDisableFeature("enable", "gamingtrivia")}>
           ENABLE
         </button>
       )}
       <h2>Upcoming Releases: </h2>
       {upcomingReleasesEnabled ? (
         <button
-          onClick={() => {
-            enableDisableFeature("disable", "upcomingreleases");
-          }}
+          onClick={() => enableDisableFeature("disable", "upcomingreleases")}
         >
           DISABLE
         </button>
       ) : (
         <button
-          onClick={() => {
-            enableDisableFeature("enable", "upcomingreleases");
-          }}
+          onClick={() => enableDisableFeature("enable", "upcomingreleases")}
         >
           ENABLE
         </button>
       )}
       <h2>Unlike Post: </h2>
       {unlikeEnabled ? (
-        <button
-          onClick={() => {
-            enableDisableFeature("disable", "unlike");
-          }}
-        >
+        <button onClick={() => enableDisableFeature("disable", "unlike")}>
           DISABLE
         </button>
       ) : (
-        <button
-          onClick={() => {
-            enableDisableFeature("enable", "unlike");
-          }}
-        >
+        <button onClick={() => enableDisableFeature("enable", "unlike")}>
           ENABLE
         </button>
       )}
       <h2>Number of Followers: </h2>
       {numOfFollowersEnabled ? (
         <button
-          onClick={() => {
-            enableDisableFeature("disable", "numoffollowers");
-          }}
+          onClick={() => enableDisableFeature("disable", "numoffollowers")}
         >
           DISABLE
         </button>
       ) : (
         <button
-          onClick={() => {
-            enableDisableFeature("enable", "numoffollowers");
-          }}
+          onClick={() => enableDisableFeature("enable", "numoffollowers")}
         >
           ENABLE
         </button>

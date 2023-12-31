@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { makeRequest } from "../API";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
@@ -12,12 +13,12 @@ export default function SearchBar() {
       if (value === "") {
         setSearchResults([]);
       } else {
-        const response = await fetch(`http://localhost:3000/search/${value}`);
-        if (response.ok) {
-          const data = await response.json();
+        const { ok, data } = await makeRequest(`/search/${value}`, "GET");
+
+        if (ok) {
           setSearchResults(data);
         } else {
-          console.error("Error fetching data:", response.statusText);
+          console.error("Error fetching data:", data.message);
         }
       }
     } catch (error) {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { makeRequest } from "../API";
 
 export default function AdminLayout() {
   const [isLoading, setIsLoading] = useState(true);
@@ -7,22 +8,13 @@ export default function AdminLayout() {
 
   const checkIfAdmin = async () => {
     try {
-      const response = await fetch("http://localhost:3000/privileges", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const { ok, data } = await makeRequest("/privileges", "GET");
 
-      const responseData = await response.json();
-      if (response.ok) {
-        setIsAdmin(responseData.isAdmin);
-      } else if (response.status === 401) {
-        setIsAdmin(false);
+      if (ok) {
+        setIsAdmin(data.isAdmin);
       } else {
         setIsAdmin(false);
-        console.log("An error occurred server side:", responseData.message);
+        console.log("An error occurred server side:", data.message);
       }
       setIsLoading(false);
     } catch (error) {
@@ -36,7 +28,7 @@ export default function AdminLayout() {
   }, []);
 
   if (isLoading) {
-    return <p></p>;
+    return <p>Loading...</p>;
   }
 
   if (isAdmin) {

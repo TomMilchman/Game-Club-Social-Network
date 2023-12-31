@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import GameClubLogo from "../images/GameClubLogo.png";
-import { useEffect, useState } from "react";
+import { makeRequest } from "../API";
 
 export default function RootLayout() {
   const navigate = useNavigate();
@@ -14,16 +15,8 @@ export default function RootLayout() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/logout", {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const responseData = await response.json();
-      console.log(responseData.message);
+      const { data } = await makeRequest("/logout", "PUT");
+      console.log(data.message);
       setAuthenticated(false);
       navigate("/login");
     } catch (error) {
@@ -33,29 +26,25 @@ export default function RootLayout() {
 
   const privileges = async () => {
     try {
-      const response = await fetch("http://localhost:3000/privileges", {
-        method: "GET",
-        credentials: "include",
-      });
+      const { ok, data } = await makeRequest("/privileges", "GET");
 
-      const responseData = await response.json();
-      if (response.ok) {
+      if (ok) {
         setAuthenticated(true);
-        setUsername(responseData.username);
-        setIsAdmin(responseData.isAdmin);
+        setUsername(data.username);
+        setIsAdmin(data.isAdmin);
 
-        if (responseData.isAdmin) {
+        if (data.isAdmin) {
           setUpcomingReleasesPrivileges(true);
           setGamingTriviaPrivileges(true);
         } else {
-          setUpcomingReleasesPrivileges(responseData.upcomingReleasesEnabled);
-          setGamingTriviaPrivileges(responseData.gamingTriviaEnabled);
+          setUpcomingReleasesPrivileges(data.upcomingReleasesEnabled);
+          setGamingTriviaPrivileges(data.gamingTriviaEnabled);
         }
-      } else if (response.status === 401) {
+      } else if (!ok && data && data.status === 401) {
         setAuthenticated(false);
-        console.log(responseData.message);
+        console.log(data.message);
       } else {
-        console.log("An error occurred server side:", responseData.message);
+        console.log("An error occurred server side:", data.message);
       }
     } catch (error) {
       setAuthenticated(false);
@@ -66,10 +55,10 @@ export default function RootLayout() {
 
   useEffect(() => {
     privileges();
-  }, [<Outlet />]);
+  }, [navigate]);
 
   if (isLoading) {
-    return <p></p>;
+    return <p>Loading...</p>;
   }
 
   return authenticated ? (

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GameClubLogo from "../images/GameClubLogo.png";
+import { makeRequest } from "../API";
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -20,24 +21,16 @@ export default function SignUpPage() {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/signup", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const { ok, data } = await makeRequest("/signup", "POST", userData);
 
-      const responseData = await response.json();
-      if (response.ok) {
+      if (ok) {
         // Successfully registered
-        console.log("Registered:", responseData.message);
+        console.log("Registered:", data.message);
         navigate("/", { replace: true });
       } else {
         // Error handling if registration failed
-        console.error("Registration failed:", responseData.message);
-        alert(`Error signing up: ${responseData.message}, please try again.`);
+        console.error("Registration failed:", data.message);
+        alert(`Error signing up: ${data.message}, please try again.`);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -47,7 +40,7 @@ export default function SignUpPage() {
 
   return (
     <div className="form-container">
-      <img src={GameClubLogo} />
+      <img src={GameClubLogo} alt="Game Club Logo" />
       <form id="signup-form" onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
         <div className="input-container">
@@ -56,7 +49,7 @@ export default function SignUpPage() {
             id="username-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-          ></input>
+          />
         </div>
         <div className="input-container">
           <label htmlFor="password-input">Password: </label>
@@ -65,7 +58,7 @@ export default function SignUpPage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          ></input>
+          />
         </div>
         <div className="input-container">
           <label htmlFor="email-input">Email: </label>
@@ -73,7 +66,7 @@ export default function SignUpPage() {
             id="email-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          ></input>
+          />
         </div>
         <div className="input-container">
           <label>Remember me </label>

@@ -1,29 +1,27 @@
 import { useEffect, useState } from "react";
+import { makeRequest } from "../API";
 
 export default function GamingTriviaPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [gamingTriviaEnabled, setGamingTriviaEnabled] = useState<
-    null | boolean
+    boolean | null
   >(null);
 
   const checkGamingTriviaPrivileges = async () => {
     try {
-      const response = await fetch("http://localhost:3000/privileges", {
-        method: "GET",
-        credentials: "include",
-      });
+      const { ok, data } = await makeRequest("/privileges", "GET");
 
-      const responseData = await response.json();
-      if (response.ok) {
-        if (responseData.isAdmin) {
+      if (ok && data) {
+        if (data.isAdmin) {
           setGamingTriviaEnabled(true);
         } else {
-          setGamingTriviaEnabled(responseData.gamingTriviaEnabled);
+          setGamingTriviaEnabled(data.gamingTriviaEnabled);
         }
       } else {
         setGamingTriviaEnabled(false);
-        console.log(responseData.message);
+        console.log(data?.message || "Error fetching privileges");
       }
+
       setIsLoading(false);
     } catch (error) {
       setGamingTriviaEnabled(false);
@@ -103,7 +101,7 @@ export default function GamingTriviaPage() {
           of the game in a landfill in New Mexico.
         </h3>
         <br />
-        <h2>What were Nintendo's best and worst selling consoles?</h2>
+        <h2>What are Nintendo's best and worst selling consoles?</h2>
         <h3>
           The Nintendo DS, which sold 154 million units, is Nintendo's best
           selling console of all time, as well as the second best selling

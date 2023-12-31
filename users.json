@@ -5,11 +5,9 @@
     "email": "afafa@afafa",
     "isAdmin": true,
     "followedUsernames": [
-      "oogia123",
       "hypno"
     ],
     "followersUsernames": [
-      "oogia123",
       "hypno"
     ],
     "posts": [
@@ -54,9 +52,25 @@
           "admin",
           "hypno"
         ]
+      },
+      {
+        "postId": 4,
+        "title": "I gotta say, The Binding of Isaac is addictive",
+        "content": "Where has the time gone??? It's already dawn aaaaaaaaaaaa",
+        "timestamp": "2023-12-31T14:07:01.482Z",
+        "usernamesWhoLiked": []
+      },
+      {
+        "postId": 5,
+        "title": "This was a triumph",
+        "content": "I am making a note here, huge success.",
+        "timestamp": "2023-12-31T14:16:58.431Z",
+        "usernamesWhoLiked": [
+          "admin"
+        ]
       }
     ],
-    "currentPostId": 4,
+    "currentPostId": 6,
     "loginActivity": [
       {
         "type": 0,
@@ -553,6 +567,46 @@
       {
         "type": 1,
         "timestamp": "2023-12-31T12:59:23.722Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-12-31T13:43:19.930Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-12-31T13:43:46.885Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-12-31T14:06:24.312Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-12-31T14:07:01.482Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-12-31T14:08:05.752Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-12-31T14:16:29.799Z"
+      },
+      {
+        "type": 2,
+        "timestamp": "2023-12-31T14:16:58.431Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-12-31T14:17:56.854Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-12-31T14:19:35.465Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-12-31T14:21:43.770Z"
       }
     ]
   },
@@ -562,11 +616,9 @@
     "email": "afafa@afafa",
     "isAdmin": false,
     "followedUsernames": [
-      "oogia123",
       "admin"
     ],
     "followersUsernames": [
-      "oogia123",
       "admin"
     ],
     "posts": [
@@ -587,7 +639,8 @@
         "timestamp": "2023-09-04T08:58:23.986Z",
         "usernamesWhoLiked": [
           "hypno",
-          "abcdef"
+          "abcdef",
+          "admin"
         ]
       },
       {
@@ -763,48 +816,30 @@
       {
         "type": 1,
         "timestamp": "2023-12-31T13:00:08.026Z"
-      }
-    ]
-  },
-  "oogia123": {
-    "username": "oogia123",
-    "password": "$2b$10$fW2.AE2MIyz53FDNaVq.vei75JXoKNN6yEgLckjYKp/vSyF1A.1.a",
-    "email": "afafa@afafa",
-    "isAdmin": false,
-    "followedUsernames": [
-      "admin",
-      "hypno"
-    ],
-    "followersUsernames": [
-      "hypno",
-      "admin"
-    ],
-    "posts": [
-      {
-        "postId": 0,
-        "title": "Baldur's Gate 3 is consuming my life",
-        "content": "Send help.",
-        "timestamp": "2023-09-04T19:14:43.925Z",
-        "usernamesWhoLiked": [
-          "oogia123",
-          "admin",
-          "hypno"
-        ]
-      }
-    ],
-    "currentPostId": 1,
-    "loginActivity": [
-      {
-        "type": 0,
-        "timestamp": "2023-09-04T19:14:15.985Z"
       },
       {
-        "type": 2,
-        "timestamp": "2023-09-04T19:14:43.925Z"
+        "type": 0,
+        "timestamp": "2023-12-31T14:18:49.089Z"
       },
       {
         "type": 1,
-        "timestamp": "2023-09-04T19:25:18.313Z"
+        "timestamp": "2023-12-31T14:19:06.085Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-12-31T14:19:10.407Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-12-31T14:19:31.177Z"
+      },
+      {
+        "type": 0,
+        "timestamp": "2023-12-31T14:21:48.271Z"
+      },
+      {
+        "type": 1,
+        "timestamp": "2023-12-31T14:22:02.738Z"
       }
     ]
   }

@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { makeRequest } from "../API";
 
 interface Props {
   username: string;
@@ -21,25 +22,17 @@ export default function Post(props: Props) {
 
   const handleLikeUnlikeClick = async (action: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/posts/${props.username}/${action}/${props.postId}`,
-        {
-          method: "PUT",
-          credentials: "include",
-        }
+      const { ok, data } = await makeRequest(
+        `/posts/${props.username}/${action}/${props.postId}`,
+        "PUT"
       );
 
-      const responseData = await response.json();
-      if (response.ok) {
-        console.log(responseData.message);
-        setNumOfLikes(responseData.updatedLikeNum);
-        if (action === "like") {
-          setUserLikesPost(true);
-        } else {
-          setUserLikesPost(false);
-        }
+      if (ok) {
+        console.log(data.message);
+        setNumOfLikes(data.updatedLikeNum);
+        setUserLikesPost(action === "like");
       } else {
-        console.log(responseData.message);
+        console.log(data.message);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -48,20 +41,12 @@ export default function Post(props: Props) {
 
   const checkUnlikePrivileges = async () => {
     try {
-      const response = await fetch("http://localhost:3000/privileges", {
-        method: "GET",
-        credentials: "include",
-      });
+      const { ok, data } = await makeRequest("/privileges", "GET");
 
-      const responseData = await response.json();
-      if (response.ok) {
-        if (responseData.isAdmin) {
-          setUnlikeEnabled(true);
-        } else {
-          setUnlikeEnabled(responseData.unlikeEnabled);
-        }
+      if (ok) {
+        setUnlikeEnabled(data.isAdmin ? true : data.unlikeEnabled);
       } else {
-        console.log(responseData.message);
+        console.log(data.message);
       }
     } catch (error) {
       console.error("Error:", error);

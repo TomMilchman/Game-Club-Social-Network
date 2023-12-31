@@ -1,55 +1,37 @@
 import { useEffect, useState } from "react";
+import { makeRequest } from "../API";
 
 export default function DeleteUserPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [usernames, setUsernames] = useState<string[]>([]);
 
-  const getUsernames = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/users/nonadmin`, {
-        method: "GET",
-        credentials: "include",
-      });
-
-      const responseData = await response.json();
-      if (response.ok) {
-        setUsernames(responseData.usernames);
-      } else {
-        console.log(responseData.message);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   useEffect(() => {
+    const getUsernames = async () => {
+      const { ok, data } = await makeRequest("/users/nonadmin", "GET");
+
+      if (ok) {
+        setUsernames(data.usernames);
+      }
+
+      setIsLoading(false);
+    };
+
     getUsernames();
   }, []);
 
   const deleteUser = async (usernameToDelete: string) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/admin/deleteuser/${usernameToDelete}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
+    const { ok, data } = await makeRequest(
+      `/admin/deleteuser/${usernameToDelete}`,
+      "DELETE"
+    );
 
-      const responseData = await response.json();
-      if (response.ok) {
-        const updatedUsernames = usernames.filter(
-          (username) => username !== usernameToDelete
-        );
-        setUsernames(updatedUsernames);
-        console.log(responseData.message);
-        alert(responseData.message);
-      } else {
-        console.log(responseData.message);
-      }
-    } catch (error) {
-      console.error("Error:", error);
+    if (ok) {
+      const updatedUsernames = usernames.filter(
+        (username) => username !== usernameToDelete
+      );
+      setUsernames(updatedUsernames);
+      console.log(data.message);
+      alert(data.message);
     }
   };
 

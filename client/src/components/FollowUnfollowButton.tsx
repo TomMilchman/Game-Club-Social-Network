@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { makeRequest } from "../API";
 
 interface Props {
   requestedUsername: string;
@@ -6,34 +7,36 @@ interface Props {
 }
 
 export default function FollowUnfollowButton(props: Props) {
-  const [isFollowing, setIsFollowing] = useState<boolean | null>(null);
+  const [followInfo, setFollowInfo] = useState<{
+    isFollowing: boolean | null;
+    numOfFollowers: number | null;
+  }>({
+    isFollowing: null,
+    numOfFollowers: null,
+  });
   const [numOfFollowersEnabled, setNumOfFollowersEnabled] = useState<
     boolean | null
   >(null);
-  const [numOfFollowers, setNumOfFollowers] = useState<number | null>(null);
 
   const handleFollowUnfollowClick = async (action: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/users/${props.requestedUsername}/${action}`,
-        {
-          method: "PUT",
-          credentials: "include",
-        }
+      const { ok, data } = await makeRequest(
+        `/users/${props.requestedUsername}/${action}`,
+        "PUT"
       );
 
-      const responseData = await response.json();
-      if (response.ok) {
-        console.log(responseData.message);
-        if (action === "follow") {
-          setIsFollowing(true);
-          setNumOfFollowers(numOfFollowers! + 1);
-        } else {
-          setIsFollowing(false);
-          setNumOfFollowers(numOfFollowers! - 1);
-        }
+      if (ok) {
+        console.log(data.message);
+        setFollowInfo((prevInfo) => ({
+          ...prevInfo,
+          isFollowing: action === "follow",
+          numOfFollowers:
+            action === "follow"
+              ? prevInfo.numOfFollowers! + 1
+              : prevInfo.numOfFollowers! - 1,
+        }));
       } else {
-        console.log(responseData.message);
+        console.log(data.message);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -41,48 +44,20 @@ export default function FollowUnfollowButton(props: Props) {
   };
 
   useEffect(() => {
-    async function checkNumOfFollowersPrivileges() {
-      try {
-        const response = await fetch("http://localhost:3000/privileges", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        const responseData = await response.json();
-        if (response.ok) {
-          if (responseData.isAdmin) {
-            setNumOfFollowersEnabled(true);
-          } else {
-            setNumOfFollowersEnabled(responseData.numOfFollowersEnabled);
-          }
-        } else {
-          console.log(responseData.message);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    }
-
-    checkNumOfFollowersPrivileges();
-  }, []);
-
-  useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(
-          `http://localhost:3000/users/${props.requestedUsername}/followinfo`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
+        const { ok, data } = await makeRequest(
+          `/users/${props.requestedUsername}/followinfo`,
+          "GET"
         );
 
-        const responseData = await response.json();
-        if (response.ok) {
-          setIsFollowing(responseData.isFollowing);
-          setNumOfFollowers(responseData.numOfFollowers);
+        if (ok) {
+          setFollowInfo({
+            isFollowing: data.isFollowing,
+            numOfFollowers: data.numOfFollowers,
+          });
         } else {
-          console.log(responseData.message);
+          console.log(data.message);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -92,34 +67,49 @@ export default function FollowUnfollowButton(props: Props) {
     fetchData();
   }, [props.requestedUsername]);
 
+  useEffect(() => {
+    async function checkNumOfFollowersPrivileges() {
+      try {
+        const { ok, data } = await makeRequest("/privileges", "GET");
+
+        if (ok) {
+          setNumOfFollowersEnabled(
+            data.isAdmin ? true : data.numOfFollowersEnabled
+          );
+        } else {
+          console.log(data.message);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    checkNumOfFollowersPrivileges();
+  }, []);
+
   if (props.requestingUsername === props.requestedUsername) {
     return (
       <>
         <button disabled title="You cannot follow/unfollow yourself!">
           FOLLOW
         </button>
-        {numOfFollowersEnabled && <label>{numOfFollowers}</label>}
+        {numOfFollowersEnabled && <label>{followInfo.numOfFollowers}</label>}
       </>
     );
   } else {
-    if (isFollowing) {
-      return (
-        <>
-          <button onClick={() => handleFollowUnfollowClick("unfollow")}>
-            UNFOLLOW
-          </button>
-          {numOfFollowersEnabled && <label>{numOfFollowers}</label>}
-        </>
-      );
-    } else {
-      return (
-        <>
-          <button onClick={() => handleFollowUnfollowClick("follow")}>
-            FOLLOW
-          </button>
-          {numOfFollowersEnabled && <label>{numOfFollowers}</label>}
-        </>
-      );
-    }
+    return (
+      <>
+        <button
+          onClick={() =>
+            handleFollowUnfollowClick(
+              followInfo.isFollowing ? "unfollow" : "follow"
+            )
+          }
+        >
+          {followInfo.isFollowing ? "UNFOLLOW" : "FOLLOW"}
+        </button>
+        {numOfFollowersEnabled && <label>{followInfo.numOfFollowers}</label>}
+      </>
+    );
   }
 }

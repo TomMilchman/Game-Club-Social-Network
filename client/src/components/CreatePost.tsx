@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react";
+import { makeRequest } from "../API";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
@@ -36,21 +37,13 @@ export default function CreatePost() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/posts/createpost", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(post),
-      });
+      const { ok, data } = await makeRequest("/posts/createpost", "POST", post);
 
-      const responseData = await response.json();
-      if (response.ok) {
-        console.log("Post created:", responseData.message);
+      if (ok) {
+        console.log("Post created:", data.message);
         alert("Post created successfully!");
       } else {
-        console.error("Post creation failed:", responseData.message);
+        console.error("Post creation failed:", data.message);
       }
     } catch (error) {
       console.error("Error:", error);

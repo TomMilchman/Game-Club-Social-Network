@@ -1,28 +1,38 @@
 import { useEffect, useState } from "react";
 import CreatePost from "../components/CreatePost";
 import PostComponent from "../components/Post";
+import { makeRequest } from "../API";
+
+interface Post {
+  username: string;
+  postId: number;
+  title: string;
+  timestamp: Date;
+  content: string;
+  usernamesWhoLiked: string[];
+}
 
 export default function FeedPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [posts, setPosts] = useState([]);
+  const [username, setUsername] = useState<string>("");
+  const [posts, setPosts] = useState<Post[]>([]);
   const [createPostClicked, setCreatePostClicked] = useState(false);
 
   const getFeed = async () => {
     try {
-      const response = await fetch("http://localhost:3000/feed", {
-        method: "GET",
-        credentials: "include",
-      });
+      const { ok, data } = await makeRequest("/feed", "GET");
 
-      const responseData = await response.json();
-      if (response.ok) {
-        setUsername(responseData.requestingUsername);
-        const posts = responseData.posts;
-        setPosts(posts);
+      if (ok && data) {
+        setUsername(data.requestingUsername);
+        const sortedPosts = data.posts.sort((a: Post, b: Post) => {
+          const timeA = new Date(a.timestamp).getTime();
+          const timeB = new Date(b.timestamp).getTime();
+          return timeB - timeA;
+        });
+        setPosts(sortedPosts);
         setIsLoading(false);
       } else {
-        console.log(responseData.message);
+        console.log(data?.message || "Error fetching data");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -33,34 +43,30 @@ export default function FeedPage() {
     getFeed();
   }, []);
 
+  const toggleCreatePost = () => {
+    setCreatePostClicked((prev) => !prev);
+  };
+
   if (isLoading) {
     return <p></p>;
   }
 
-  if (posts.length > 0) {
-    const sortedPosts = posts.sort((a: any, b: any) => {
-      const timeA = new Date(a.timestamp).getTime();
-      const timeB = new Date(b.timestamp).getTime();
-      return timeB - timeA;
-    });
+  return (
+    <div className="feed">
+      <h1>{username}'s Feed</h1>
 
-    return (
-      <div className="feed">
-        <h1>{username}'s Feed</h1>
-
-        {!createPostClicked && (
-          <button onClick={() => setCreatePostClicked(true)}>
-            CREATE POST
-          </button>
-        )}
-        {createPostClicked && (
-          <>
-            <CreatePost />
-            <button onClick={() => setCreatePostClicked(false)}>CANCEL</button>
-          </>
-        )}
-        <h2>Posts from users you follow:</h2>
-        {sortedPosts.map((post: any) => (
+      {!createPostClicked && (
+        <button onClick={toggleCreatePost}>CREATE POST</button>
+      )}
+      {createPostClicked && (
+        <>
+          <CreatePost />
+          <button onClick={toggleCreatePost}>CANCEL</button>
+        </>
+      )}
+      <h2>Posts from users you follow:</h2>
+      {posts.length > 0 ? (
+        posts.map((post) => (
           <PostComponent
             key={`${post.username}-${post.postId}`}
             username={post.username}
@@ -71,28 +77,10 @@ export default function FeedPage() {
             numOfLikes={post.usernamesWhoLiked.length}
             didUserLikePost={post.usernamesWhoLiked.includes(username)}
           />
-        ))}
-      </div>
-    );
-  } else {
-    return (
-      <div className="feed">
-        <h1>{username}'s Feed</h1>
-
-        {!createPostClicked && (
-          <button onClick={() => setCreatePostClicked(true)}>
-            CREATE POST
-          </button>
-        )}
-        {createPostClicked && (
-          <>
-            <CreatePost />
-            <button onClick={() => setCreatePostClicked(false)}>CANCEL</button>
-          </>
-        )}
-        <h2>Posts from users you follow:</h2>
+        ))
+      ) : (
         <h3>Follow users to see their posts!</h3>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }

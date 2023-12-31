@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import MortalKombat1KeyArt from "../images/upcoming-releases/Mortal_Kombat_1_key_art.jpeg";
 import SuperMarioBrosWonderKeyArt from "../images/upcoming-releases/Mario_Wonder_key_art.jpg";
-import { useEffect, useState } from "react";
+import { makeRequest } from "../API";
 
 export default function UpcomingReleasesPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,21 +11,17 @@ export default function UpcomingReleasesPage() {
 
   const checkUpcomingReleasesPrivileges = async () => {
     try {
-      const response = await fetch("http://localhost:3000/privileges", {
-        method: "GET",
-        credentials: "include",
-      });
+      const { ok, data } = await makeRequest("/privileges", "GET");
 
-      const responseData = await response.json();
-      if (response.ok) {
-        if (responseData.isAdmin) {
+      if (ok) {
+        if (data.isAdmin) {
           setUpcomingReleasesEnabled(true);
         } else {
-          setUpcomingReleasesEnabled(responseData.upcomingReleasesEnabled);
+          setUpcomingReleasesEnabled(data.upcomingReleasesEnabled);
         }
       } else {
         setUpcomingReleasesEnabled(false);
-        console.log(responseData.message);
+        console.log(data.message);
       }
 
       setIsLoading(false);
@@ -39,7 +36,7 @@ export default function UpcomingReleasesPage() {
   }, []);
 
   if (isLoading) {
-    return <p></p>;
+    return <p>Loading...</p>;
   }
 
   if (upcomingReleasesEnabled) {
@@ -56,7 +53,7 @@ export default function UpcomingReleasesPage() {
           favorite characters are reimagined when the game releases on 19
           September 2023.
         </h3>
-        <img src={MortalKombat1KeyArt} />
+        <img src={MortalKombat1KeyArt} alt="Mortal Kombat 1 Key Art" />
         <br />
         <h2>Super Mario Bros. Wonder</h2>
         <h3>
@@ -67,7 +64,10 @@ export default function UpcomingReleasesPage() {
           warp pipe and get ready to play when the game releases on 20 October
           2023.
         </h3>
-        <img src={SuperMarioBrosWonderKeyArt} />
+        <img
+          src={SuperMarioBrosWonderKeyArt}
+          alt="Super Mario Bros. Wonder Key Art"
+        />
       </div>
     );
   } else {
