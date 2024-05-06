@@ -1,5 +1,10 @@
 # Game Club - A Gaming Social Network
 
-This is a small university project that I had to program for one of my courses. 
-Every user may create and read posts about gaming, follow other users to see their posts in their feed and follow gaming news and trivia.
-Admin has the ability to disable/enable certain features, see user activity log and delete users from the social network.
+## Overview
+A small gaming-centered social network developed in React TypeScript.
+Every user may create and read posts about gaming, follow other users to see their posts in their feed, and follow gaming news and trivia.
+Admin can disable/enable certain features, see user activity logs, and delete users from the social network.
+
+## Setup
+Run the server with "node server.js" and run the client with "npm start dev". Then go to http://localhost:5173 in your browser. To run the tests, run "node test.js".
+If you wish to log in as an admin, use the username "admin" and password "admin".
